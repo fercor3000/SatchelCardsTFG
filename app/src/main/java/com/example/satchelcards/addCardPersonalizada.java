@@ -16,7 +16,7 @@ public class addCardPersonalizada extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rellenar_tarjeta_personalizada);
 
-        gobackBtn = (ImageView)findViewById(R.id.goBack);
+        gobackBtn = (ImageView)findViewById(R.id.go_back);
 
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override

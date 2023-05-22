@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#FFFFFF">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
-        android:background="#FFFFFF"
         android:padding="16dp">
 
         <LinearLayout
@@ -36,72 +35,52 @@
 
             <TextView
                 android:id="@+id/title_text"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_weight="1"
-                android:text="Rellenar tarjeta personalizada:"
+                android:text="Tarjeta de regalo:"
                 android:textColor="#232e63"
-                android:textSize="27sp"
+                android:textSize="30sp"
                 android:textStyle="bold" />
 
-
         </LinearLayout>
-        <Button
-            android:id="@+id/btn_add_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Seleccionar imagen"
-            android:textFontWeight="@integer/material_motion_duration_long_1"
-            android:backgroundTint="@color/darkBlue"/>
 
         <EditText
+            android:id="@+id/gift_card_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
-            android:padding="16dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre completo del dueño"
-            android:padding="16dp"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Número identificador de la tarjeta"
+            android:inputType="number"
             android:padding="16dp" />
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/gift_titular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="16dp">
+            android:hint="Nombre del titular"
+            android:inputType="textPersonName"
+            android:padding="16dp" />
 
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="MM/AA"
-                android:padding="16dp" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="16dp"/>
-        </LinearLayout>
+        <EditText
+            android:id="@+id/gift_FechaVencimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de vencimiento (MM/AA)"
+            android:inputType="number"
+            android:padding="16dp" />
 
         <Button
+            android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="GUARDAR"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
+            android:layout_marginTop="24dp"
             android:backgroundTint="@color/darkBlue"
             android:padding="16dp"
-            android:layout_marginTop="24dp"/>
+            android:text="GUARDAR"
+            android:textColor="#FFFFFF"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
-</LinearLayout>
+</ScrollView>

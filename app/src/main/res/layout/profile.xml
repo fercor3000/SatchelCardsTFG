@@ -55,28 +55,52 @@
                 android:gravity="center"
                 android:text=""
                 android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:textSize="18dp"
                 android:textColor="@color/white"
                 android:fontFamily="sans-serif-black" />
-            <ImageView
-                android:id="@+id/gestionar_perfil"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/editprofile"
-                android:maxWidth="90dp"
-                android:maxHeight="45dp"
-                android:layout_marginTop="20dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/historial"
-                android:maxWidth="90dp"
-                android:maxHeight="45dp"
-                android:layout_marginTop="10dp"
-                android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
+                android:orientation="vertical"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp">
+
+                <Button
+                    android:id="@+id/gestionar_perfil"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Gestionar Perfil"
+                    android:textColor="@color/darkBlue"
+                    android:textStyle="bold"
+                    android:textFontWeight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/white" />
+
+                <Button
+                    android:id="@+id/historial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Historial"
+                    android:textColor="@color/darkBlue"
+                    android:textStyle="bold"
+                    android:textFontWeight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/white" />
+
+                <Button
+                    android:id="@+id/btnCerrarSesion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cerrar Sesión"
+                    android:textColor="@color/darkBlue"
+                    android:textStyle="bold"
+                    android:textFontWeight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/white" />
+
+            </LinearLayout>
+
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"

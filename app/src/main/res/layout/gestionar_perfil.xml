@@ -48,12 +48,15 @@
                 android:layout_marginTop="20dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:text="Editar foto de perfil"
-                android:textSize="16dp"
+            <Button
+                android:id="@+id/editImage"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="2dp"
+                android:backgroundTint="@color/cian"
+                android:text="Editar imagen"
+                android:drawableLeft="@drawable/baseline_edit_24"
                 android:textColor="@color/white" />
 
             <EditText
@@ -74,17 +77,24 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:padding="16dp" />
-            <Button
-                android:id="@+id/btn_save"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginBottom="60dp"
-                android:backgroundTint="@color/white"
-                android:padding="16dp"
-                android:text="GUARDAR CAMBIOS"
-                android:textColor="@color/darkBlue"
-                android:textSize="15sp" />
+                android:orientation="vertical"
+                android:paddingRight="25dp"
+                android:paddingLeft="25dp">
+                <Button
+                    android:id="@+id/btn_save"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Guardar Cambios"
+                    android:textColor="@color/darkBlue"
+                    android:textStyle="bold"
+                    android:textFontWeight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/white" />
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

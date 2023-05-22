@@ -12,6 +12,7 @@ public class AddCards extends AppCompatActivity {
     //#region VARIABLES
     ImageView gobackBtn;
     LinearLayout addDniBtn;
+    LinearLayout addGiftBtn;
     //#endregion
 
     @Override
@@ -22,6 +23,7 @@ public class AddCards extends AppCompatActivity {
         //#region OBTENER ELEMENTOS
         gobackBtn = (ImageView)findViewById(R.id.goBack);
         addDniBtn = (LinearLayout) findViewById(R.id.addDni);
+        addGiftBtn = (LinearLayout) findViewById(R.id.loyaltyCard);
         //#endregion
 
         //#region AL PULSAR VOLVER...
@@ -39,6 +41,15 @@ public class AddCards extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddCards.this, AddDNI.class);
+                startActivity(intent);
+            }
+        });
+
+        //#region AL PULSAR ADDGIFT
+        addGiftBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddCards.this, AddGift.class);
                 startActivity(intent);
             }
         });

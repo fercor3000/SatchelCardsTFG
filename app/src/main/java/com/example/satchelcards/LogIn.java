@@ -112,7 +112,7 @@ public class LogIn extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Acción de eliminar tarjeta
-                drawerLayout.closeDrawer(GravityCompat.START);
+                //drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
 

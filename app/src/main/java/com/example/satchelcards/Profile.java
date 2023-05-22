@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,7 +30,9 @@ public class Profile extends AppCompatActivity {
 
     //#region VARIABLES
     ImageView gobackBtn;
-    ImageView gestProfile;
+    Button gestProfile;
+    Button cerrarSesion;
+
     //#endregion
 
     @Override
@@ -39,7 +42,8 @@ public class Profile extends AppCompatActivity {
 
         //#region OBTIENE ELEMENTOS
         gobackBtn = (ImageView)findViewById(R.id.goBack);
-        gestProfile = (ImageView)findViewById(R.id.gestionar_perfil);
+        gestProfile = (Button) findViewById(R.id.gestionar_perfil);
+        cerrarSesion = (Button) findViewById(R.id.btnCerrarSesion);
         //#endregion
 
         //#region AL PULSAR VOLVER
@@ -54,12 +58,24 @@ public class Profile extends AppCompatActivity {
         gestProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Profile.this, ListDNI.class);
+                Intent intent = new Intent(Profile.this, GestPerfil.class);
                 startActivity(intent);
             }
         });
         //#endregion
 
+        cerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Cerrar sesión en FirebaseAuth
+                FirebaseAuth.getInstance().signOut();
+
+                // Redirigir a la página de inicio de sesión
+                Intent intent = new Intent(Profile.this, MainActivity.class);
+                startActivity(intent);
+                finish(); // Finaliza la actividad actual para que no se pueda volver atrás
+            }
+        });
 
         String email = null;
         //OBTIENE EL USUARIO ACTUAL
