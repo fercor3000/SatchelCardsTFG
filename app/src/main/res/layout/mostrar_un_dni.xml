@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dni_titulo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:text="DNI:"
+                android:textColor="#232e63"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+            <!-- ImageView para volver atrás -->
+            <ImageView
+                android:id="@+id/go_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="270dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="40dp"
+                android:maxHeight="40dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/goback" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imgTarjeta"/>
+
+        <TextView
+            android:id="@+id/dni_nombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/dni_apellidos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Apellidos"
+            android:padding="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dni_sexo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Sexo (M/H)"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/dni_nacionalidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nacionalidad"
+                android:padding="16dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dni_num_soport"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Num Soport"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/dni_can"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="CAN              "
+                android:padding="16dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/dni_dni"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="DNI"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/dni_equipo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Equipo"
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/dni_provincia"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Provincia "
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/dni_domicilio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Domicilio "
+            android:padding="16dp" />
+
+        <TextView
+            android:id="@+id/dni_lugar_nacimiento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lugar de Nacimiento "
+            android:padding="16dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dni_nombre_padre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del Padre"
+                android:padding="16dp" />
+
+            <TextView
+                android:id="@+id/dni_nombre_madre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="Nombre de la Madre"
+                android:padding="16dp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Fecha de nacimiento: "
+            android:textColor="#232e63"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dni_FechaNacimiento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de nacimiento"
+            android:padding="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Fecha de validez: "
+            android:textColor="#232e63"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dni_FechaValidez"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Fecha de validez"
+            android:padding="16dp" />
+
+    </LinearLayout>
+
+</ScrollView>

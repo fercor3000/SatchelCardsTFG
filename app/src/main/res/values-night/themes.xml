@@ -1,0 +1,7 @@
+<resources>
+    <style name="Base.Theme.SatchelCards" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your dark theme here. -->
+        <item name="colorPrimary">@color/white</item>
+        <!-- Other theme attributes -->
+    </style>
+</resources>

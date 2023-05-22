@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "645828654850",
+    "firebase_url": "https://fir-3cf5e-default-rtdb.firebaseio.com",
+    "project_id": "fir-3cf5e",
+    "storage_bucket": "fir-3cf5e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645828654850:android:489ecabc07e40916b4741b",
+        "android_client_info": {
+          "package_name": "com.example.firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645828654850-cv3uqkulseo91d3p72pg2jkujiu1ekhk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3ko16a7S16L0te338uAGyqGS7eyFe5_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645828654850-cv3uqkulseo91d3p72pg2jkujiu1ekhk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:645828654850:android:ece2ddbc6eef8669b4741b",
+        "android_client_info": {
+          "package_name": "com.example.satchelcards"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "645828654850-cv3uqkulseo91d3p72pg2jkujiu1ekhk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3ko16a7S16L0te338uAGyqGS7eyFe5_I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "645828654850-cv3uqkulseo91d3p72pg2jkujiu1ekhk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
