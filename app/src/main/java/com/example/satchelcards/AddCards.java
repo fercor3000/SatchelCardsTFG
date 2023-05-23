@@ -12,6 +12,8 @@ public class AddCards extends AppCompatActivity {
     //#region VARIABLES
     ImageView gobackBtn;
     LinearLayout addDniBtn;
+    LinearLayout addCreditBtn;
+    LinearLayout addTransportBtn;
     LinearLayout addGiftBtn;
     //#endregion
 
@@ -23,6 +25,8 @@ public class AddCards extends AppCompatActivity {
         //#region OBTENER ELEMENTOS
         gobackBtn = (ImageView)findViewById(R.id.goBack);
         addDniBtn = (LinearLayout) findViewById(R.id.addDni);
+        addCreditBtn = (LinearLayout) findViewById(R.id.creditCard);
+        addTransportBtn = (LinearLayout) findViewById(R.id.transportCard);
         addGiftBtn = (LinearLayout) findViewById(R.id.loyaltyCard);
         //#endregion
 
@@ -41,6 +45,24 @@ public class AddCards extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddCards.this, AddDNI.class);
+                startActivity(intent);
+            }
+        });
+
+        //#region AL PULSAR ADDCREDIT
+        addCreditBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddCards.this, AddCredit.class);
+                startActivity(intent);
+            }
+        });
+
+        //#region AL PULSAR ADDTRANSPORT
+        addTransportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddCards.this, AddTransport.class);
                 startActivity(intent);
             }
         });

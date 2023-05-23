@@ -1,12 +1,19 @@
 package com.example.satchelcards;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class ListDNI extends AppCompatActivity {
+
+    ImageView gobackBtn;
+
+    Button pulsarTarjetaDniBtn;
 
     //ScrollView scrollView;
     LinearLayout linearLYActual;
@@ -17,8 +24,30 @@ public class ListDNI extends AppCompatActivity {
         // ESTO LO HIZO JD PERO ESTA SIN TERMINAR
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listdni);
-        Context context = getApplicationContext();
+
+        gobackBtn = (ImageView)findViewById(R.id.go_back);
+
+        pulsarTarjetaDniBtn = findViewById(R.id.pulsarTarjetaDni);
+
+        gobackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListDNI.this, LogIn.class);
+                startActivity(intent);
+            }
+        });
+
+        pulsarTarjetaDniBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListDNI.this, seleccionarDni.class);
+                startActivity(intent);
+            }
+        });
+
         /*
+        Context context = getApplicationContext();
+
         scrollView = findViewById(R.id.scrollView);
         linearLYActual = findViewById(R.id.linearLYActual);
 

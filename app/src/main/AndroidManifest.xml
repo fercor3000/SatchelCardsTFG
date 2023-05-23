@@ -27,11 +27,13 @@
         <activity android:name=".Register"></activity>
         <activity android:name=".addCardPersonalizada"></activity>
         <activity android:name=".AddDNI"></activity>
+        <activity android:name=".AddCredit"></activity>
         <activity android:name=".AddTransport"></activity>
         <activity android:name=".AddGift"></activity>
         <activity android:name=".ListDNI"></activity>
         <activity android:name=".MostrarUnDNI"></activity>
         <activity android:name=".GestPerfil"></activity>
+        <activity android:name=".seleccionarDni"></activity>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />

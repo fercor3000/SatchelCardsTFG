@@ -20,7 +20,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
-                android:layout_marginBottom="90dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="35dp"
                 android:gravity="top">
 
 
@@ -51,6 +52,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="left"
                 android:layout_marginBottom="25dp">
 
                 <ImageView
@@ -72,20 +74,86 @@
                     android:adjustViewBounds="true"
                     android:layout_marginLeft="25dp"
                     android:layout_marginRight="25dp"
-                    android:maxWidth="145dp"
-                    android:maxHeight="95dp"
+                    android:maxWidth="155dp"
+                    android:maxHeight="100dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/piccreditcard" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/TransportCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:maxWidth="155dp"
+                    android:maxHeight="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/pictransportcard" />
+
+                <ImageView
+                    android:id="@+id/GiftCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:maxWidth="160dp"
+                    android:maxHeight="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/picgiftcard" />
+
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="left"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/CustomCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:maxWidth="160dp"
+                    android:maxHeight="100dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/piccustomcard" />
+
+                <ImageView
+                    android:id="@+id/FavoriteCards"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:adjustViewBounds="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:maxWidth="175dp"
+                    android:maxHeight="105dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/picfavoritocard" />
+
+            </LinearLayout>
+
+            <!--<LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
                 android:orientation="vertical">
 
                 <ImageView
-                    android:id="@+id/TransportCards"
+                    android:id="@+id/favorite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -95,20 +163,20 @@
                     android:maxHeight="95dp"
                     android:scaleType="fitCenter"
                     android:src="@drawable/baseline_star_24" />
-            </LinearLayout>
+            </LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginTop="240dp"
+                android:layout_marginTop="130dp"
                 android:gravity="center">
 
                 <ImageView
                     android:id="@+id/helpBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="40dp"
+                    android:layout_marginRight="55dp"
                     android:adjustViewBounds="true"
                     android:maxWidth="60dp"
                     android:maxHeight="60dp"

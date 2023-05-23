@@ -61,6 +61,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/creditCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
@@ -91,6 +92,7 @@
 
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/transportCard"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top"
