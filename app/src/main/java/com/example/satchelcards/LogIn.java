@@ -16,7 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class LogIn extends AppCompatActivity {
 
     //#region VARIABLES
-    ImageView profileBtn, addCardBtn, dnisList;
+    ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList;
     ImageView displayMenuButton;
     private DrawerLayout drawerLayout;
     private TextView menuItem1;
@@ -29,6 +29,9 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.home_login);
 
         dnisList = (ImageView) findViewById(R.id.DniCards);
+        creditsList = (ImageView) findViewById(R.id.CreditCards);
+        transportsList = (ImageView) findViewById(R.id.TransportCards);
+        giftsList = (ImageView) findViewById(R.id.GiftCards);
         profileBtn = (ImageView) findViewById(R.id.profile);
         addCardBtn = (ImageButton) findViewById(R.id.addCard);
         displayMenuButton = (ImageView)findViewById(R.id.displayMenu);
@@ -42,6 +45,39 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View v) {
                 //REDIRIGE A LA PÁGINA DE LISTADO
                 Intent intent = new Intent(LogIn.this, ListDNI.class);
+                startActivity(intent);
+            }
+        });
+        //#endregion
+
+        //#region AL PULSAR LISTA DE DNIS
+        creditsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DE LISTADO
+                Intent intent = new Intent(LogIn.this, ListCreditCard.class);
+                startActivity(intent);
+            }
+        });
+        //#endregion
+
+        //#region AL PULSAR LISTA DE DNIS
+        transportsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DE LISTADO
+                Intent intent = new Intent(LogIn.this, ListTransport.class);
+                startActivity(intent);
+            }
+        });
+        //#endregion
+
+        //#region AL PULSAR LISTA DE DNIS
+        giftsList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DE LISTADO
+                Intent intent = new Intent(LogIn.this, ListGift.class);
                 startActivity(intent);
             }
         });
