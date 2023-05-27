@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
     <color name="darkBlue">#232e63</color>
-    <color name="frenchGray">#C9CBD8</color>
-    <color name="cian">#4DA3C5</color>
+    <color name="ultraViolet">#5a638a</color>
+    <color name="coolGray">#9197b1</color>
+    <color name="frenchGray">#C8CBD8</color>
+    <color name="ghostWhite">#e4e5ec</color>
+    <color name="antiFlashWhite">#f2f2f6</color>
+    <color name="seaSalt">#f9f9fb</color>
+    <color name="white">#fcfcfd</color>
 </resources>

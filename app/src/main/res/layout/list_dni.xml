@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:text="Lista de  DNI:"
+                android:text="Lista de DNI:"
                 android:textColor="#232e63"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -52,14 +52,6 @@
             android:layout_weight="1" />
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/pulsarTarjetaDni"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:backgroundTint="@color/darkBlue"
-        android:text="Pulsar Tarjeta"/>
 
 </LinearLayout>
 

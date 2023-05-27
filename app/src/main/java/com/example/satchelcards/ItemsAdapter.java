@@ -1,6 +1,5 @@
 package com.example.satchelcards;
 
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +43,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         // Obtén el layout actual del RecyclerView
         int layoutResId = 0;
         if (parent.getId() == R.id.recyclerView_dni) {
-            layoutResId = R.layout.listdni;
+            layoutResId = R.layout.list_dni;
         } else if (parent.getId() == R.id.recyclerView_transport) {
             layoutResId = R.layout.list_transport;
         } else if (parent.getId() == R.id.recyclerView_credit) {

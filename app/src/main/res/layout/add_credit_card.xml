@@ -47,6 +47,14 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/credit_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre de la tarjeta"
+            android:inputType="number"
+            android:padding="16dp" />
+
+        <EditText
             android:id="@+id/credit_card_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

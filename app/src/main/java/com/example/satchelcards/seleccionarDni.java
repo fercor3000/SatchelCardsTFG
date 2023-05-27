@@ -17,7 +17,7 @@ public class seleccionarDni extends AppCompatActivity {
 
         // ESTO LO HIZO JD PERO ESTA SIN TERMINAR
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.seleccionar_dni);
+        setContentView(R.layout.seleccionar_credit_card);
 
         gobackBtn = (ImageView)findViewById(R.id.go_back);
 

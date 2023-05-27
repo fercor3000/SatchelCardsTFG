@@ -53,12 +53,4 @@
         <!--Diseño de cada item-->
     </LinearLayout>
 
-    <Button
-        android:id="@+id/pulsarTarjetaDni"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:backgroundTint="@color/darkBlue"
-        android:text="Pulsar Tarjeta"/>
-
 </LinearLayout>

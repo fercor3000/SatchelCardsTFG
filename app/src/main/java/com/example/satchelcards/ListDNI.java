@@ -1,6 +1,9 @@
 package com.example.satchelcards;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,13 +21,23 @@ import java.util.List;
 
 public class ListDNI extends AppCompatActivity {
 
+    ImageView gobackBtn;
     private RecyclerView recyclerView;
     private ItemsAdapter itemsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.listdni);
+        setContentView(R.layout.list_dni);
+
+        gobackBtn = (ImageView) findViewById(R.id.go_back);
+        gobackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListDNI.this, LogIn.class);
+                startActivity(intent);
+            }
+        });
 
         recyclerView = findViewById(R.id.recyclerView_dni);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
