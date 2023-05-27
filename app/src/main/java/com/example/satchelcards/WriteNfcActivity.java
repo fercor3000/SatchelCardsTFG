@@ -11,6 +11,7 @@ import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,6 +31,8 @@ public class WriteNfcActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_nfc);
 
+
+
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,6 +47,9 @@ public class WriteNfcActivity extends AppCompatActivity {
         if (extras != null) {
             nfcData = extras.getString("nfcData");
         }
+
+        TextView textViewCambio = findViewById(R.id.cambio);
+        textViewCambio.setText(nfcData);
 
         // Inicializar el adaptador NFC
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
