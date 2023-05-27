@@ -9,6 +9,8 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +21,7 @@ import java.util.Locale;
 
 public class WriteNfcActivity extends AppCompatActivity {
 
+    ImageView gobackBtn;
     private NfcAdapter nfcAdapter;
     private String nfcData; // Aquí deberías tener el código NFC guardado en una variable
 
@@ -26,6 +29,15 @@ public class WriteNfcActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_nfc);
+
+        gobackBtn = (ImageView) findViewById(R.id.go_back);
+        gobackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(WriteNfcActivity.this, LogIn.class);
+                startActivity(intent);
+            }
+        });
 
         // Obtener el valor del NFC del Intent
         Bundle extras = getIntent().getExtras();
