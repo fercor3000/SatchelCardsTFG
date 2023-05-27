@@ -21,19 +21,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     // Clase ViewHolder para representar cada elemento en el RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
-        public TextView tituloItem;
-        public TextView subtituloItem;
-        public TextView propietario;
-        public TextView cvv;
+        public TextView nombreTarjeta;
 
         public ViewHolder(View itemView) {
             super(itemView);
             // Obtén las referencias a las vistas dentro del elemento de la lista
             imageView = itemView.findViewById(R.id.imageView);
-            tituloItem = itemView.findViewById(R.id.titulo_item);
-            subtituloItem = itemView.findViewById(R.id.subtitulo_item);
-            propietario = itemView.findViewById(R.id.propietario);
-            cvv = itemView.findViewById(R.id.cvv);
+            nombreTarjeta = itemView.findViewById(R.id.nombre_tarjeta);
         }
     }
 
@@ -61,10 +55,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         // Configura los datos en las vistas
         holder.imageView.setImageResource(item.getImageResId());
-        holder.tituloItem.setText(item.getTitulo());
-        holder.subtituloItem.setText(item.getSubtitulo());
-        holder.propietario.setText(item.getPropietario());
-        holder.cvv.setText(item.getCVV());
+        holder.nombreTarjeta.setText(item.getTitulo());
     }
 
     // Devuelve la cantidad de elementos en la lista
