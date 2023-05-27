@@ -21,6 +21,7 @@ public class LogIn extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private TextView menuItem1;
     private TextView menuItem2;
+    private TextView menuItem3;
     //#endregion
 
     @Override
@@ -38,6 +39,7 @@ public class LogIn extends AppCompatActivity {
         drawerLayout = findViewById(R.id.drawer_layout);
         menuItem1 = findViewById(R.id.menu_item1);
         menuItem2 = findViewById(R.id.menu_item2);
+        menuItem3 = findViewById(R.id.menu_item3);
 
         //#region AL PULSAR LISTA DE DNIS
         dnisList.setOnClickListener(new View.OnClickListener() {
@@ -149,6 +151,16 @@ public class LogIn extends AppCompatActivity {
             public void onClick(View v) {
                 // Acción de eliminar tarjeta
                 //drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+
+        //#region MENÚ 2
+        menuItem3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DEL PERFIL
+                Intent intent = new Intent(LogIn.this, WriteNfcActivity.class);
+                startActivity(intent);
             }
         });
 

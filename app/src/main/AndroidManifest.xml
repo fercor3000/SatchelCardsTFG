@@ -36,6 +36,7 @@
         <activity android:name=".ListGift"></activity>
         <activity android:name=".GestPerfil"></activity>
         <activity android:name=".seleccionarDni"></activity>
+        <activity android:name=".WriteNfcActivity"></activity>
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
