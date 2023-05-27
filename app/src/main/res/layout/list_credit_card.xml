@@ -39,18 +39,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
-                android:text="Lista de  DNI:"
+                android:text="Lista de  tarjetas de crédito:"
                 android:textColor="#232e63"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView_dni"
+            android:id="@+id/recyclerView_credit"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1" />
-
+        <!--Diseño de cada item-->
     </LinearLayout>
 
     <Button
@@ -62,4 +62,3 @@
         android:text="Pulsar Tarjeta"/>
 
 </LinearLayout>
-

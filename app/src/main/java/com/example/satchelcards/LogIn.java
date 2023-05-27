@@ -16,7 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class LogIn extends AppCompatActivity {
 
     //#region VARIABLES
-    ImageView profileBtn, addCardBtn, dnisList;
+    ImageView profileBtn, addCardBtn, dnisList, persoList;
     ImageView displayMenuButton;
     private DrawerLayout drawerLayout;
     private TextView menuItem1;
@@ -28,6 +28,7 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_login);
 
+        persoList = (ImageView) findViewById(R.id.CustomCards);
         dnisList = (ImageView) findViewById(R.id.DniCards);
         profileBtn = (ImageView) findViewById(R.id.profile);
         addCardBtn = (ImageButton) findViewById(R.id.addCard);
@@ -46,6 +47,17 @@ public class LogIn extends AppCompatActivity {
             }
         });
         //#endregion
+
+        persoList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DE LISTADO
+                Intent intent = new Intent(LogIn.this, pruebaNFC.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         //#region AL PULSAR PERFIL...
         profileBtn.setOnClickListener(new View.OnClickListener() {

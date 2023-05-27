@@ -50,6 +50,7 @@
                 android:layout_height="56dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/black"
                 android:hint="email"
                 android:inputType="textEmailAddress" />
 
@@ -59,6 +60,7 @@
                 android:layout_height="56dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
+                android:textColor="@color/black"
                 android:hint="contraseña"
                 android:inputType="textPassword" />
         </LinearLayout>
