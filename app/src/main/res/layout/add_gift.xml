@@ -47,19 +47,17 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/gift_card_name"
+            android:id="@+id/cardName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
-            android:inputType="text"
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/gift_titular"
+            android:id="@+id/cardHolderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre del titular"
-            android:inputType="textPersonName"
             android:padding="16dp" />
 
         <TextView
@@ -71,9 +69,8 @@
             android:textSize="24sp"
             android:textStyle="bold" />
 
-        <!-- DatePicker para seleccionar la fecha de validez -->
         <DatePicker
-            android:id="@+id/gift_FechaVencimiento"
+            android:id="@+id/expirationDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:calendarViewShown="false"

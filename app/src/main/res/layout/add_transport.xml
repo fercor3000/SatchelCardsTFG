@@ -47,19 +47,17 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/credit_card_number"
+            android:id="@+id/cardName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
-            android:inputType="text"
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/credit_titular"
+            android:id="@+id/cardHolderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre del titular"
-            android:inputType="textPersonName"
             android:padding="16dp" />
 
         <TextView
@@ -73,7 +71,7 @@
 
         <!-- DatePicker para seleccionar la fecha de validez -->
         <DatePicker
-            android:id="@+id/transport_fechaValidez"
+            android:id="@+id/expirationDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:calendarViewShown="false"

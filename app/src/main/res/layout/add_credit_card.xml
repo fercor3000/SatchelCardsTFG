@@ -47,35 +47,35 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/credit_card_name"
+            android:id="@+id/cardName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
-            android:inputType="number"
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/credit_card_number"
+            android:id="@+id/cardNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Número de tarjeta"
+            android:maxLength="16"
             android:inputType="number"
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/credit_titular"
+            android:id="@+id/cardHolderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre del titular"
-            android:inputType="textPersonName"
             android:padding="16dp" />
 
         <EditText
-            android:id="@+id/credit_CVV"
+            android:id="@+id/CVV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="CVV"
             android:inputType="number"
+            android:maxLength="3"
             android:padding="16dp" />
 
         <TextView
@@ -88,7 +88,7 @@
             android:textStyle="bold" />
         <!-- DatePicker para seleccionar la fecha de validez -->
         <DatePicker
-            android:id="@+id/credit_FechaVencimiento"
+            android:id="@+id/expirationDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:calendarViewShown="false"
