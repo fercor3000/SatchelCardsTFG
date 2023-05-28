@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
-            android:inputType="number"
+            android:inputType="text"
             android:padding="16dp" />
 
         <EditText
@@ -62,13 +62,22 @@
             android:inputType="textPersonName"
             android:padding="16dp" />
 
-        <EditText
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="16dp"
+            android:text="Fecha de vencimiento: "
+            android:textColor="#232e63"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- DatePicker para seleccionar la fecha de validez -->
+        <DatePicker
             android:id="@+id/gift_FechaVencimiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Fecha de vencimiento (MM/AA)"
-            android:inputType="number"
-            android:padding="16dp" />
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
 
         <Button
             android:id="@+id/btn_save"
