@@ -2,13 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="#FFFFFF"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -20,7 +20,7 @@
                 android:id="@+id/go_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="25dp"
                 android:adjustViewBounds="true"
                 android:maxWidth="40dp"
                 android:maxHeight="40dp"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:layout_weight="1"
-                android:text="Tarjeta de crédito:"
+                android:text="Tarjeta de acceso:"
                 android:textColor="#232e63"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -47,18 +47,10 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/credit_card_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nombre de la tarjeta"
-            android:inputType="number"
-            android:padding="16dp" />
-
-        <EditText
             android:id="@+id/credit_card_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Número de tarjeta"
+            android:hint="Nombre de la tarjeta"
             android:inputType="number"
             android:padding="16dp" />
 
@@ -69,46 +61,6 @@
             android:hint="Nombre del titular"
             android:inputType="textPersonName"
             android:padding="16dp" />
-
-        <EditText
-            android:id="@+id/credit_CVV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="CVV"
-            android:inputType="number"
-            android:padding="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="16dp"
-            android:text="Fecha de Vencimiento: "
-            android:textColor="#232e63"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-        <!-- DatePicker para seleccionar la fecha de validez -->
-        <DatePicker
-            android:id="@+id/credit_FechaVencimiento"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:calendarViewShown="false"
-            android:datePickerMode="spinner" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="1"
-            android:text="Acerque su tarjeta de crédito"
-            android:textColor="#232e63"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_gravity="right"/>
-        <ImageView
-            android:id="@+id/nfc_logo"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/nfc_logo"
-            android:layout_gravity="right"/>
 
         <Button
             android:id="@+id/btn_save"

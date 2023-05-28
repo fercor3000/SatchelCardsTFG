@@ -16,7 +16,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class LogIn extends AppCompatActivity {
 
     //#region VARIABLES
-    ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList;
+    ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList, accessList;
     ImageView displayMenuButton;
     private DrawerLayout drawerLayout;
     private TextView menuItem1;
@@ -32,6 +32,8 @@ public class LogIn extends AppCompatActivity {
         creditsList = (ImageView) findViewById(R.id.CreditCards);
         transportsList = (ImageView) findViewById(R.id.TransportCards);
         giftsList = (ImageView) findViewById(R.id.GiftCards);
+        accessList = (ImageView) findViewById(R.id.AccessCards);
+
         profileBtn = (ImageView) findViewById(R.id.profile);
         addCardBtn = (ImageButton) findViewById(R.id.addCard);
         displayMenuButton = (ImageView)findViewById(R.id.displayMenu);
@@ -50,7 +52,7 @@ public class LogIn extends AppCompatActivity {
         });
         //#endregion
 
-        //#region AL PULSAR LISTA DE DNIS
+        //#region AL PULSAR LISTA DE CREDITS
         creditsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,7 +63,7 @@ public class LogIn extends AppCompatActivity {
         });
         //#endregion
 
-        //#region AL PULSAR LISTA DE DNIS
+        //#region AL PULSAR LISTA DE TRANSPORTS
         transportsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,12 +74,23 @@ public class LogIn extends AppCompatActivity {
         });
         //#endregion
 
-        //#region AL PULSAR LISTA DE DNIS
+        //#region AL PULSAR LISTA DE GIFTS
         giftsList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //REDIRIGE A LA PÁGINA DE LISTADO
                 Intent intent = new Intent(LogIn.this, ListGift.class);
+                startActivity(intent);
+            }
+        });
+        //#endregion
+
+        //#region AL PULSAR LISTA DE ACCESS
+        accessList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DE LISTADO
+                Intent intent = new Intent(LogIn.this, ListAccess.class);
                 startActivity(intent);
             }
         });

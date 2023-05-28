@@ -15,6 +15,7 @@ public class AddCards extends AppCompatActivity {
     LinearLayout addCreditBtn;
     LinearLayout addTransportBtn;
     LinearLayout addGiftBtn;
+    LinearLayout addAccessBtn;
     //#endregion
 
     @Override
@@ -28,6 +29,7 @@ public class AddCards extends AppCompatActivity {
         addCreditBtn = (LinearLayout) findViewById(R.id.creditCard);
         addTransportBtn = (LinearLayout) findViewById(R.id.transportCard);
         addGiftBtn = (LinearLayout) findViewById(R.id.loyaltyCard);
+        addAccessBtn = (LinearLayout) findViewById(R.id.accessCard);
         //#endregion
 
         //#region AL PULSAR VOLVER...
@@ -72,6 +74,16 @@ public class AddCards extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(AddCards.this, AddGift.class);
+                startActivity(intent);
+            }
+        });
+        //#endregion
+
+        //#region AL PULSAR ADDACCESS
+        addAccessBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(AddCards.this, AddAccess.class);
                 startActivity(intent);
             }
         });

@@ -30,10 +30,12 @@
         <activity android:name=".AddCredit"></activity>
         <activity android:name=".AddTransport"></activity>
         <activity android:name=".AddGift"></activity>
+        <activity android:name=".AddAccess"></activity>
         <activity android:name=".ListDNI"></activity>
         <activity android:name=".ListCreditCard"></activity>
         <activity android:name=".ListTransport"></activity>
         <activity android:name=".ListGift"></activity>
+        <activity android:name=".ListAccess"></activity>
         <activity android:name=".GestPerfil"></activity>
         <activity android:name=".seleccionarDni"></activity>
         <activity android:name=".WriteNfcActivity"></activity>
