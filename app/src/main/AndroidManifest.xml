@@ -25,7 +25,6 @@
         <activity android:name=".Profile"></activity>
         <activity android:name=".AddCards"></activity>
         <activity android:name=".Register"></activity>
-        <activity android:name=".addCardPersonalizada"></activity>
         <activity android:name=".AddDNI"></activity>
         <activity android:name=".AddCredit"></activity>
         <activity android:name=".AddTransport"></activity>

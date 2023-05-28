@@ -32,20 +32,20 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddAccess extends AppCompatActivity {
+public class AddCustom extends AppCompatActivity {
 
     ImageView gobackBtn;
     Button btn_guardar;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_access);
+        setContentView(R.layout.add_custom);
 
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddAccess.this, AddCards.class);
+                Intent intent = new Intent(AddCustom.this, LogIn.class);
                 startActivity(intent);
             }
         });
@@ -58,10 +58,23 @@ public class AddAccess extends AppCompatActivity {
                 //#region DATOS
                 EditText cardNameEditText = findViewById(R.id.cardName);
                 EditText cardHolderNameEditText = findViewById(R.id.cardHolderName);
+                EditText cardNumberEditText = findViewById(R.id.cardNumber);
+                DatePicker expireDateDatePicker = findViewById(R.id.expirationDate);
 
                 // Obtener los valores ingresados en los campos
                 String cardName = cardNameEditText.getText().toString();
                 String cardHolderName = cardHolderNameEditText.getText().toString();
+                long cardNumber = Long.parseLong(cardNumberEditText.getText().toString());
+
+                // Obtener la fecha de vencimiento seleccionada
+                int expireYear = expireDateDatePicker.getYear();
+                int expireMonth = expireDateDatePicker.getMonth();
+                int expireDay = expireDateDatePicker.getDayOfMonth();
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, expireYear);
+                calendar.set(Calendar.MONTH, expireMonth - 1); //
+                calendar.set(Calendar.DAY_OF_MONTH, expireDay);
+                Date DExpire = calendar.getTime();
 
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -82,7 +95,7 @@ public class AddAccess extends AppCompatActivity {
                                 if (userId != null && cardNextId != null) {
                                     String userCardID = "user" + userId + "card" + cardNextId;
                                     //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
-                                    insertInDDBB(cardName, cardHolderName, userCardID, cardNextId);
+                                    insertInDDBB(cardName, cardHolderName,cardNumber, DExpire, userCardID, cardNextId);
                                 } else {
                                     // Handle missing or invalid data
                                     // Show an error message or take appropriate action
@@ -101,20 +114,22 @@ public class AddAccess extends AppCompatActivity {
             }
 
             //Método para insertar datos en la base de datos según los parámetros recibidos
-            private void insertInDDBB(String cardName, String cardHolderName, String userCardID, String cardNextId) {
+            private void insertInDDBB(String cardName, String cardHolderName,long cardNumber, Date DExpire, String userCardID, String cardNextId) {
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String email = currentUser.getEmail();
-                //Me situo en una coleccion inexistente en user/email/access/userCardID y se crea automaticamente cuando intento insertar datos ahí.
-                DocumentReference docRef = db.collection("user").document(email).collection("access").document(userCardID);
+                //Me situo en una coleccion inexistente en user/email/custom/userCardID y se crea automaticamente cuando intento insertar datos ahí.
+                DocumentReference docRef = db.collection("user").document(email).collection("custom").document(userCardID);
 
                 //Mapeo los datos con el nombre del campo de la base de datos: userMap.put("nombre campo en bbdd", valor a introducir);
                 Map<String, Object> userMap = new HashMap<>();
                 userMap.put("cardName", cardName);
                 userMap.put("cardHolderName", cardHolderName);
+                userMap.put("cardNumber", cardNumber);
+                userMap.put("expirationDate", DExpire);
                 userMap.put("cardId", cardNextId);
-                userMap.put("cardType","access");
+                userMap.put("cardType","custom");
 
                 docRef.set(userMap)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -144,7 +159,7 @@ public class AddAccess extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddAccess.this, LogIn.class);
+                                        Intent intent = new Intent(AddCustom.this, LogIn.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -172,5 +187,6 @@ public class AddAccess extends AppCompatActivity {
 
             //#endregion
         });
+
     }
 }

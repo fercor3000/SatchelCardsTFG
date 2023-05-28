@@ -44,8 +44,6 @@
                 android:textColor="#232e63"
                 android:textSize="27sp"
                 android:textStyle="bold" />
-
-
         </LinearLayout>
         <Button
             android:id="@+id/btn_add_image"
@@ -56,34 +54,49 @@
             android:backgroundTint="@color/darkBlue"/>
 
         <EditText
+            android:id="@+id/cardName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
             android:padding="16dp"/>
 
         <EditText
+            android:id="@+id/cardHolderName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre completo del dueño"
             android:padding="16dp"/>
 
         <EditText
+            android:id="@+id/cardNumber"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Número identificador de la tarjeta"
+            android:inputType="number"
+            android:maxLength="16"
             android:padding="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_marginTop="16dp">
 
-            <EditText
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="MM/AA"
-                android:padding="16dp" />
+                android:paddingTop="16dp"
+                android:text="Fecha de vencimiento: "
+                android:textColor="#232e63"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <DatePicker
+                android:id="@+id/expirationDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -93,6 +106,7 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GUARDAR"
