@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         password = (EditText) findViewById(R.id.password);
         //#endregion
 
+
         //#region AL PULSAR INICIAR SESIÓN...
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,6 +95,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //#endregion
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Cierra la aplicación
+        finishAffinity();
     }
 
     //#region FUNCIÓN PARA VALIDAR FORMATO DE EMAIL

@@ -161,4 +161,9 @@ public class LogIn extends AppCompatActivity {
         });
         //#endregion
     }
+
+    @Override
+    public void onBackPressed() {
+        // No realiza ninguna acción para evitar volver atrás a la pantalla de inicio de sesión
+    }
 }
