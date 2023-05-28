@@ -233,13 +233,29 @@ public class AddCredit extends AppCompatActivity {
         if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
             Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
 
-            // Aquí puedes realizar acciones adicionales con la etiqueta NFC, si es necesario
+            byte[] tagId = tag.getId(); // Obtiene el código NFC de la tarjeta como un arreglo de bytes
+
+            //En esta variable esta guardada la cadena del NFC
+            String tagIdString = convertBytesToHexString(tagId); // Convierte el arreglo de bytes a una cadena hexadecimal
 
             // Cambia la imagen a nfc_check.png
             nfcLogoImageView.setImageResource(R.drawable.nfc_check);
 
             // Muestra un mensaje de éxito
             Toast.makeText(this, "Tarjeta registrada correctamente", Toast.LENGTH_SHORT).show();
+
+            // Iniciar la actividad WriteNfcActivity y pasar el valor del NFC como extra
+            Intent writeNfcIntent = new Intent(this, WriteNfcActivity.class);
+            writeNfcIntent.putExtra("nfcData", tagIdString);
+            startActivity(writeNfcIntent);
         }
+    }
+
+    private String convertBytesToHexString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
     }
 }

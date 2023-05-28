@@ -22,25 +22,14 @@ import java.util.Locale;
 
 public class WriteNfcActivity extends AppCompatActivity {
 
-    ImageView gobackBtn;
     private NfcAdapter nfcAdapter;
+    private PendingIntent pendingIntent;
     private String nfcData; // Aquí deberías tener el código NFC guardado en una variable
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write_nfc);
-
-
-
-        gobackBtn = (ImageView) findViewById(R.id.go_back);
-        gobackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(WriteNfcActivity.this, LogIn.class);
-                startActivity(intent);
-            }
-        });
 
         // Obtener el valor del NFC del Intent
         Bundle extras = getIntent().getExtras();
@@ -60,22 +49,31 @@ public class WriteNfcActivity extends AppCompatActivity {
             finish();
             return;
         }
+
+        // Crear una intención para escribir en una etiqueta NFC
+        Intent nfcIntent = new Intent(this, getClass())
+                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        pendingIntent = PendingIntent.getActivity(this, 0, nfcIntent, PendingIntent.FLAG_MUTABLE);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        // Habilitar el modo de escritura NFC en primer plano
-        enableNfcWriteMode();
+        // Habilitar la detección de NFC en primer plano
+        if (nfcAdapter != null) {
+            nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        // Deshabilitar el modo de escritura NFC en primer plano
-        disableNfcWriteMode();
+        // Deshabilitar la detección de NFC en primer plano
+        if (nfcAdapter != null) {
+            nfcAdapter.disableForegroundDispatch(this);
+        }
     }
 
     @Override
@@ -89,18 +87,6 @@ public class WriteNfcActivity extends AppCompatActivity {
             // Escribir el código NFC en la etiqueta
             writeNfcTag(tag);
         }
-    }
-
-    private void enableNfcWriteMode() {
-        // Crear una intención para escribir en una etiqueta NFC
-        Intent nfcIntent = new Intent(this, getClass())
-                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, nfcIntent, PendingIntent.FLAG_MUTABLE);
-        nfcAdapter.enableForegroundDispatch(this, pendingIntent, null, null);
-    }
-
-    private void disableNfcWriteMode() {
-        nfcAdapter.disableForegroundDispatch(this);
     }
 
     private void writeNfcTag(Tag tag) {
@@ -128,8 +114,7 @@ public class WriteNfcActivity extends AppCompatActivity {
         payload.write(languageBytes, 0, languageLength);
         payload.write(textBytes, 0, textLength);
 
-        return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0],
-                payload.toByteArray());
+        return new NdefRecord(NdefRecord.TNF_WELL_KNOWN, NdefRecord.RTD_TEXT, new byte[0], payload.toByteArray());
     }
 
     private boolean writeToNfc(Tag tag, NdefMessage message) {

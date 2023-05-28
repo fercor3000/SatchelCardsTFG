@@ -38,7 +38,17 @@
         <activity android:name=".ListAccess"></activity>
         <activity android:name=".GestPerfil"></activity>
         <activity android:name=".seleccionarDni"></activity>
-        <activity android:name=".WriteNfcActivity"></activity>
+        <activity
+            android:name=".WriteNfcActivity"
+            android:label="Write NFC"
+            android:launchMode="singleTop"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
