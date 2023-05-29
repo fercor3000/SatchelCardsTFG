@@ -19,7 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListTransport extends AppCompatActivity {
+public class ListCredit extends AppCompatActivity{
 
     ImageView gobackBtn;
     private RecyclerView recyclerView;
@@ -28,18 +28,18 @@ public class ListTransport extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_transport);
+        setContentView(R.layout.list_credit_card);
 
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListTransport.this, LogIn.class);
+                Intent intent = new Intent(ListCredit.this, LogIn.class);
                 startActivity(intent);
             }
         });
 
-        recyclerView = findViewById(R.id.recyclerView_transport);
+        recyclerView = findViewById(R.id.recyclerView_credit);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Item> itemList = new ArrayList<>();

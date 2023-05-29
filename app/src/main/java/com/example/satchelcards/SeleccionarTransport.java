@@ -17,14 +17,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-public class SeleccionarDNI extends AppCompatActivity {
+public class SeleccionarTransport extends AppCompatActivity {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     ImageView imagen;
-    TextView nombreCompleto, NumDNI, DNIelec, Sexo, fechaExpiracion;
+    TextView holderNombreTarjeta, nombreTarjeta, fechaExpiracion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class SeleccionarDNI extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarDNI.this, ListDNI.class);
+                Intent intent = new Intent(SeleccionarTransport.this, ListDNI.class);
                 startActivity(intent);
             }
         });
@@ -50,20 +49,15 @@ public class SeleccionarDNI extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        //String userId = String.valueOf(document.getLong("userId"));
-                        String vNombreCompleto = String.valueOf(document.getLong("nombre")) + " " + String.valueOf(document.getLong("apellidos"));
-                        String vNumDNI = String.valueOf(document.getLong("dni"));
-                        String vDniElect = String.valueOf(document.getLong("numSoport"));
-                        String vSexo = String.valueOf(document.getLong("nombre"));
-                        String vFechaExpiracion = String.valueOf(document.getLong("numsoport"));
+                        String vCardHolderName = String.valueOf(document.getLong("cardHolderName"));
+                        String vCardNombre = String.valueOf(document.getLong("cardName"));
+                        String vFechaExpiracion = String.valueOf(document.getLong("expirationDate"));
 
-                        if (vNombreCompleto != null && vNumDNI != null && vDniElect != null && vSexo != null && vFechaExpiracion != null) {
-                            nombreCompleto.setText(vNombreCompleto);
-                            NumDNI.setText(vNombreCompleto);
-                            DNIelec.setText(vNombreCompleto);
-                            Sexo.setText(vNombreCompleto);
-                            fechaExpiracion.setText(vNombreCompleto);
-                            imagen.setImageResource(R.drawable.picdnicard);
+                        if (vCardHolderName != null && vCardNombre != null && vFechaExpiracion != null) {
+                            holderNombreTarjeta.setText(vCardHolderName); ;
+                            nombreTarjeta.setText(vCardNombre);
+                            fechaExpiracion.setText(vFechaExpiracion);
+                            imagen.setImageResource(R.drawable.pictransportcard);
                         }
                     }
                 }
@@ -71,4 +65,3 @@ public class SeleccionarDNI extends AppCompatActivity {
         });
     }
 }
-

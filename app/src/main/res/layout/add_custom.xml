@@ -50,7 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Seleccionar imagen"
-            android:textColor="#FFFFFF"
             android:textFontWeight="@integer/material_motion_duration_long_1"
             android:backgroundTint="@color/darkBlue"/>
 

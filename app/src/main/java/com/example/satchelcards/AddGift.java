@@ -43,6 +43,15 @@ public class AddGift extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_gift);
 
+        //Recibimos la operacion que queremos realizar
+        Intent intent = getIntent();
+        String operation = intent.getStringExtra("operation");
+        int currentId = intent.getIntExtra("currentId",0);
+
+        if("edit".equals(operation) && currentId != 0){
+            fillInterface();
+        }
+
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +60,7 @@ public class AddGift extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        
+
         btn_guardar = (Button) findViewById(R.id.btn_save);
 
         btn_guardar.setOnClickListener(new View.OnClickListener() {
@@ -82,23 +91,28 @@ public class AddGift extends AppCompatActivity {
                 String email = auth.getCurrentUser().getEmail();
                 //Recoger los datos del usuario actual
                 DocumentReference userRef = db.collection("user").document(email);
+
                 userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
-                                //Recogo el userId y el cardNextId del usuario (getLong para numero, getString para cadena)
-                                String userId = String.valueOf(document.getLong("userId"));
-                                String cardNextId = String.valueOf(document.getLong("cardNextId"));
-                                //Si los recojo con exito, los utilizo para crear la nueva tarjeta
-                                if (userId != null && cardNextId != null) {
-                                    String userCardID = "user" + userId + "card" + cardNextId;
-                                    //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
-                                    insertInDDBB(cardName, cardHolderName, DExpire, userCardID, cardNextId);
+                                if ("edit".equals(operation)) {
+                                    editCard(cardName, cardHolderName, DExpire);
                                 } else {
-                                    // Handle missing or invalid data
-                                    // Show an error message or take appropriate action
+                                    //Recogo el userId y el cardNextId del usuario (getLong para numero, getString para cadena)
+                                    String userId = String.valueOf(document.getLong("userId"));
+                                    String cardNextId = String.valueOf(document.getLong("cardNextId"));
+                                    //Si los recojo con exito, los utilizo para crear la nueva tarjeta
+                                    if (userId != null && cardNextId != null) {
+                                        String userCardID = "user" + userId + "card" + cardNextId;
+                                        //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
+                                        insertInDDBB(cardName, cardHolderName, DExpire, userCardID, cardNextId);
+                                    } else {
+                                        // Handle missing or invalid data
+                                        // Show an error message or take appropriate action
+                                    }
                                 }
                             } else {
                                 // Handle non-existent document
@@ -110,6 +124,7 @@ public class AddGift extends AppCompatActivity {
                         }
                     }
                 });
+
                 //#endregion
             }
 
@@ -187,4 +202,63 @@ public class AddGift extends AppCompatActivity {
             //#endregion
         });
     }
+        private void fillInterface() {
+            // Recoje los datos que hacen falta para la interfaz
+            Intent intent = getIntent();
+            String cardName = intent.getStringExtra("cardName");
+            String cardHolderName = intent.getStringExtra("cardHolderName");
+            Date expirationDate = (Date) intent.getSerializableExtra("expirationDate");
+
+            // Rellena la interfaz con lso datos
+            EditText cardNameEditText = findViewById(R.id.cardName);
+            EditText cardHolderNameEditText = findViewById(R.id.cardHolderName);
+            DatePicker expireDateDatePicker = findViewById(R.id.expirationDate);
+
+            cardNameEditText.setText(cardName);
+            cardHolderNameEditText.setText(cardHolderName);
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(expirationDate);
+
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            expireDateDatePicker.updateDate(year, month, day);
+        }
+
+    private void editCard(String cardName, String cardHolderName, Date DExpire) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String email = currentUser.getEmail();
+
+        // Actualizar la tarjeta con nuevos valores
+        DocumentReference docRef = db.collection("user").document(email).collection("loyalty").document("cardId");
+
+        Map<String, Object> cardMap = new HashMap<>();
+        cardMap.put("cardName", cardName);
+        cardMap.put("cardHolderName", cardHolderName);
+        cardMap.put("expirationDate", DExpire);
+
+        docRef.update(cardMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Context context = getApplicationContext();
+                        Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AddGift.this, LogIn.class);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Context context = getApplicationContext();
+                        Toast.makeText(context, "Error al actualizar la tarjeta!" + e, Toast.LENGTH_SHORT).show();
+                        Log.e("AddGift", "Error updating card data in Firestore", e);
+                    }
+                });
+    }
+
 }

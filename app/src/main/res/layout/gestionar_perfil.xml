@@ -48,15 +48,16 @@
                 android:layout_marginTop="20dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true" />
+
             <Button
                 android:id="@+id/editImage"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="2dp"
-                android:backgroundTint="@color/cian"
-                android:text="Editar imagen"
+                android:backgroundTint="@color/darkBlue"
                 android:drawableLeft="@drawable/baseline_edit_24"
+                android:text="Editar imagen"
                 android:textColor="@color/white" />
 
             <EditText

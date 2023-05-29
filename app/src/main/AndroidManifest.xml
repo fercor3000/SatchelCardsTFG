@@ -27,17 +27,17 @@
         <activity android:name=".Register"></activity>
         <activity android:name=".AddDNI"></activity>
         <activity android:name=".AddCredit"></activity>
+        <activity android:name=".AddCustom"></activity>
         <activity android:name=".AddTransport"></activity>
         <activity android:name=".AddGift"></activity>
         <activity android:name=".AddAccess"></activity>
-        <activity android:name=".AddCustom"></activity>
         <activity android:name=".ListDNI"></activity>
         <activity android:name=".ListCreditCard"></activity>
         <activity android:name=".ListTransport"></activity>
         <activity android:name=".ListGift"></activity>
         <activity android:name=".ListAccess"></activity>
         <activity android:name=".GestPerfil"></activity>
-        <activity android:name=".seleccionarDni"></activity>
+        <activity android:name=".SeleccionarGift" />
         <activity
             android:name=".WriteNfcActivity"
             android:label="Write NFC"
@@ -48,15 +48,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
-        <service android:name=".MyHostApduService" android:exported="true"
-            android:permission="android.permission.BIND_NFC_SERVICE">
-            <intent-filter>
-                <action android:name="android.nfc.cardemulation.action.HOST_APDU_SERVICE"/>
-            </intent-filter>
-            <meta-data android:name="android.nfc.cardemulation.host_apdu_service"
-                android:resource="@xml/apduservice"/>
-        </service>
 
     </application>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />

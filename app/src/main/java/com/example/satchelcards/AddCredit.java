@@ -226,6 +226,7 @@ public class AddCredit extends AppCompatActivity {
         }
     }
 
+    String tagIdString = "";
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -236,17 +237,16 @@ public class AddCredit extends AppCompatActivity {
             byte[] tagId = tag.getId(); // Obtiene el código NFC de la tarjeta como un arreglo de bytes
 
             //En esta variable esta guardada la cadena del NFC
-            String tagIdString = convertBytesToHexString(tagId); // Convierte el arreglo de bytes a una cadena hexadecimal
+            tagIdString = convertBytesToHexString(tagId); // Convierte el arreglo de bytes a una cadena hexadecimal
 
             // Cambia la imagen a nfc_check.png
             nfcLogoImageView.setImageResource(R.drawable.nfc_check);
 
             // Muestra un mensaje de éxito
-            Toast.makeText(this, "Tarjeta registrada correctamente", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "NFC detectado correctamente", Toast.LENGTH_SHORT).show();
 
-            /*
             // Iniciar la actividad WriteNfcActivity y pasar el valor del NFC como extra
-            Intent writeNfcIntent = new Intent(this, WriteNfcActivity.class);
+            /*Intent writeNfcIntent = new Intent(this, WriteNfcActivity.class);
             writeNfcIntent.putExtra("nfcData", tagIdString);
             startActivity(writeNfcIntent);*/
         }

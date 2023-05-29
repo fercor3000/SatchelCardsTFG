@@ -1,68 +1,83 @@
 package com.example.satchelcards;
 
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.drawable.Icon;
+import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import androidx.recyclerview.widget.RecyclerView;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
-    private List<Item> itemList; // La lista de elementos que se mostrarán
+    private List<Item> itemList;
 
-    // Constructor para el adaptador
     public ItemsAdapter(List<Item> itemList) {
         this.itemList = itemList;
     }
 
-    // Clase ViewHolder para representar cada elemento en el RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageView;
         public TextView nombreTarjeta;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            // Obtén las referencias a las vistas dentro del elemento de la lista
-            imageView = itemView.findViewById(R.id.imageView);
+            imageView = itemView.findViewById(R.id.imagenTarjeta);
             nombreTarjeta = itemView.findViewById(R.id.nombre_tarjeta);
         }
     }
 
-    // Crea las vistas para los elementos individuales
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        // Obtén el layout actual del RecyclerView
-        int layoutResId = 0;
-        if (parent.getId() == R.id.recyclerView_dni) {
-            layoutResId = R.layout.list_dni;
-        } else if (parent.getId() == R.id.recyclerView_transport) {
-            layoutResId = R.layout.list_transport;
-        } else if (parent.getId() == R.id.recyclerView_credit) {
-            layoutResId = R.layout.list_credit_card;
-        }
-
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(layoutResId, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_layout, parent, false);
         return new ViewHolder(itemView);
     }
 
-    // Vincula los datos a las vistas en cada elemento
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Item item = itemList.get(position);
 
-        // Configura los datos en las vistas
-        holder.imageView.setImageResource(item.getImageResId());
+        holder.imageView.setImageResource(R.drawable.gift_card_24);
         holder.nombreTarjeta.setText(item.getTitulo());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Context context = v.getContext();
+                Intent intent = new Intent(context, SeleccionarGift.class);
+
+                intent.putExtra("itemId", item.getId());
+
+                context.startActivity(intent);
+            }
+        });
     }
 
-    // Devuelve la cantidad de elementos en la lista
+
     @Override
     public int getItemCount() {
         return itemList.size();
     }
 }
-
-

@@ -26,7 +26,7 @@ public class LogIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_login);
+        setContentView(R.layout.home_menu);
 
         dnisList = (ImageView) findViewById(R.id.DniCards);
         creditsList = (ImageView) findViewById(R.id.CreditCards);

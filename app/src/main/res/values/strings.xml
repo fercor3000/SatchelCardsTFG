@@ -1,5 +1,3 @@
 <resources>
     <string name="app_name">SatchelCards</string>
-    <string name="servicedesc">Descripción del servicio</string>
-    <string name="aiddescription">Descripción del AID</string>
 </resources>

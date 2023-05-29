@@ -38,7 +38,6 @@
             android:orientation="vertical"
             android:layout_marginLeft="10dp">
             <ImageView
-                android:id="@+id/imagen_perfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="40dp"
@@ -56,7 +55,7 @@
             android:layout_marginRight="10dp">
 
             <TextView
-                android:id="@+id/nombre_tarjeta_gift"
+                android:id="@+id/nombre_tarjeta_custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -65,7 +64,7 @@
                 android:text="Nombre Tarjeta"/>
 
             <TextView
-                android:id="@+id/nombre_titular_gift"
+                android:id="@+id/nombre_titular_custom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -73,19 +72,31 @@
                 android:textSize="12dp"
                 android:text="Nombre Titular"/>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/fecha_validez_gift"
-                    android:layout_width="match_parent"
+                    android:id="@+id/numero_identificador_custom"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Fecha Validez"/>
+                    android:text="Numero identificador"/>
+
+                <TextView
+                    android:id="@+id/fecha_expiracion"
+                    android:layout_width="40dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:textStyle="bold"
+                    android:text="F.Exp"/>
             </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>
@@ -126,6 +137,7 @@
             android:layout_marginRight="10dp">
 
             <Button
+                android:id="@+id/notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/darkBlue"
@@ -157,7 +169,6 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
-                android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Editar Tarjeta"
@@ -188,7 +199,6 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
-                android:id="@+id/delete_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Eliminar Tarjeta"

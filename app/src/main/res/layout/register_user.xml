@@ -39,10 +39,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="2dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="@color/darkBlue"
             android:text="Editar imagen"
             android:drawableLeft="@drawable/baseline_edit_24"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
 
         <LinearLayout
             android:id="@+id/group2"

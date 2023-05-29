@@ -1,35 +1,55 @@
 package com.example.satchelcards;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListGift extends AppCompatActivity {
+public class ListGift extends AppCompatActivity{
 
     ImageView gobackBtn;
     private RecyclerView recyclerView;
     private ItemsAdapter itemsAdapter;
+    Boolean noFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_gift);
+        Context context = getApplicationContext();
 
+        //#region BUTTON BACK
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,45 +58,57 @@ public class ListGift extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        //#endregion
 
         recyclerView = findViewById(R.id.recyclerView_gift);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Item> itemList = new ArrayList<>();
 
-        // Crear una consulta para obtener los datos de Firebase
-        Query query = FirebaseDatabase.getInstance().getReference().child("items");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Recorrer los datos obtenidos de Firebase
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    // Obtener cada objeto Item y agregarlo a la lista
-                    Item item = snapshot.getValue(Item.class);
-                    itemList.add(item);
-                }
-                // Notificar al adaptador que los datos han cambiado
-                itemsAdapter.notifyDataSetChanged();
-            }
+        //Coge el usuario autentificado y su email
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        String email = auth.getCurrentUser().getEmail();
 
+        //Coge todas las tarjetas
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference collectionRef = db.collection("/user/" + email + "/loyalty/");
+
+        //#region OBTENER LISTA DE TARJETAS
+        collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Manejar el error si es necesario
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null) {
+                        //POR CADA DOCUMENTO
+                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                            ImageView imageView = new ImageView(context);
+                            // Resto del código...
+
+                            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.HORIZONTAL
+                            );
+                            String documentId = document.getId();
+                            String cardName = document.getData().get("cardName").toString();
+                            Item item = new Item(imageView, cardName, documentId);
+                            
+                            itemList.add(item);
+                        }
+                        // Notificar al adaptador que los datos han cambiado
+                        itemsAdapter.notifyDataSetChanged();
+                    }
+                } else {
+                    Toast.makeText(context, "Error!! DNI no encontrado!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+//#endregion
+
 
         // Crear el adaptador y establecerlo en el RecyclerView
         itemsAdapter = new ItemsAdapter(itemList);
         recyclerView.setAdapter(itemsAdapter);
     }
 }
-/*
-En este ejemplo, se realiza una consulta a la base de datos de Firebase para obtener los datos de la referencia "items".
-Luego, se utiliza un ValueEventListener para escuchar los cambios en los datos y agregarlos a la lista itemList.
-Una vez que se obtienen todos los datos, se notifica al adaptador (itemsAdapter) que se han realizado cambios en los datos
-mediante notifyDataSetChanged().
-
-Asegúrate de tener correctamente configurada tu base de datos Firebase y que los datos se encuentren en la referencia "items".
-Además, asegúrate de tener la configuración adecuada de Firebase en tu proyecto y de haber agregado las dependencias
-necesarias en el archivo build.gradle de la app.
-*/

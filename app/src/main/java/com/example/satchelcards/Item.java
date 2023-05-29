@@ -1,20 +1,28 @@
 package com.example.satchelcards;
 
-public class Item {
-    private int imageResId;
-    private String titulo;
+import android.widget.ImageView;
 
-    public Item(int imageResId, String titulo) {
-        this.imageResId = imageResId;
+public class Item {
+    private ImageView imageView;
+    private String titulo;
+    private String id;
+
+    public Item(ImageView imageView, String titulo, String id) {
+        this.imageView = imageView;
         this.titulo = titulo;
+        this.id = id;
     }
 
-    public int getImageResId() {
-        return imageResId;
+    public ImageView getImageView() {
+        return imageView;
     }
 
     public String getTitulo() {
         return titulo;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 

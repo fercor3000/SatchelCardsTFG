@@ -17,14 +17,13 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
-public class SeleccionarDNI extends AppCompatActivity {
+public class SeleccionarCredit extends AppCompatActivity {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     ImageView imagen;
-    TextView nombreCompleto, NumDNI, DNIelec, Sexo, fechaExpiracion;
+    TextView nombreTarjeta, numeroTarjeta, holderTarjeta, fechaExpiracion, cvv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +34,7 @@ public class SeleccionarDNI extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarDNI.this, ListDNI.class);
+                Intent intent = new Intent(SeleccionarCredit.this, ListDNI.class);
                 startActivity(intent);
             }
         });
@@ -43,27 +42,27 @@ public class SeleccionarDNI extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String email = currentUser.getEmail();
-        DocumentReference userRef = db.collection("user").document(email).collection("transport").document();
+        DocumentReference userRef = db.collection("user").document(email).collection("payment").document();
+
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        //String userId = String.valueOf(document.getLong("userId"));
-                        String vNombreCompleto = String.valueOf(document.getLong("nombre")) + " " + String.valueOf(document.getLong("apellidos"));
-                        String vNumDNI = String.valueOf(document.getLong("dni"));
-                        String vDniElect = String.valueOf(document.getLong("numSoport"));
-                        String vSexo = String.valueOf(document.getLong("nombre"));
-                        String vFechaExpiracion = String.valueOf(document.getLong("numsoport"));
+                        String vNombreTarjeta = String.valueOf(document.getLong("cardName"));
+                        String vHolderTarjeta = String.valueOf(document.getLong("cardHolderName"));
+                        String vFechaExpiracion = String.valueOf(document.getLong("expirationDate"));
+                        String vNumeroTarjeta = String.valueOf(document.getLong("expirationDate"));
+                        String vCVV = String.valueOf(document.getLong("CVV"));
 
-                        if (vNombreCompleto != null && vNumDNI != null && vDniElect != null && vSexo != null && vFechaExpiracion != null) {
-                            nombreCompleto.setText(vNombreCompleto);
-                            NumDNI.setText(vNombreCompleto);
-                            DNIelec.setText(vNombreCompleto);
-                            Sexo.setText(vNombreCompleto);
-                            fechaExpiracion.setText(vNombreCompleto);
-                            imagen.setImageResource(R.drawable.picdnicard);
+                        if (vNombreTarjeta != null && vHolderTarjeta != null && vFechaExpiracion != null) {
+                            nombreTarjeta.setText(vNombreTarjeta);
+                            holderTarjeta.setText(vHolderTarjeta);
+                            numeroTarjeta.setText(vNumeroTarjeta);
+                            cvv.setText(vCVV);
+                            fechaExpiracion.setText(vFechaExpiracion);
+                            imagen.setImageResource(R.drawable.piccreditcard);
                         }
                     }
                 }
