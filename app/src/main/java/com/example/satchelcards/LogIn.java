@@ -126,7 +126,7 @@ public class LogIn extends AppCompatActivity {
                         int itemId = item.getItemId();
                         if (itemId == aniadirTarjetaPersonalizadaId) {
                             // Iniciar la actividad correspondiente a "Añadir tarjeta personalizada"
-                            Intent intentPersonalizada = new Intent(LogIn.this, addCardPersonalizada.class);
+                            Intent intentPersonalizada = new Intent(LogIn.this, AddCustom.class);
                             startActivity(intentPersonalizada);
                             return true;
                         } else if (itemId == aniadirTarjetaExistenteId) {

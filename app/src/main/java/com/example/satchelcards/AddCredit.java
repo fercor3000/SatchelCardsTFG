@@ -244,10 +244,11 @@ public class AddCredit extends AppCompatActivity {
             // Muestra un mensaje de éxito
             Toast.makeText(this, "Tarjeta registrada correctamente", Toast.LENGTH_SHORT).show();
 
+            /*
             // Iniciar la actividad WriteNfcActivity y pasar el valor del NFC como extra
             Intent writeNfcIntent = new Intent(this, WriteNfcActivity.class);
             writeNfcIntent.putExtra("nfcData", tagIdString);
-            startActivity(writeNfcIntent);
+            startActivity(writeNfcIntent);*/
         }
     }
 
