@@ -21,12 +21,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Transaction;
 
 import java.util.Calendar;
@@ -38,6 +36,7 @@ public class AddGift extends AppCompatActivity {
 
     ImageView gobackBtn;
     Button btn_guardar;
+    String itemId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +45,9 @@ public class AddGift extends AppCompatActivity {
         //Recibimos la operacion que queremos realizar
         Intent intent = getIntent();
         String operation = intent.getStringExtra("operation");
-        int currentId = intent.getIntExtra("currentId",0);
+        itemId = intent.getStringExtra("itemId");
 
-        if("edit".equals(operation) && currentId != 0){
+        if("edit".equals(operation)){
             fillInterface();
         }
 
@@ -56,8 +55,14 @@ public class AddGift extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddGift.this, AddCards.class);
-                startActivity(intent);
+                if("edit".equals(operation)){
+                    Intent intent = new Intent(AddGift.this, SeleccionarGift.class);
+                    intent.putExtra("itemId",itemId);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(AddGift.this, AddCards.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -98,11 +103,11 @@ public class AddGift extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             DocumentSnapshot document = task.getResult();
                             if (document.exists()) {
+                                //Recogo el userId y el cardNextId del usuario (getLong para numero, getString para cadena)
+                                String userId = String.valueOf(document.getLong("userId"));
                                 if ("edit".equals(operation)) {
-                                    editCard(cardName, cardHolderName, DExpire);
+                                    editCard(cardName, cardHolderName, DExpire, userId);
                                 } else {
-                                    //Recogo el userId y el cardNextId del usuario (getLong para numero, getString para cadena)
-                                    String userId = String.valueOf(document.getLong("userId"));
                                     String cardNextId = String.valueOf(document.getLong("cardNextId"));
                                     //Si los recojo con exito, los utilizo para crear la nueva tarjeta
                                     if (userId != null && cardNextId != null) {
@@ -173,7 +178,7 @@ public class AddGift extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddGift.this, LogIn.class);
+                                        Intent intent = new Intent(AddGift.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -202,39 +207,40 @@ public class AddGift extends AppCompatActivity {
             //#endregion
         });
     }
-        private void fillInterface() {
-            // Recoje los datos que hacen falta para la interfaz
-            Intent intent = getIntent();
-            String cardName = intent.getStringExtra("cardName");
-            String cardHolderName = intent.getStringExtra("cardHolderName");
-            Date expirationDate = (Date) intent.getSerializableExtra("expirationDate");
+    private void fillInterface() {
+        // Retrieve the data from the intent
+        Intent intent = getIntent();
+        String cardName = intent.getStringExtra("cardName");
+        String cardHolderName = intent.getStringExtra("cardHolderName");
+        Date expirationDate = (Date) intent.getSerializableExtra("expirationDate");
 
-            // Rellena la interfaz con lso datos
-            EditText cardNameEditText = findViewById(R.id.cardName);
-            EditText cardHolderNameEditText = findViewById(R.id.cardHolderName);
-            DatePicker expireDateDatePicker = findViewById(R.id.expirationDate);
+        // Fill the interface with the data
+        EditText cardNameEditText = findViewById(R.id.cardName);
+        EditText cardHolderNameEditText = findViewById(R.id.cardHolderName);
+        DatePicker expireDateDatePicker = findViewById(R.id.expirationDate);
 
-            cardNameEditText.setText(cardName);
-            cardHolderNameEditText.setText(cardHolderName);
+        cardNameEditText.setText(cardName);
+        cardHolderNameEditText.setText(cardHolderName);
 
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(expirationDate);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(expirationDate);
 
-            int year = calendar.get(Calendar.YEAR);
-            int month = calendar.get(Calendar.MONTH);
-            int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            expireDateDatePicker.updateDate(year, month, day);
-        }
+        expireDateDatePicker.updateDate(year, month, day);
+    }
 
-    private void editCard(String cardName, String cardHolderName, Date DExpire) {
+
+    private void editCard(String cardName, String cardHolderName, Date DExpire, String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String email = currentUser.getEmail();
 
         // Actualizar la tarjeta con nuevos valores
-        DocumentReference docRef = db.collection("user").document(email).collection("loyalty").document("cardId");
+        DocumentReference docRef = db.collection("user").document(email).collection("loyalty").document(itemId);
 
         Map<String, Object> cardMap = new HashMap<>();
         cardMap.put("cardName", cardName);
@@ -247,7 +253,8 @@ public class AddGift extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Context context = getApplicationContext();
                         Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddGift.this, LogIn.class);
+                        Intent intent = new Intent(AddGift.this, SeleccionarGift.class);
+                        intent.putExtra("itemId",itemId);
                         startActivity(intent);
                     }
                 })

@@ -34,7 +34,7 @@ public class ListDNI extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListDNI.this, LogIn.class);
+                Intent intent = new Intent(ListDNI.this, HomeMenu.class);
                 startActivity(intent);
             }
         });

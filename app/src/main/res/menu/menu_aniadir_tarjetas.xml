@@ -2,8 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/aniadirtarjetapersonalizada"
-        android:title="Añadir tarjeta personalizada" />
+        android:title="Personalizada" />
     <item
         android:id="@+id/aniadirtarjetaexistente"
-        android:title="Añadir tarjeta existente" />
+        android:title="A partir de una plantilla" />
 </menu>

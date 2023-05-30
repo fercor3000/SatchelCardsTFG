@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
-import android.nfc.tech.Ndef;
-import android.nfc.tech.NdefFormatable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -144,6 +142,29 @@ public class AddCredit extends AppCompatActivity {
                 userMap.put("cardId", cardNextId);
                 userMap.put("cardType","payment");
 
+                String cardNumberString = Long.toString(cardNumber);
+                char firstNumberIssuer = cardNumberString.charAt(0);
+                switch (firstNumberIssuer) {
+                    case '2':
+                    case '5':
+                        userMap.put("issuer", "MasterCard");
+                        break;
+                    case '3':
+                        userMap.put("issuer", "Amex");
+                        break;
+                    case '4':
+                        userMap.put("issuer", "Visa");
+                        break;
+                    case '6':
+                        userMap.put("issuer", "Discover");
+                        break;
+                    case '8':
+                        userMap.put("issuer", "UnionPay");
+                        break;
+                    default:
+                        userMap.put("issuer", "unrecognised");
+                }
+
                 docRef.set(userMap)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -172,7 +193,7 @@ public class AddCredit extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddCredit.this, LogIn.class);
+                                        Intent intent = new Intent(AddCredit.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

@@ -1,175 +1,97 @@
 package com.example.satchelcards;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-public class LogIn extends AppCompatActivity {
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+public class Login extends AppCompatActivity {
 
     //#region VARIABLES
-    ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList, accessList;
-    ImageView displayMenuButton;
-    private DrawerLayout drawerLayout;
-    private TextView menuItem1;
-    private TextView menuItem2;
+    Button btnLogIn, btnRegister;
+    EditText email, password;
+    private FirebaseAuth mAuth;
     //#endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_menu);
+        setContentView(R.layout.login);
 
-        dnisList = (ImageView) findViewById(R.id.DniCards);
-        creditsList = (ImageView) findViewById(R.id.CreditCards);
-        transportsList = (ImageView) findViewById(R.id.TransportCards);
-        giftsList = (ImageView) findViewById(R.id.GiftCards);
-        accessList = (ImageView) findViewById(R.id.AccessCards);
-
-        profileBtn = (ImageView) findViewById(R.id.profile);
-        addCardBtn = (ImageButton) findViewById(R.id.addCard);
-        displayMenuButton = (ImageView)findViewById(R.id.displayMenu);
-        drawerLayout = findViewById(R.id.drawer_layout);
-        menuItem1 = findViewById(R.id.menu_item1);
-        menuItem2 = findViewById(R.id.menu_item2);
-
-        //#region AL PULSAR LISTA DE DNIS
-        dnisList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //REDIRIGE A LA PÁGINA DE LISTADO
-                Intent intent = new Intent(LogIn.this, ListDNI.class);
-                startActivity(intent);
-            }
-        });
+        //#region OBTENER ELEMENTOS
+        btnRegister = (Button)findViewById(R.id.register);
+        btnLogIn = (Button)findViewById(R.id.login);
+        email = (EditText)findViewById(R.id.email);
+        password = (EditText) findViewById(R.id.password);
         //#endregion
 
-        //#region AL PULSAR LISTA DE CREDITS
-        creditsList.setOnClickListener(new View.OnClickListener() {
+
+        //#region AL PULSAR INICIAR SESIÓN...
+        btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //REDIRIGE A LA PÁGINA DE LISTADO
-                Intent intent = new Intent(LogIn.this, ListCreditCard.class);
-                startActivity(intent);
-            }
-        });
-        //#endregion
+                //OBTIENE LOS DATOS PARA INCIAR SESIÓN
+                String emailSTR = email.getText().toString();
+                String passwordSTR = password.getText().toString();
 
-        //#region AL PULSAR LISTA DE TRANSPORTS
-        transportsList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //REDIRIGE A LA PÁGINA DE LISTADO
-                Intent intent = new Intent(LogIn.this, ListTransport.class);
-                startActivity(intent);
-            }
-        });
-        //#endregion
-
-        //#region AL PULSAR LISTA DE GIFTS
-        giftsList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //REDIRIGE A LA PÁGINA DE LISTADO
-                Intent intent = new Intent(LogIn.this, ListGift.class);
-                startActivity(intent);
-            }
-        });
-        //#endregion
-
-        //#region AL PULSAR LISTA DE ACCESS
-        accessList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //REDIRIGE A LA PÁGINA DE LISTADO
-                Intent intent = new Intent(LogIn.this, ListAccess.class);
-                startActivity(intent);
-            }
-        });
-        //#endregion
-
-        //#region AL PULSAR PERFIL...
-        profileBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //REDIRIGE A LA PÁGINA DEL PERFIL
-                Intent intent = new Intent(LogIn.this, Profile.class);
-                startActivity(intent);
-            }
-        });
-        //#endregion
-
-        //#region AL PULSAR AÑADIR TARJETA
-        addCardBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu popup = new PopupMenu(LogIn.this, addCardBtn);
-                popup.getMenuInflater().inflate(R.menu.menu_aniadir_tarjetas, popup.getMenu());
-
-
-
-                // Agrega el listener para el menú
-                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        // Obtener los valores enteros de los recursos
-                        final int aniadirTarjetaPersonalizadaId = getResources().getIdentifier("aniadirtarjetapersonalizada", "id", getPackageName());
-                        final int aniadirTarjetaExistenteId = getResources().getIdentifier("aniadirtarjetaexistente", "id", getPackageName());
-                        int itemId = item.getItemId();
-                        if (itemId == aniadirTarjetaPersonalizadaId) {
-                            // Iniciar la actividad correspondiente a "Añadir tarjeta personalizada"
-                            Intent intentPersonalizada = new Intent(LogIn.this, AddCustom.class);
-                            startActivity(intentPersonalizada);
-                            return true;
-                        } else if (itemId == aniadirTarjetaExistenteId) {
-                            // Iniciar la actividad correspondiente a "Añadir tarjeta existente"
-                            Intent intentExistente = new Intent(LogIn.this, AddCards.class);
-                            startActivity(intentExistente);
-                            return true;
+                if((!emailSTR.equals("")) && (!passwordSTR.equals(""))) { //SI NO ESTÁN VACÍOS...
+                    if (validarEmail(emailSTR)) { //SI EL FORMATO ES VÁLIDO...
+                        //OBTIENE INSTANCIA DE FIREBASEAUTH
+                        mAuth = FirebaseAuth.getInstance();
+                        //INICIA SESIÓN
+                        mAuth.signInWithEmailAndPassword(emailSTR,passwordSTR).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Context context = getApplicationContext();
+                                if (task.isSuccessful()) { //SI TODO HA IDO BIEN
+                                    //REDIRIGE A LA PÁGINA PRINCIPAL
+                                    Intent intent = new Intent(Login.this, HomeMenu.class);
+                                    startActivity(intent);
+                                } else { //SI NO SE HA COMPLETADO...
+                                    Toast.makeText(context, "Error!! Email o contraseña inválidos!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                    } else { //SI EL FORMATO ES INVÁLIDO
+                        Context context = getApplicationContext();
+                        Toast.makeText(context, "Error!! Email inválido", Toast.LENGTH_SHORT).show();
+                    }
+                } else { //SI HAY ALGÚN DATO VACÍO...
+                    Context context = getApplicationContext();
+                    if (emailSTR.equals("") && passwordSTR.equals("")){
+                        Toast.makeText(context, "Email y contraseña no pueden estar vacíos!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if((emailSTR.equals(""))) {
+                            Toast.makeText(context, "Email no puede estar vacío!", Toast.LENGTH_SHORT).show();
                         } else {
-                            return false;
+                            Toast.makeText(context, "Contraseña no puede estar vacía!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                });
-                popup.show();
+                }
             }
         });
         //#endregion
 
-        //#region AL PULSAR EL MENÚ
-        menuItem1.setOnClickListener(new View.OnClickListener() {
+        //#region AL PULSAR REGISTRARSE...
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción de añadir tarjeta
-                Intent intent = new Intent(LogIn.this, AddCards.class);
+                Intent intent = new Intent(Login.this, Register.class);
                 startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
-            }
-        });
-        //#endregion
-
-        //#region MENÚ 2
-        menuItem2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Acción de eliminar tarjeta
-                //drawerLayout.closeDrawer(GravityCompat.START);
-            }
-        });
-
-        // Configura el botón para abrir el menú lateral
-        displayMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
         //#endregion
@@ -177,6 +99,17 @@ public class LogIn extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // No realiza ninguna acción para evitar volver atrás a la pantalla de inicio de sesión
+        // Cierra la aplicación
+        finishAffinity();
     }
+
+    //#region FUNCIÓN PARA VALIDAR FORMATO DE EMAIL
+    public boolean validarEmail(String email) {
+        String regex = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches();
+    }
+    //#endregion
+
 }

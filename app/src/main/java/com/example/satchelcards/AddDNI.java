@@ -134,7 +134,7 @@ public class AddDNI extends AppCompatActivity {
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) { //SI TODO VA BIEN
-                                Intent intent = new Intent(AddDNI.this, LogIn.class);
+                                Intent intent = new Intent(AddDNI.this, HomeMenu.class);
                                 startActivity(intent);
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "DNI insertado !", Toast.LENGTH_SHORT).show();

@@ -36,21 +36,23 @@
             android:layout_height="wrap_content"
             android:textColor="@color/darkBlue"
             android:textStyle="bold"
+            android:textSize="30dp"
             android:text="Notas"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"/>
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Porfavor, escriba aquí"
-            android:gravity="top|center"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="80dp"
+            android:id="@+id/noteBlock"
+            android:layout_width="298dp"
+            android:layout_height="506dp"
+            android:layout_above="@+id/btn_save_notes"
+            android:layout_centerHorizontal="true"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="-40dp"
             android:layout_marginRight="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+            android:layout_marginBottom="1dp"
+            android:gravity="top|center"
+            android:hint="Porfavor, escriba aquí" />
 
         <Button
             android:id="@+id/btn_save_notes"

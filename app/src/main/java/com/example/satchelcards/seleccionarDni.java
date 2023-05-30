@@ -18,7 +18,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
-public class SeleccionarDNI extends AppCompatActivity {
+public class SeleccionarDni extends AppCompatActivity {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -35,7 +35,7 @@ public class SeleccionarDNI extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarDNI.this, ListDNI.class);
+                Intent intent = new Intent(SeleccionarDni.this, ListDNI.class);
                 startActivity(intent);
             }
         });

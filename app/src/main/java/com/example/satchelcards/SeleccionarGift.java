@@ -23,14 +23,24 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+//IMPORTS CAMBIOS RAUL
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+
+
 public class SeleccionarGift extends AppCompatActivity {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
     ImageView imagen;
-    Button editBtn, deleteBtn;
-    String vFechaExpiracion, vNombreTarjeta, vHolderTarjeta;
+    Button editBtn, deleteBtn, notesBtn;
+    Date vFechaExpiracion;
+
+    String formattedExpirationDate, vNombreTarjeta, vHolderTarjeta;
     TextView nombreTarjeta, holderTarjeta, fechaExpiracion;
 
     @Override
@@ -47,7 +57,7 @@ public class SeleccionarGift extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarGift.this, ListDNI.class);
+                Intent intent = new Intent(SeleccionarGift.this, ListGift.class);
                 startActivity(intent);
             }
         });
@@ -70,18 +80,26 @@ public class SeleccionarGift extends AppCompatActivity {
                     if (document.exists()) {
                         vNombreTarjeta = String.valueOf(document.getString("cardName"));
                         vHolderTarjeta = String.valueOf(document.getString("cardHolderName"));
-                        vFechaExpiracion = String.valueOf(document.get("expirationDate"));
+                        vFechaExpiracion = document.getDate("expirationDate");
+                        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+                        formattedExpirationDate = formatter.format(vFechaExpiracion);
+                        try {
+                            vFechaExpiracion = formatter.parse(formattedExpirationDate);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
 
                         if (vNombreTarjeta != null && vHolderTarjeta != null && vFechaExpiracion != null) {
                             nombreTarjeta.setText(vNombreTarjeta);
                             holderTarjeta.setText(vHolderTarjeta);
-                            fechaExpiracion.setText(vFechaExpiracion);
+                            fechaExpiracion.setText(formattedExpirationDate);
                             //imagen.setImageResource(R.drawable.picgiftcard);
                         }
                     }
                 }
             }
         });
+
 
 
         //METODOS RAUL ========================================================================================
@@ -95,10 +113,9 @@ public class SeleccionarGift extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String email = currentUser.getEmail();
-                //IGNACIO TIENES QUE PASARME EL USER4CARD6 (ES UN EJEMPLO), Y METERLO EN currentCard !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                //DocumentReference cardRef = db.collection("user").document(email).collection("loyalty").document(currentCard);
+                DocumentReference cardRef = db.collection("user").document(email).collection("loyalty").document(itemId);
 
-                /*cardRef.delete()
+                cardRef.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -117,7 +134,7 @@ public class SeleccionarGift extends AppCompatActivity {
                                 Toast.makeText(context, "Error al eliminar la tarjeta: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                                 Log.e("AddGift", "Error deleting card in Firestore", e);
                             }
-                        });*/
+                        });
             }
     });
 
@@ -130,6 +147,19 @@ public class SeleccionarGift extends AppCompatActivity {
                 intent.putExtra("cardName", vNombreTarjeta);
                 intent.putExtra("cardHolderName", vHolderTarjeta);
                 intent.putExtra("expirationDate", vFechaExpiracion);
+                intent.putExtra("itemId",itemId);
+                intent.putExtra("operation","edit");
+                startActivity(intent);
+            }
+        });
+
+        notesBtn = findViewById(R.id.notes_button);
+
+        notesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SeleccionarGift.this, CardNotes.class);
+                intent.putExtra("itemId",itemId);
                 startActivity(intent);
             }
         });

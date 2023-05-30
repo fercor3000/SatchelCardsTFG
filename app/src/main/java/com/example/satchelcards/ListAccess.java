@@ -34,7 +34,7 @@ public class ListAccess extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListAccess.this, LogIn.class);
+                Intent intent = new Intent(ListAccess.this, HomeMenu.class);
                 startActivity(intent);
             }
         });

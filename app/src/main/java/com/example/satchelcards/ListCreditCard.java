@@ -34,7 +34,7 @@ public class ListCreditCard extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListCreditCard.this, LogIn.class);
+                Intent intent = new Intent(ListCreditCard.this, HomeMenu.class);
                 startActivity(intent);
             }
         });

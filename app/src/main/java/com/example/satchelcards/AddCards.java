@@ -36,7 +36,7 @@ public class AddCards extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddCards.this, LogIn.class);
+                Intent intent = new Intent(AddCards.this, HomeMenu.class);
                 startActivity(intent);
             }
         });

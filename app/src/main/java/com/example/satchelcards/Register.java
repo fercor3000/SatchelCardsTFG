@@ -110,7 +110,7 @@ public class Register extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //VUELVE A INICIAR SESIÓN
-                Intent intent = new Intent(Register.this, MainActivity.class);
+                Intent intent = new Intent(Register.this, Login.class);
                 startActivity(intent);
             }
         });
@@ -150,7 +150,7 @@ public class Register extends AppCompatActivity {
                                                     //GUARDA LOS DATOS EN LA BBDD
                                                     meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
                                                     //REDIRIGE A LA PÁGINA PRINCIPAL
-                                                    Intent intent = new Intent(Register.this, LogIn.class);
+                                                    Intent intent = new Intent(Register.this, HomeMenu.class);
                                                     startActivity(intent);
                                                 } else { //SI HAY ALGÚN ERROR EN EL REGISTRO...
                                                     Context context = getApplicationContext();
@@ -349,7 +349,7 @@ public class Register extends AppCompatActivity {
                             subirPhoto(image_url);
                         }
                     }
-                    Intent intent = new Intent(Register.this, LogIn.class);
+                    Intent intent = new Intent(Register.this, HomeMenu.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "Error!! Email o contraseña inválidos!", Toast.LENGTH_SHORT).show();

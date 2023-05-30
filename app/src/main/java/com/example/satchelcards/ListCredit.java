@@ -34,7 +34,7 @@ public class ListCredit extends AppCompatActivity{
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListCredit.this, LogIn.class);
+                Intent intent = new Intent(ListCredit.this, HomeMenu.class);
                 startActivity(intent);
             }
         });

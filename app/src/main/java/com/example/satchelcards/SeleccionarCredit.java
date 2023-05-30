@@ -50,19 +50,37 @@ public class SeleccionarCredit extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String vNombreTarjeta = String.valueOf(document.getLong("cardName"));
-                        String vHolderTarjeta = String.valueOf(document.getLong("cardHolderName"));
+                        String vNombreTarjeta = document.getString("cardName");
+                        String vHolderTarjeta = document.getString("cardHolderName");
                         String vFechaExpiracion = String.valueOf(document.getLong("expirationDate"));
                         String vNumeroTarjeta = String.valueOf(document.getLong("expirationDate"));
+                        String vIssuer = String.valueOf(document.getString("issuer"));
                         String vCVV = String.valueOf(document.getLong("CVV"));
 
-                        if (vNombreTarjeta != null && vHolderTarjeta != null && vFechaExpiracion != null) {
+                        if (vNombreTarjeta != null && vHolderTarjeta != null && vFechaExpiracion != null && vNumeroTarjeta != null && vCVV != null) {
                             nombreTarjeta.setText(vNombreTarjeta);
                             holderTarjeta.setText(vHolderTarjeta);
                             numeroTarjeta.setText(vNumeroTarjeta);
                             cvv.setText(vCVV);
                             fechaExpiracion.setText(vFechaExpiracion);
-                            imagen.setImageResource(R.drawable.piccreditcard);
+                            switch(vIssuer){
+                                case "MasterCard":
+                                    imagen.setImageResource(R.drawable.mastercard_logo);
+                                    break;
+                                case "Visa":
+                                    imagen.setImageResource(R.drawable.visa_logo);
+                                    break;
+                                case "Amex":
+                                    imagen.setImageResource(R.drawable.amex_logo);
+                                case "Discover":
+                                    imagen.setImageResource(R.drawable.discover_logo);
+                                case "UnionPay":
+                                    imagen.setImageResource(R.drawable.unionpay_logo);
+                                    break;
+                                default:
+                                    imagen.setImageResource(R.drawable.baseline_credit_card_24);
+                            }
+
                         }
                     }
                 }

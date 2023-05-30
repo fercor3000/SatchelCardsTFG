@@ -30,7 +30,7 @@ public class GestPerfil extends AppCompatActivity {
     private void atras(int c) {
         Intent intent = new Intent(GestPerfil.this, Profile.class);
         if (c == 1) {
-            intent = new Intent(GestPerfil.this, MainActivity.class);
+            intent = new Intent(GestPerfil.this, Login.class);
         }
         startActivity(intent);
     }

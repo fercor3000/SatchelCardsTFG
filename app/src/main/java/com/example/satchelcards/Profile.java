@@ -71,7 +71,7 @@ public class Profile extends AppCompatActivity {
                 FirebaseAuth.getInstance().signOut();
 
                 // Redirigir a la página de inicio de sesión
-                Intent intent = new Intent(Profile.this, MainActivity.class);
+                Intent intent = new Intent(Profile.this, Login.class);
                 startActivity(intent);
                 finish(); // Finaliza la actividad actual para que no se pueda volver atrás
             }
@@ -147,9 +147,9 @@ public class Profile extends AppCompatActivity {
 
     //#region FUNCIÓN PARA REDIRECCIONAR
     private void atras(int c) {
-        Intent intent = new Intent(Profile.this, LogIn.class);
+        Intent intent = new Intent(Profile.this, HomeMenu.class);
         if (c == 1) {
-            intent = new Intent(Profile.this, MainActivity.class);
+            intent = new Intent(Profile.this, Login.class);
         }
         startActivity(intent);
     }

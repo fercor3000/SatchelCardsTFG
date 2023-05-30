@@ -155,7 +155,7 @@ public class AddTransport extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddTransport.this, LogIn.class);
+                                        Intent intent = new Intent(AddTransport.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

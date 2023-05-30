@@ -34,7 +34,7 @@ public class ListTransport extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListTransport.this, LogIn.class);
+                Intent intent = new Intent(ListTransport.this, HomeMenu.class);
                 startActivity(intent);
             }
         });

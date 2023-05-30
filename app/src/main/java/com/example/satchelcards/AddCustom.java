@@ -45,7 +45,7 @@ public class AddCustom extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddCustom.this, LogIn.class);
+                Intent intent = new Intent(AddCustom.this, HomeMenu.class);
                 startActivity(intent);
             }
         });
@@ -159,7 +159,7 @@ public class AddCustom extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddCustom.this, LogIn.class);
+                                        Intent intent = new Intent(AddCustom.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
