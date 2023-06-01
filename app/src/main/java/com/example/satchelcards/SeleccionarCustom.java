@@ -28,8 +28,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
-public class SeleccionarDni extends AppCompatActivity {
+public class SeleccionarCustom extends AppCompatActivity {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -37,26 +36,25 @@ public class SeleccionarDni extends AppCompatActivity {
     ImageView imagen;
     Button editBtn, deleteBtn, notesBtn;
     Date vFechaExpiracion;
-    String nombre_dni, num_dni, dni_elec, sexo, fecha_expiracionFormatted;
-    TextView nombreDniTarjeta, numeroDniTarjeta, dniElectronicoTarjeta, sexoTarjeta, fechaExpiracionTarjeta;
+    String vNombreTarjeta, vNombreTitular, vNumeroTarjeta, formattedExpirationDate;
+    TextView nombreTarjeta, nombreTitular, numeroTarjeta, fechaExpiracion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.seleccionar_dni);
+        setContentView(R.layout.seleccionar_custom);
 
         imagen = findViewById(R.id.imagen_tarjeta);
-        nombreDniTarjeta = findViewById(R.id.nombre_dni);
-        numeroDniTarjeta = findViewById(R.id.num_dni);
-        dniElectronicoTarjeta = findViewById(R.id.dni_elec);
-        sexoTarjeta = findViewById(R.id.sexo);
-        fechaExpiracionTarjeta = findViewById(R.id.fecha_expiracion);
+        nombreTarjeta = findViewById(R.id.nombre_tarjeta_custom);
+        nombreTitular = findViewById(R.id.nombre_titular_custom);
+        numeroTarjeta = findViewById(R.id.cardNumber);
+        fechaExpiracion = findViewById(R.id.fecha_expiracion);
 
         goBackBtn = (ImageView) findViewById(R.id.go_back);
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarDni.this, ListDNI.class);
+                Intent intent = new Intent(SeleccionarCustom.this, ListCustom.class);
                 startActivity(intent);
             }
         });
@@ -69,7 +67,7 @@ public class SeleccionarDni extends AppCompatActivity {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String email = currentUser.getEmail();
-        DocumentReference userRef = db.collection("user").document(email).collection("dni").document(itemId);
+        DocumentReference userRef = db.collection("user").document(email).collection("custom").document(itemId);
 
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -77,30 +75,23 @@ public class SeleccionarDni extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        String nombre = String.valueOf(document.getString("nombre"));
-                        String apellidos = String.valueOf(document.getString("apellidos"));
-                        nombre_dni = nombre + " " + apellidos;
-                        num_dni = String.valueOf(document.getString("dni"));
-                        dni_elec = String.valueOf(document.getString("numSoport"));
-                        sexo = String.valueOf(document.getString("sexo"));
-
-
-                        vFechaExpiracion = document.getDate("DValidez");
+                        vNombreTarjeta = String.valueOf(document.getString("cardName"));
+                        vNombreTitular = String.valueOf(document.getString("cardHolderName"));
+                        vNumeroTarjeta = String.valueOf(document.get("cardNumber"));
+                        vFechaExpiracion = document.getDate("expirationDate");
                         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-                        fecha_expiracionFormatted = formatter.format(vFechaExpiracion);
+                        formattedExpirationDate = formatter.format(vFechaExpiracion);
                         try {
-                            vFechaExpiracion = formatter.parse(fecha_expiracionFormatted);
+                            vFechaExpiracion = formatter.parse(formattedExpirationDate);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
 
-                        if (nombre_dni != null && num_dni != null && num_dni != null && dni_elec != null && vFechaExpiracion != null) {
-                            nombreDniTarjeta.setText(nombre_dni);
-                            numeroDniTarjeta.setText(num_dni);
-                            dniElectronicoTarjeta.setText(dni_elec);
-                            sexoTarjeta.setText(sexo);
-                            fechaExpiracionTarjeta.setText(fecha_expiracionFormatted);
-                            //imagen.setImageResource(R.drawable.picgiftcard);
+                        if (vNombreTarjeta != null && vNombreTitular != null && vFechaExpiracion != null) {
+                            nombreTarjeta.setText(vNombreTarjeta);
+                            nombreTitular.setText(vNombreTitular);
+                            fechaExpiracion.setText(formattedExpirationDate);
+                            numeroTarjeta.setText(vNumeroTarjeta);
                         }
                     }
                 }
@@ -120,7 +111,7 @@ public class SeleccionarDni extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String email = currentUser.getEmail();
-                DocumentReference cardRef = db.collection("user").document(email).collection("dni").document(itemId);
+                DocumentReference cardRef = db.collection("user").document(email).collection("transport").document(itemId);
 
                 cardRef.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -129,7 +120,7 @@ public class SeleccionarDni extends AppCompatActivity {
                                 // Tarjeta borrada con exito
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "Tarjeta eliminada", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SeleccionarDni.this, ListGift.class);
+                                Intent intent = new Intent(SeleccionarCustom.this, ListCustom.class);
                                 startActivity(intent);
                             }
                         })
@@ -150,12 +141,11 @@ public class SeleccionarDni extends AppCompatActivity {
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarDni.this, AddDNI.class);
-                intent.putExtra("name", nombre_dni);
-                intent.putExtra("number", num_dni);
-                intent.putExtra("dniElec", dni_elec);
-                intent.putExtra("sex", sexo);
-                intent.putExtra("expirationDate", fecha_expiracionFormatted);
+                Intent intent = new Intent(SeleccionarCustom.this, AddCustom.class);
+                intent.putExtra("cardName", vNombreTarjeta);
+                intent.putExtra("cardHolderName", vNombreTitular);
+                intent.putExtra("expirationDate", vFechaExpiracion);
+                intent.putExtra("cardNumber", vNumeroTarjeta);
                 intent.putExtra("itemId",itemId);
                 intent.putExtra("operation","edit");
                 startActivity(intent);
@@ -167,10 +157,12 @@ public class SeleccionarDni extends AppCompatActivity {
         notesBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SeleccionarDni.this, CardNotes.class);
+                Intent intent = new Intent(SeleccionarCustom.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
                 startActivity(intent);
             }
         });
 
     }}
+
+

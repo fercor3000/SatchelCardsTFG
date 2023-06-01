@@ -2,6 +2,7 @@ package com.example.satchelcards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,12 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,9 +75,6 @@ public class ListGift extends AppCompatActivity{
                     if (querySnapshot != null) {
                         //POR CADA DOCUMENTO
                         for (DocumentSnapshot document : querySnapshot.getDocuments()) {
-                            ImageView imageView = new ImageView(context);
-                            // Resto del código...
-
                             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
                                     LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -80,15 +82,34 @@ public class ListGift extends AppCompatActivity{
                             );
                             String documentId = document.getId();
                             String cardName = document.getData().get("cardName").toString();
-                            Item item = new Item(imageView, cardName, documentId);
-                            
-                            itemList.add(item);
+
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            String storagePath = "cardImages/";
+                            String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_loyalty_" + documentId;
+                            StorageReference storageRef = storage.getReference().child(rute_storage_photo);
+                            //ImageView imageView = findViewById(R.id.profile);
+
+                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Item item = new Item(uri, cardName, documentId, "loyalty");
+                                    itemList.add(item);
+                                    itemsAdapter.notifyDataSetChanged();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Item item = new Item(null, cardName, documentId, "loyalty");
+                                    itemList.add(item);
+                                    itemsAdapter.notifyDataSetChanged();
+                                }
+                            });
                         }
-                        // Notificar al adaptador que los datos han cambiado
                         itemsAdapter.notifyDataSetChanged();
+
                     }
                 } else {
-                    Toast.makeText(context, "Error!! DNI no encontrado!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Error!! Tarjetas no encontradas!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

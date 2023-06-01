@@ -3,6 +3,7 @@ package com.example.satchelcards;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +33,13 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Log.i("Auth", "Estoy autentificado");
+            Log.i("Auth", FirebaseAuth.getInstance().getCurrentUser().getEmail());
+        } else {
+            Log.i("Auth", "No estoy autentificado");
+        }
+
         //#region OBTENER ELEMENTOS
         btnRegister = (Button)findViewById(R.id.register);
         btnLogIn = (Button)findViewById(R.id.login);
@@ -45,7 +53,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //OBTIENE LOS DATOS PARA INCIAR SESIÓN
-                String emailSTR = email.getText().toString();
+                String emailSTR = email.getText().toString().toLowerCase();
                 String passwordSTR = password.getText().toString();
 
                 if((!emailSTR.equals("")) && (!passwordSTR.equals(""))) { //SI NO ESTÁN VACÍOS...

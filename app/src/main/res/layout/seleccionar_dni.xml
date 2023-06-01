@@ -38,6 +38,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="10dp">
             <ImageView
+                android:id="@+id/imagen_tarjeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="40dp"
@@ -79,30 +80,31 @@
 
                 <TextView
                     android:id="@+id/dni_elec"
-                    android:layout_width="120dp"
+                    android:layout_width="73dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:text="DNI Electronico"/>
+                    android:text="DNI Electronico" />
+
                 <TextView
                     android:id="@+id/sexo"
-                    android:layout_width="40dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:textStyle="bold"
-                    android:text="Sexo"/>
+                    android:text="Sexo"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/fecha_expiracion"
-                    android:layout_width="40dp"
+                    android:layout_width="86dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="5dp"
-                    android:textStyle="bold"
-                    android:text="F.Exp"/>
+                    android:text="F.Exp"
+                    android:textStyle="bold" />
             </LinearLayout>
         </LinearLayout>
 
@@ -144,6 +146,7 @@
             android:layout_marginRight="10dp">
 
             <Button
+                android:id="@+id/notes_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/darkBlue"
@@ -175,6 +178,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
+                android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Editar Tarjeta"
@@ -205,6 +209,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
+                android:id="@+id/delete_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Eliminar Tarjeta"

@@ -2,7 +2,9 @@ package com.example.satchelcards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Transaction;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -37,10 +42,27 @@ public class AddGift extends AppCompatActivity {
     ImageView gobackBtn;
     Button btn_guardar;
     String itemId;
+    Button btnCambiarImg;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 100;
+    ImageView imageViewPhoto;
+    Uri selectedImageUri;
+    String cardNextIdFinal;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_gift);
+
+        imageViewPhoto = findViewById(R.id.imageViewPhoto);
+        btnCambiarImg = (Button) findViewById(R.id.gift_btn_add_image);
+        btnCambiarImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+            }
+        });
+
 
         //Recibimos la operacion que queremos realizar
         Intent intent = getIntent();
@@ -112,6 +134,7 @@ public class AddGift extends AppCompatActivity {
                                     //Si los recojo con exito, los utilizo para crear la nueva tarjeta
                                     if (userId != null && cardNextId != null) {
                                         String userCardID = "user" + userId + "card" + cardNextId;
+                                        cardNextIdFinal = userCardID;
                                         //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
                                         insertInDDBB(cardName, cardHolderName, DExpire, userCardID, cardNextId);
                                     } else {
@@ -176,6 +199,25 @@ public class AddGift extends AppCompatActivity {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         // Transaction success
+                                        if (selectedImageUri != null) {
+                                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                                            StorageReference storageRef = storage.getReference();
+                                            StorageReference imagenRef = storageRef.child("cardImages/" + currentUser.getUid() + "_loyalty_" + cardNextIdFinal);
+
+                                            UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
+
+                                            uploadTask.addOnSuccessListener(taskSnapshot -> {
+
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Context context = getApplicationContext();
+                                                    Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                        }
+
+
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(AddGift.this, HomeMenu.class);
@@ -207,6 +249,21 @@ public class AddGift extends AppCompatActivity {
             //#endregion
         });
     }
+
+    //#region IMAGEN ----
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                selectedImageUri = data.getData();
+                imageViewPhoto.setImageURI(selectedImageUri);
+            }
+        }
+    }
+//#endregion
+
     private void fillInterface() {
         // Retrieve the data from the intent
         Intent intent = getIntent();

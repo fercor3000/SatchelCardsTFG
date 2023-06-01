@@ -38,6 +38,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="12dp">
             <ImageView
+                android:id="@+id/imagen_tarjeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="40dp"
@@ -46,10 +47,11 @@
                 android:paddingLeft="40dp"/>
 
             <TextView
+                android:id="@+id/dueño"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="DUEÑO TARJETA"/>
+                android:text="DUEÑO TARJETA" />
 
         </LinearLayout>
 
@@ -61,16 +63,19 @@
             android:layout_marginRight="10dp">
 
             <TextView
+                android:id="@+id/nombre_tarjeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="NOMBRE TARJETA"/>
 
             <TextView
+                android:id="@+id/numero_tarjeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="NUMERO TARJETA"/>
 
             <TextView
+                android:id="@+id/cvv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -78,6 +83,7 @@
                 android:text="CVV"/>
 
             <TextView
+                android:id="@+id/fecha_expiracion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
@@ -124,6 +130,7 @@
             android:layout_marginRight="10dp">
 
             <Button
+                android:id="@+id/notes_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/darkBlue"
@@ -155,6 +162,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
+                android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Editar Tarjeta"
@@ -185,6 +193,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
+                android:id="@+id/delete_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Eliminar Tarjeta"

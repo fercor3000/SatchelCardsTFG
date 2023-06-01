@@ -36,9 +36,15 @@
         <activity android:name=".ListTransport"></activity>
         <activity android:name=".ListGift"></activity>
         <activity android:name=".ListAccess"></activity>
+        <activity android:name=".ListCustom"></activity>
         <activity android:name=".GestPerfil"></activity>
         <activity android:name=".CardNotes"></activity>
         <activity android:name=".SeleccionarGift" />
+        <activity android:name=".SeleccionarDni" />
+        <activity android:name=".SeleccionarCredit" />
+        <activity android:name=".SeleccionarTransport" />
+        <activity android:name=".SeleccionarCustom" />
+        <activity android:name=".BuyPremium" />
         <activity
             android:name=".WriteNfcActivity"
             android:label="Write NFC"

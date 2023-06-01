@@ -1,6 +1,7 @@
 package com.example.satchelcards;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,12 +17,25 @@ public class AddCards extends AppCompatActivity {
     LinearLayout addTransportBtn;
     LinearLayout addGiftBtn;
     LinearLayout addAccessBtn;
+
+    private ImageView helpBtn;
     //#endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_card_select);
+
+        helpBtn = (ImageView) findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://drive.google.com/file/d/1QAMsVhlz7bGe04_j_qrhlYvHBaJQBigt/view?usp=sharing";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
 
         //#region OBTENER ELEMENTOS
         gobackBtn = (ImageView)findViewById(R.id.goBack);

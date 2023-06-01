@@ -1,6 +1,7 @@
 package com.example.satchelcards;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,11 +17,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 public class HomeMenu extends AppCompatActivity {
 
     //#region VARIABLES
-    ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList, accessList;
-    //ImageView displayMenuButton;
+    ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList, accessList, customList;
+    ImageView displayMenuButton;
     private DrawerLayout drawerLayout;
     private TextView menuItem1;
     private TextView menuItem2;
+    private ImageView helpBtn;
     //#endregion
 
     @Override
@@ -28,15 +30,27 @@ public class HomeMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_menu);
 
+        helpBtn = (ImageView) findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://drive.google.com/file/d/1QAMsVhlz7bGe04_j_qrhlYvHBaJQBigt/view?usp=sharing";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+
         dnisList = (ImageView) findViewById(R.id.DniCards);
         creditsList = (ImageView) findViewById(R.id.CreditCards);
         transportsList = (ImageView) findViewById(R.id.TransportCards);
         giftsList = (ImageView) findViewById(R.id.GiftCards);
         accessList = (ImageView) findViewById(R.id.AccessCards);
+        customList = (ImageView) findViewById(R.id.CustomCards);
 
         profileBtn = (ImageView) findViewById(R.id.profile);
         addCardBtn = (ImageButton) findViewById(R.id.addCard);
-        //displayMenuButton = (ImageView)findViewById(R.id.displayMenu);
+        displayMenuButton = (ImageView)findViewById(R.id.displayMenu);
         drawerLayout = findViewById(R.id.drawer_layout);
         menuItem1 = findViewById(R.id.menu_item1);
         menuItem2 = findViewById(R.id.menu_item2);
@@ -96,6 +110,17 @@ public class HomeMenu extends AppCompatActivity {
         });
         //#endregion
 
+        //#region AL PULASR CUSTOM...
+        customList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //REDIRIGE A LA PÁGINA DE LISTADO
+                Intent intent = new Intent(HomeMenu.this, ListCustom.class);
+                startActivity(intent);
+            }
+        });
+        //#endregion
+
         //#region AL PULSAR PERFIL...
         profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,6 +169,15 @@ public class HomeMenu extends AppCompatActivity {
         });
         //#endregion
 
+        // Configura el botón para abrir el menú lateral
+        displayMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        //#endregion
+
         //#region AL PULSAR EL MENÚ
         menuItem1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,20 +194,11 @@ public class HomeMenu extends AppCompatActivity {
         menuItem2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción de eliminar tarjeta
-                //drawerLayout.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(HomeMenu.this, BuyPremium.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
-
-        /*
-        // Configura el botón para abrir el menú lateral
-        displayMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });*/
-        //#endregion
     }
 
     @Override

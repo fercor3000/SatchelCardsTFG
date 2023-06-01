@@ -2,25 +2,18 @@ package com.example.satchelcards;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,8 +21,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -42,6 +38,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
+
+
 public class Register extends AppCompatActivity {
 
     //#region VARIABLES
@@ -49,15 +47,9 @@ public class Register extends AppCompatActivity {
     EditText username, email, password, telephone;
     ImageView imageViewPhoto;
     private FirebaseAuth mAuth;
-    private static final int PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 1;
     StorageReference storageReference;
-    String storagePath = "profileUserImages/*";
-    private static final int COD_SEL_STORAGE = 200;
-    private static final int COD_SEL_IMAGE = 300;
-    private Uri image_url;
-    String tipoFoto = "profileUserImg";
-    ActivityResultLauncher<Intent> imagePickerLauncher;
-    private ActivityResultLauncher<Intent> cropImageLauncher;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 100;
+    Uri selectedImageUri;
     //#endregion
 
     @Override
@@ -66,47 +58,30 @@ public class Register extends AppCompatActivity {
         setContentView(R.layout.register_user);
 
         //#region OBTIENE ELEMENTOS
+        imageViewPhoto = findViewById(R.id.imageViewPhoto);
         mAuth = FirebaseAuth.getInstance();
-        btnRegister = (Button)findViewById(R.id.register);
-        btnCancel = (Button)findViewById(R.id.cancel);
+        btnRegister = (Button) findViewById(R.id.register);
+        btnCancel = (Button) findViewById(R.id.cancel);
         btnCambiarImg = (Button) findViewById(R.id.editImage);
-        username = (EditText)findViewById(R.id.username);
-        email = (EditText)findViewById(R.id.email);
+        username = (EditText) findViewById(R.id.username);
+        email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
         telephone = (EditText) findViewById(R.id.telephone);
         imageViewPhoto = findViewById(R.id.imageViewPhoto);
         storageReference = FirebaseStorage.getInstance().getReference();
+        selectedImageUri = null;
         //#endregion
 
-        //#region IMAGE PICKER
-        imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                new ActivityResultCallback<ActivityResult>() {
-                    @Override
-                    public void onActivityResult(ActivityResult result) {
-                        if (result.getResultCode() == RESULT_OK) {
-                            Intent data = result.getData();
-                            if (data != null) {
-                                image_url = data.getData();
-                                startCropActivity(image_url);
-                                //Bitmap bitmap = BitmapFactory.decodeFile(image_url.getPath());
-                                //imageViewPhoto.setImageBitmap(bitmap);
-                            }
-                        }
-                    }
-                });
-        //#endregion
-
-        //#region AL PULSAR EDITAR IMAGEN
         btnCambiarImg.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                uploadPhoto();
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
             }
         });
-        //#endregion
 
-       //#region AL PULSAR CANCELAR...
-       btnCancel.setOnClickListener(new View.OnClickListener() {
+        //#region AL PULSAR CANCELAR...
+        btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //VUELVE A INICIAR SESIÓN
@@ -115,25 +90,24 @@ public class Register extends AppCompatActivity {
             }
         });
         //#endregion
-
-        //#region AL PULSAR REGISTRAR
+        //#startregion REGISTRAR
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //#region VARIABLES DE REGISTRO
                 String usernameSTR = username.getText().toString();
-                String emailSTR = email.getText().toString();
+                String emailSTR = email.getText().toString().toLowerCase();
                 String passwordSTR = password.getText().toString();
                 String telephoneSTR = telephone.getText().toString();
-                //#endregion
 
-                //COMPRUEBA SI LOS DATOS SON VÁLIDOS
-                if((!usernameSTR.equals("")) && (!emailSTR.equals("")) && (!passwordSTR.equals("")) && (passwordSTR.length() >= 6) && (!telephoneSTR.equals("")) && (telephoneSTR.length() == 9)) {
-                    //COMPRUEBA EL FORMATO DEL EMAIL
+                if (usernameSTR.isEmpty() || emailSTR.isEmpty() || passwordSTR.isEmpty() || telephoneSTR.isEmpty()) {
+                    Toast.makeText(Register.this, "Por favor rellene todos los campos", Toast.LENGTH_SHORT).show();
+                } else if (passwordSTR.length() < 6) {
+                    Toast.makeText(Register.this, "La contraseña debe ser al menos 6 caracteres", Toast.LENGTH_SHORT).show();
+                } else if (telephoneSTR.length() != 9) {
+                    Toast.makeText(Register.this, "Numero de teléfono inválido", Toast.LENGTH_SHORT).show();
+                } else {
+                    // TODOS LOS CHECKS COMPLETOS, INTENTAMOS REGISTRAR
                     if (validarEmail(emailSTR)) {
-                        //INSTANCIA FIREBASEAUTH
-                        mAuth = FirebaseAuth.getInstance();
-                        //BUSCA EL EMAIL EN LA AUTENTIFICACION
                         mAuth.fetchSignInMethodsForEmail(emailSTR).addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
                             @Override
                             public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
@@ -141,222 +115,170 @@ public class Register extends AppCompatActivity {
                                     SignInMethodQueryResult result = task.getResult();
                                     List<String> signInMethods = result.getSignInMethods();
 
-                                    if (signInMethods == null || signInMethods.isEmpty()) { //SI EL CORREO NO EXISTE...
-                                        //CREA EL USUARIO
-                                        mAuth.createUserWithEmailAndPassword(emailSTR, passwordSTR).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                    if (signInMethods == null || signInMethods.isEmpty()) {
+                                        mAuth.createUserWithEmailAndPassword(emailSTR.toLowerCase(), passwordSTR).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (task.isSuccessful()) {
-                                                    //GUARDA LOS DATOS EN LA BBDD
-                                                    meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
-                                                    //REDIRIGE A LA PÁGINA PRINCIPAL
-                                                    Intent intent = new Intent(Register.this, HomeMenu.class);
-                                                    startActivity(intent);
-                                                } else { //SI HAY ALGÚN ERROR EN EL REGISTRO...
-                                                    Context context = getApplicationContext();
-                                                    Toast.makeText(context, "Registro abortado!", Toast.LENGTH_SHORT).show();
+                                                    if (selectedImageUri != null) {
+                                                        StorageReference imageRef = storageReference.child("profileUserImages/" + mAuth.getCurrentUser().getUid());
+
+                                                        UploadTask uploadTask = imageRef.putFile(selectedImageUri);
+                                                        uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                                                            @Override
+                                                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                                //Toast.makeText(Register.this, "Imagen guardada con éxito", Toast.LENGTH_SHORT).show();
+                                                                meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
+                                                            }
+                                                        }).addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                Toast.makeText(Register.this, "Error al guardar imagen", Toast.LENGTH_SHORT).show();
+                                                                meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
+                                                                Intent intent = new Intent(Register.this, HomeMenu.class);
+                                                                startActivity(intent);
+                                                            }
+                                                        });
+                                                    } else {
+                                                        meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
+                                                        Intent intent = new Intent(Register.this, HomeMenu.class);
+                                                        startActivity(intent);
+                                                    }
+                                                } else {
+                                                    Toast.makeText(Register.this, "Registro fallido", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                         });
-                                    } else { //SI EL CORREO YA EXISTE...
-                                        Context context = getApplicationContext();
-                                        Toast.makeText(context, "Este correo electrónico ya está registrado!", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(Register.this, "este email ya está registrado", Toast.LENGTH_SHORT).show();
                                     }
-                                } else { //SI NO SE CONSIGUE BUSCAR EL EMAIL...
-                                    Context context = getApplicationContext();
-                                    Toast.makeText(context, "Error al comprobar el correo electrónico", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(Register.this, "Error al comprobar email", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                    } else { //SI EL FORMARTO DEL EMAIL ES INVÁLIDO...
-                        Context context = getApplicationContext();
-                        Toast.makeText(context, "Error!! Email inválido", Toast.LENGTH_SHORT).show();
-                    }
-                } else { //SI HAY ALGÚN DATO INVÁLIDO...
-                    Context context = getApplicationContext();
-                    if (usernameSTR.equals("")) {
-                        Toast.makeText(context, "El nombre no puede estar vacío!", Toast.LENGTH_SHORT).show();
-                    } else if (emailSTR.equals("") || passwordSTR.equals("")){
-                        if((emailSTR.equals(""))) {
-                            Toast.makeText(context, "El email no puede estar vacío!", Toast.LENGTH_SHORT).show();
-                        } else if (passwordSTR.equals("")) {
-                            Toast.makeText(context, "La contraseña no puede estar vacía!", Toast.LENGTH_SHORT).show();
-                        }
-                    }else if (passwordSTR.length() < 6) {
-                        Toast.makeText(context, "La contraseña tiene que tener un tamaño mínimo de 6!", Toast.LENGTH_SHORT).show();
-                    } else if (telephoneSTR.equals("")) {
-                        Toast.makeText(context, "El teléfono no puede estár vacío!", Toast.LENGTH_SHORT).show();
-                    } else if (telephoneSTR.length() != 9) {
-                        Toast.makeText(context, "El teléfono tiene que tener un tamaño de 9!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(context, "Error en los datos!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, "Error, email inválido", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
         });
-        //#endregion
-
-        //#region CROPIMAGELAUNCHER
-        cropImageLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK) {
-                        Intent data = result.getData();
-                        // Obtén la imagen recortada de los datos de resultado
-                        // Llama a la función subirPhoto con la imagen recortada
-                        image_url = data.getData();
-                        Bitmap bitmap = BitmapFactory.decodeFile(image_url.getPath());
-                        imageViewPhoto.setImageBitmap(bitmap);
-                    } else if (result.getResultCode() == RESULT_CANCELED) {
-                    }
-                }
-        );
-        //#endregion
-
     }
 
-    //#region FUNCIÓN UPLOAD PHOTO
-    private void uploadPhoto() {
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-
-        imagePickerLauncher.launch(intent);
-    }
-    //#endregion
-
-    private static final int COD_CROP_IMAGE = 1001;
-
-    //#region FUNCION PARA RECORTAR IMAGEN
-    private void startCropActivity(Uri imageUri) {
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(imageUri, "image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 256);
-        intent.putExtra("outputY", 256);
-        intent.putExtra("scale", true);
-        intent.putExtra("return-data", true);
-
-        cropImageLauncher.launch(intent);
-    }
-    //#endregion
-
-    //#region FUNCIÓN SUBIR PHOTO
-    private void subirPhoto(Uri image_url) {
-        String rute_storage_photo = storagePath + "" + tipoFoto + "" + mAuth.getUid();
-        StorageReference reference = storageReference.child(rute_storage_photo);
-        UploadTask uploadTask = reference.putFile(image_url);
-
-        Task<Uri> uriTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-            @Override
-            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-                if (!task.isSuccessful()) {
-                    throw task.getException();
-                }
-
-                return reference.getDownloadUrl();
-            }
-        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-            @Override
-            public void onComplete(@NonNull Task<Uri> task) {
-                if (task.isSuccessful()) {
-                    Uri downloadUri = task.getResult();
-
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("photo", downloadUri.toString());
-                    reference.putFile(image_url).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            // Obtener la URL de descarga de la imagen subida
-                            reference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri downloadUri) {
-                                    Toast.makeText(Register.this, "Foto subida exitosamente", Toast.LENGTH_SHORT).show();
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Toast.makeText(Register.this, "Error al obtener la URL de descarga", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Register.this, "Error al subir la foto", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                } else {
-                    Context context = getApplicationContext();
-                    Toast.makeText(context, "Error al cargar la foto!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
-    //#endregion
 
     //#region FUNCIÓN PARA METER DATOS EN LA BBDD
     private void meterdatosenBBDD(String username, String email, String password, String phoneNumber) {
-        //OBTIENE LA INSTANCIA
+        //RECOGE EL ID DISPONIBLE PARA EL USUARIO
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        //GUARDA LA FECHA ACTUAL
-        Date tRegister = new Date();
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        //GUARDA LA COLECCIÓN
-        DocumentReference docRef = db.collection("user").document(email);
-        //CREA EL DOCUMENTO Y AÑADE LOS CAMPOS
-        Map<String, Object> userMap = new HashMap<>();
-        userMap.put("email", email);
-        userMap.put("name", username);
-        userMap.put("phoneNumber", phoneNumber);
-        userMap.put("tRegister", tRegister);
+        //RECOGE DATOS GENERICOS DE LA APP
+        CollectionReference dataRef = db.collection("data");
 
-        //AÑADE EL DOCUMENTO A LA COLECCIÓN
-        docRef.set(userMap)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) { //SI TODO VA BIEN
-                        //INICIA SESIÓN
-                        iniciarSesion(email, password);
+        dataRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot querySnapshot = task.getResult();
+                    if (querySnapshot != null && !querySnapshot.isEmpty()) {
+                        DocumentSnapshot document = querySnapshot.getDocuments().get(0);
+                        if (document.exists()) {
+                            //RECOGE EL SIGUIENTE USUARIO DISPONIBLE
+                            Long userId = document.getLong("nextUserId");
+
+                            //OBTIENE LA INSTANCIA
+                            FirebaseFirestore db = FirebaseFirestore.getInstance();
+                            //GUARDA LA FECHA ACTUAL
+                            Date tRegister = new Date();
+
+                            //GUARDA LA COLECCIÓN
+                            DocumentReference docRef = db.collection("user").document(email.toLowerCase());
+                            //CREA EL DOCUMENTO Y AÑADE LOS CAMPOS
+                            Map<String, Object> userMap = new HashMap<>();
+                            userMap.put("email", email.toLowerCase());
+                            userMap.put("name", username);
+                            userMap.put("phoneNumber", phoneNumber);
+                            userMap.put("tRegister", tRegister);
+                            userMap.put("cardNextId", 1);
+                            userMap.put("userId", Long.valueOf(userId));
+
+                            //AÑADE EL DOCUMENTO A LA COLECCIÓN
+                            docRef.set(userMap)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) { //SI TODO VA BIEN
+                                            //INICIA SESIÓN
+                                            iniciarSesion(email.toLowerCase(), password);
+                                        }
+                                    })
+                                    .addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) { //SI HAY ALGÚN ERROR
+                                            Context context = getApplicationContext();
+                                            Toast.makeText(context, "Error al registrar los datos del usuario!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                            //ACTUALIZA EL VALOR DE nextUserId + 1
+                            Long nextUserIdValue = document.getLong("nextUserId");
+                            if (nextUserIdValue != null) {
+                                long nextUserId = nextUserIdValue + 1;
+                                Map<String, Object> updateMap = new HashMap<>();
+                                updateMap.put("nextUserId", nextUserId);
+                                dataRef.document(document.getId()).update(updateMap);
+                            }
+                        } else {
+                            // Handle non-existent document
+                            // Show an error message or take appropriate action
+                        }
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) { //SI HAY ALGÚN ERROR
-                        Context context = getApplicationContext();
-                        Toast.makeText(context, "Error al registrar los datos del usuario!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                } else {
+                    // Handle task exception
+                    // Show an error message or take appropriate action
+                }
+            }
+        });
     }
-    //#endregion
+//#endregion
+
 
     //#region FUNCIÓN PARA INICIAR SESIÓN
     private void iniciarSesion(String emailSTR, String passwordSTR) {
         //OBTIENE LA INSTANCIA DE FIREBASEAUTH
         mAuth = FirebaseAuth.getInstance();
         //INICIA SESIÓN
-        mAuth.signInWithEmailAndPassword(emailSTR,passwordSTR).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        mAuth.signInWithEmailAndPassword(emailSTR, passwordSTR).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Context context = getApplicationContext();
                 if (task.isSuccessful()) {
-                    Drawable profileDrawable = getResources().getDrawable(R.drawable.profile);
-                    Drawable imageViewDrawable = imageViewPhoto.getDrawable();
-                    if (imageViewDrawable != null && imageViewDrawable.getConstantState() != null) {
-                        if (imageViewDrawable.getConstantState().equals(profileDrawable.getConstantState())) {
-                        } else {
-                            subirPhoto(image_url);
-                        }
+                    if (selectedImageUri != null) {
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        StorageReference storageRef = storage.getReference();
+                        StorageReference imagenRef = storageRef.child("profileUserImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid());
+
+                        UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
+
+                        uploadTask.addOnSuccessListener(taskSnapshot -> {
+
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                    Intent intent = new Intent(Register.this, HomeMenu.class);
-                    startActivity(intent);
+
+                    //Intent intent = new Intent(Register.this, HomeMenu.class);
+                    Toast.makeText(context, "Registro completado!", Toast.LENGTH_SHORT).show();
+                    //startActivity(intent);
                 } else {
                     Toast.makeText(context, "Error!! Email o contraseña inválidos!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
+
     //#endregion
 
     //#region FUNCION PARA VALIDAR FORMATO DEL EMAIL
@@ -368,4 +290,17 @@ public class Register extends AppCompatActivity {
     }
     //#endregion
 
+    //#region IMAGEN ----
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                selectedImageUri = data.getData();
+                imageViewPhoto.setImageURI(selectedImageUri);
+            }
+        }
+    }
+    //#endregion
 }

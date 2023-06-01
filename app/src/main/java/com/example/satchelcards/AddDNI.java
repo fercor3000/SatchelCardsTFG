@@ -2,7 +2,9 @@ package com.example.satchelcards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -19,6 +21,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -28,10 +33,26 @@ import java.util.Map;
 public class AddDNI extends AppCompatActivity {
     ImageView gobackBtn;
     Button btn_guardar;
-    // Obtén una referencia al EditText de fecha
+    Button btnCambiarImg;
+    Uri selectedImageUri;
+    ImageView imageViewPhoto;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 100;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_dni);
+
+        imageViewPhoto = findViewById(R.id.imageViewPhoto);
+        btnCambiarImg = (Button) findViewById(R.id.dni_btn_add_image);
+        btnCambiarImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+            }
+        });
+
+
         gobackBtn = (ImageView)findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,45 +131,88 @@ public class AddDNI extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String email = currentUser.getEmail();
-                DocumentReference docRef = db.collection("user").document(email).collection("dni").document(dni);
-                //CREA EL DOCUMENTO Y AÑADE LOS CAMPOS
-                Map<String, Object> userMap = new HashMap<>();
-                userMap.put("nombre", nombre);
-                userMap.put("apellidos", apellidos);
-                userMap.put("sexo", sexo);
-                userMap.put("nacionalidad", nacionalidad);
-                userMap.put("numSoport", numSoport);
-                userMap.put("can", can);
-                userMap.put("dni", dni);
-                userMap.put("equipo", equipo);
-                userMap.put("provincia", provincia);
-                userMap.put("domicilio", domicilio);
-                userMap.put("lugarNacimiento", lugarNacimiento);
-                userMap.put("nombrePadre", nombrePadre);
-                userMap.put("nombreMadre", nombreMadre);
-                userMap.put("DNacimiento", DNacimiento);
-                userMap.put("DValidez", DValidez);
+                //SI HAY ALGO NULL
+                if (nombre.equals("") || apellidos.equals("") || sexo.equals("") || nacionalidad.equals("") || numSoport.equals("")
+                        || can.equals("") ||dni.equals("") || equipo.equals("") || provincia.equals("") || domicilio.equals("")
+                        || lugarNacimiento.equals("") || nombrePadre.equals("") || nombreMadre.equals("") || DNacimiento.equals("")
+                        || DValidez.equals("")) {
+                    Context context = getApplicationContext();
+                    Toast.makeText(context, "ERROR! Faltan datos!", Toast.LENGTH_SHORT).show();
+                } else {
+                    DocumentReference docRef = db.collection("user").document(email).collection("dni").document(dni);
+                    //CREA EL DOCUMENTO Y AÑADE LOS CAMPOS
+                    Map<String, Object> userMap = new HashMap<>();
+                    userMap.put("nombre", nombre);
+                    userMap.put("apellidos", apellidos);
+                    userMap.put("sexo", sexo);
+                    userMap.put("nacionalidad", nacionalidad);
+                    userMap.put("numSoport", numSoport);
+                    userMap.put("can", can);
+                    userMap.put("dni", dni);
+                    userMap.put("equipo", equipo);
+                    userMap.put("provincia", provincia);
+                    userMap.put("domicilio", domicilio);
+                    userMap.put("lugarNacimiento", lugarNacimiento);
+                    userMap.put("nombrePadre", nombrePadre);
+                    userMap.put("nombreMadre", nombreMadre);
+                    userMap.put("DNacimiento", DNacimiento);
+                    userMap.put("DValidez", DValidez);
 
-                //AÑADE EL DOCUMENTO A LA COLECCIÓN
-                docRef.set(userMap)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) { //SI TODO VA BIEN
-                                Intent intent = new Intent(AddDNI.this, HomeMenu.class);
-                                startActivity(intent);
-                                Context context = getApplicationContext();
-                                Toast.makeText(context, "DNI insertado !", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-                        .addOnFailureListener(new OnFailureListener() {
-                            @Override
-                            public void onFailure(@NonNull Exception e) { //SI HAY ALGÚN ERROR
-                                Context context = getApplicationContext();
-                                Toast.makeText(context, "Error al registrar los datos del usuario!" + e, Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                    //AÑADE EL DOCUMENTO A LA COLECCIÓN
+                    docRef.set(userMap)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) { //SI TODO VA BIEN
+                                    if (selectedImageUri != null) {
+                                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                                        StorageReference storageRef = storage.getReference();
+                                        StorageReference imagenRef = storageRef.child("cardImages/" + currentUser.getUid() + "_dni_" + dni);
+
+                                        UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
+
+                                        uploadTask.addOnSuccessListener(taskSnapshot -> {
+
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Context context = getApplicationContext();
+                                                Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+
+
+                                    Intent intent = new Intent(AddDNI.this, HomeMenu.class);
+                                    startActivity(intent);
+                                    Context context = getApplicationContext();
+                                    Toast.makeText(context, "DNI insertado !", Toast.LENGTH_SHORT).show();
+                                }
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) { //SI HAY ALGÚN ERROR
+                                    Context context = getApplicationContext();
+                                    Toast.makeText(context, "Error al registrar los datos del usuario!" + e, Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
             //#endregion
         });
     }
+
+    //#region IMAGEN ----
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
+            if (data != null && data.getData() != null) {
+                selectedImageUri = data.getData();
+                imageViewPhoto.setImageURI(selectedImageUri);
+            }
+        }
+    }
+    //#endregion
+
 }

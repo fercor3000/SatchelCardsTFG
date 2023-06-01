@@ -38,12 +38,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:text="Rellenar DNI:"
+                android:text="Nuevo DNI:"
                 android:textColor="#232e63"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imageViewPhoto"
+            android:layout_width="100dp"
+            android:layout_height="90dp"
+            android:layout_gravity="left"
+            android:src="@drawable/baseline_credit_card_off_24"/>
 
         <Button
             android:id="@+id/dni_btn_add_image"
@@ -155,7 +162,7 @@
             <!-- EditText para el Nombre del padre -->
             <EditText
                 android:id="@+id/dni_nombre_padre"
-                android:layout_width="wrap_content"
+                android:layout_width="180dp"
                 android:layout_height="wrap_content"
                 android:hint="Nombre del Padre"
                 android:padding="16dp" />
@@ -163,7 +170,7 @@
             <!-- EditText para la nombre de la madre -->
             <EditText
                 android:id="@+id/dni_nombre_madre"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:hint="Nombre de la Madre"
                 android:padding="16dp" />

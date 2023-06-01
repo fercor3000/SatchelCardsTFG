@@ -38,6 +38,7 @@
             android:orientation="vertical"
             android:layout_marginLeft="10dp">
             <ImageView
+                android:id="@+id/imagen_tarjeta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="40dp"
@@ -71,6 +72,14 @@
                 android:layout_marginBottom="5dp"
                 android:textSize="12dp"
                 android:text="Nombre Titular"/>
+
+            <TextView
+                android:id="@+id/fecha_expiracion"
+                android:layout_width="179dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:gravity="right"
+                android:text="Fecha Expiracion" />
 
         </LinearLayout>
 
@@ -112,6 +121,7 @@
             android:layout_marginRight="10dp">
 
             <Button
+                android:id="@+id/notes_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/darkBlue"
@@ -143,6 +153,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
+                android:id="@+id/edit_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Editar Tarjeta"
@@ -173,6 +184,7 @@
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
             <Button
+                android:id="@+id/delete_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Eliminar Tarjeta"

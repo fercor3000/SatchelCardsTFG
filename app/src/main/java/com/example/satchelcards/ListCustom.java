@@ -29,7 +29,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDNI extends AppCompatActivity {
+public class ListCustom extends AppCompatActivity {
 
     ImageView gobackBtn;
     private RecyclerView recyclerView;
@@ -39,7 +39,7 @@ public class ListDNI extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_dni);
+        setContentView(R.layout.list_custom);
         Context context = getApplicationContext();
 
         //#region BUTTON BACK
@@ -47,13 +47,13 @@ public class ListDNI extends AppCompatActivity {
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ListDNI.this, HomeMenu.class);
+                Intent intent = new Intent(ListCustom.this, HomeMenu.class);
                 startActivity(intent);
             }
         });
         //#endregion
 
-        recyclerView = findViewById(R.id.recyclerView_dni);
+        recyclerView = findViewById(R.id.recyclerView_custom);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         List<Item> itemList = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ListDNI extends AppCompatActivity {
 
         //Coge todas las tarjetas
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionRef = db.collection("/user/" + email + "/dni/");
+        CollectionReference collectionRef = db.collection("/user/" + email + "/custom/");
 
         //#region OBTENER LISTA DE TARJETAS
         collectionRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -81,39 +81,42 @@ public class ListDNI extends AppCompatActivity {
                                     LinearLayout.HORIZONTAL
                             );
                             String documentId = document.getId();
-                            String dni = document.getData().get("dni").toString();
+                            String cardName = document.getData().get("cardName").toString();
 
                             FirebaseStorage storage = FirebaseStorage.getInstance();
                             String storagePath = "cardImages/";
-                            String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_dni_" + dni;
+                            String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_custom_" + documentId;
                             StorageReference storageRef = storage.getReference().child(rute_storage_photo);
                             //ImageView imageView = findViewById(R.id.profile);
 
                             storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {
-                                    Item item = new Item(uri, dni, documentId, "dni");
+                                    Item item = new Item(uri, cardName, documentId, "custom");
                                     itemList.add(item);
                                     itemsAdapter.notifyDataSetChanged();
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    Item item = new Item(null, dni, documentId, "dni");
+                                    Item item = new Item(null, cardName, documentId, "custom");
                                     itemList.add(item);
                                     itemsAdapter.notifyDataSetChanged();
                                 }
                             });
                         }
                         itemsAdapter.notifyDataSetChanged();
+
                     }
                 } else {
                     Toast.makeText(context, "Error!! Tarjetas no encontradas!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        //#endregion
+//#endregion
 
+
+        // Crear el adaptador y establecerlo en el RecyclerView
         itemsAdapter = new ItemsAdapter(itemList);
         recyclerView.setAdapter(itemsAdapter);
     }

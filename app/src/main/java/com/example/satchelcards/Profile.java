@@ -33,12 +33,25 @@ public class Profile extends AppCompatActivity {
     Button gestProfile;
     Button cerrarSesion;
 
+    private ImageView helpBtn;
+
     //#endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile);
+
+        helpBtn = (ImageView) findViewById(R.id.helpBtn);
+        helpBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = "https://drive.google.com/file/d/1QAMsVhlz7bGe04_j_qrhlYvHBaJQBigt/view?usp=sharing";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
 
         //#region OBTIENE ELEMENTOS
         gobackBtn = (ImageView)findViewById(R.id.goBack);
@@ -107,32 +120,29 @@ public class Profile extends AppCompatActivity {
                         TextView tVName = (TextView) findViewById(R.id.emailTextView);
                         //GUARDA EL NAME OBTENIDO EN EL TEXTVIEW
                         tVName.setText(name);
+
+                        // Realizar la carga de la imagen después de obtener los datos del usuario
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        String storagePath = "profileUserImages/";
+                        String rute_storage_photo = storagePath + user.getUid();
+                        StorageReference storageRef = storage.getReference().child(rute_storage_photo);
+                        ImageView imageView = findViewById(R.id.profile);
+
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Picasso.get().load(uri).into(imageView);
+                                showPage();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {}
+                        });
                     }
                 } else { //SI NO SE COMPLETA LA EJECUCIÓN DE LA QUERY...
                     Context context = getApplicationContext();
                     Toast.makeText(context, "Error! No se pudo ejecutar la consulta!", Toast.LENGTH_SHORT).show();
                     atras(0);
-                }
-            });
-            //#endregion
-
-            //#region PONER FOTO
-            FirebaseStorage storage = FirebaseStorage.getInstance();
-            String storagePath = "profileUserImages/*";
-            String tipoFoto = "profileUserImg";
-            String rute_storage_photo = storagePath + "" + tipoFoto + "" + user.getUid();
-            StorageReference storageRef = storage.getReference().child(rute_storage_photo);
-            ImageView imageView = findViewById(R.id.profile);
-
-            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                @Override
-                public void onSuccess(Uri uri) {
-                    Picasso.get().load(uri).into(imageView);
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    // Ocurrió un error al obtener la URL de descarga
                 }
             });
             //#endregion
@@ -155,4 +165,8 @@ public class Profile extends AppCompatActivity {
     }
     //#endregion
 
+    private void showPage() {
+        View mainContainer = findViewById(R.id.mainContainer);
+        mainContainer.setVisibility(View.VISIBLE);
+    }
 }

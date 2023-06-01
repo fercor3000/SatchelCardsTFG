@@ -1,20 +1,22 @@
 package com.example.satchelcards;
 
-import android.widget.ImageView;
+import android.net.Uri;
 
 public class Item {
-    private ImageView imageView;
+    private Uri imageViewUri;
     private String titulo;
     private String id;
+    private String tipo;
 
-    public Item(ImageView imageView, String titulo, String id) {
-        this.imageView = imageView;
+    public Item(Uri imageViewUri, String titulo, String id, String tipo) {
+        this.imageViewUri = imageViewUri;
         this.titulo = titulo;
         this.id = id;
+        this.tipo = tipo;
     }
 
-    public ImageView getImageView() {
-        return imageView;
+    public Uri getImageViewUri() {
+        return imageViewUri;
     }
 
     public String getTitulo() {
@@ -23,6 +25,9 @@ public class Item {
 
     public String getId() {
         return id;
+    }
+    public String getTipo() {
+        return tipo;
     }
 }
 

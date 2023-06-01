@@ -48,7 +48,7 @@ public class SeleccionarGift extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seleccionar_gift);
 
-        imagen = findViewById(R.id.imagen_perfil);
+        imagen = findViewById(R.id.imagen_tarjeta);
         nombreTarjeta = findViewById(R.id.nombre_tarjeta_gift);
         holderTarjeta = findViewById(R.id.nombre_titular_gift);
         fechaExpiracion = findViewById(R.id.fecha_validez_gift);
@@ -136,7 +136,7 @@ public class SeleccionarGift extends AppCompatActivity {
                             }
                         });
             }
-    });
+        });
 
         editBtn = findViewById(R.id.edit_button);
 
