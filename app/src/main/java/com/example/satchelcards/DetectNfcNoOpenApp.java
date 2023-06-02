@@ -20,8 +20,9 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-public class WriteNfcActivity extends AppCompatActivity {
+public class DetectNfcNoOpenApp extends AppCompatActivity {
 
+    ImageView gobackBtn;
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
     private String nfcData; // Aquí deberías tener el código NFC guardado en una variable
@@ -29,7 +30,16 @@ public class WriteNfcActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_write_nfc);
+        setContentView(R.layout.detect_nfc_no_open_app);
+
+        gobackBtn = (ImageView) findViewById(R.id.go_back);
+        gobackBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DetectNfcNoOpenApp.this, HomeMenu.class);
+                startActivity(intent);
+            }
+        });
 
         // Obtener el valor del NFC del Intent
         Bundle extras = getIntent().getExtras();

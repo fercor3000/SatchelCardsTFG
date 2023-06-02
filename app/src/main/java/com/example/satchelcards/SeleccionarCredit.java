@@ -183,6 +183,7 @@ public class SeleccionarCredit extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarCredit.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("cardType","payment");
                 startActivity(intent);
             }
         });

@@ -167,6 +167,7 @@ public class SeleccionarTransport extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarTransport.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("cardType","transport");
                 startActivity(intent);
             }
         });
