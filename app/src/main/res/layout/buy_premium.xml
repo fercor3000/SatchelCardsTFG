@@ -50,83 +50,83 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="296dp"
             android:layout_height="match_parent"
-            android:gravity="top"
-            android:orientation="vertical"
-            android:background="@drawable/rounded_bg"
-            android:minHeight="500dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/rounded_bg"
+            android:gravity="top"
+            android:minHeight="500dp"
+            android:orientation="vertical">
 
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="25dp"
+                android:fontFamily="sans-serif-black"
                 android:paddingLeft="15dp"
+                android:paddingTop="25dp"
+                android:text="Ventajas:"
                 android:textColor="@color/white"
-                android:textSize="13dp"
-                android:fontFamily="sans-serif-black"
-                android:text="Ventajas:"/>
+                android:textSize="13dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingLeft="25dp"
-                android:textColor="@color/white"
-                android:textSize="13dp"
                 android:fontFamily="sans-serif-black"
-                android:text="- No aparecerán anuncios en la app"/>
+                android:paddingLeft="25dp"
+                android:paddingTop="15dp"
+                android:text="- No aparecerán anuncios en la app"
+                android:textColor="@color/white"
+                android:textSize="13dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingLeft="25dp"
-                android:textColor="@color/white"
-                android:textSize="13dp"
                 android:fontFamily="sans-serif-black"
-                android:text="- Podrás guardar más tarjetas "/>
+                android:paddingLeft="25dp"
+                android:paddingTop="15dp"
+                android:text="- Podrás guardar más tarjetas "
+                android:textColor="@color/white"
+                android:textSize="13dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingLeft="25dp"
-                android:textColor="@color/white"
-                android:textSize="13dp"
                 android:fontFamily="sans-serif-black"
-                android:text="- Anticipación de actualizaciones "/>
+                android:paddingLeft="25dp"
+                android:paddingTop="15dp"
+                android:text="- Anticipación de actualizaciones "
+                android:textColor="@color/white"
+                android:textSize="13dp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingLeft="25dp"
-                android:textColor="@color/white"
-                android:textSize="13dp"
                 android:fontFamily="sans-serif-black"
-                android:text="- Soporte técnico en 12 horas"/>
+                android:paddingLeft="25dp"
+                android:paddingTop="15dp"
+                android:text="- Soporte técnico en 12 horas"
+                android:textColor="@color/white"
+                android:textSize="13dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:paddingLeft="25dp"
                 android:paddingTop="25dp"
-                android:paddingRight="25dp"
-                android:paddingLeft="25dp">
+                android:paddingRight="25dp">
 
                 <Button
                     android:id="@+id/buy_premium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:backgroundTint="@color/white"
                     android:text="1,99 €"
                     android:textColor="@color/darkBlue"
-                    android:textStyle="bold"
                     android:textFontWeight="@integer/material_motion_duration_long_1"
-                    android:backgroundTint="@color/white" />
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -134,11 +134,12 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:fontFamily="sans-serif-black"
                 android:gravity="center"
                 android:text="SATCHEL S.L."
-                android:textSize="12dp"
                 android:textColor="@color/white"
-                android:fontFamily="sans-serif-black" />
+                android:textSize="12dp" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -150,7 +151,7 @@
                     android:layout_height="90dp"
                     android:maxWidth="90dp"
                     android:maxHeight="90dp"
-                    android:src="@drawable/logocardsatchel"/>
+                    android:src="@drawable/logocardsatchel" />
 
             </LinearLayout>
         </LinearLayout>
