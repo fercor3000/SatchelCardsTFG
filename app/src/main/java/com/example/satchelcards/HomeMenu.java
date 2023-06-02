@@ -180,7 +180,7 @@ public class HomeMenu extends AppCompatActivity {
         });
         //#endregion
 
-        //#region AL PULSAR EL MENÚ
+        //#region AL PULSAR EL MENÚ & 1,2
         menuItem1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,14 +190,13 @@ public class HomeMenu extends AppCompatActivity {
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
-        //#endregion
 
-        //#region MENÚ 2
         menuItem2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Acción de eliminar tarjeta
-                //drawerLayout.closeDrawer(GravityCompat.START);
+                Intent intent = new Intent(HomeMenu.this, BuyPremium.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
 
