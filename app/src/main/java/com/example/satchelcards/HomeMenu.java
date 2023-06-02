@@ -113,7 +113,7 @@ public class HomeMenu extends AppCompatActivity {
         });
         //#endregion
 
-        //#region AL PULSAR LISTA DE ACCESS
+        /*//#region AL PULSAR LISTA DE ACCESS
         accessList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +122,7 @@ public class HomeMenu extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //#endregion
+        //#endregion*/
 
         //#region AL PULASR CUSTOM...
         customList.setOnClickListener(new View.OnClickListener() {
