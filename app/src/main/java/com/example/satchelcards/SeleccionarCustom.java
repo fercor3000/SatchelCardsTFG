@@ -170,6 +170,7 @@ public class SeleccionarCustom extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarCustom.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("cardType","custom");
                 startActivity(intent);
             }
         });

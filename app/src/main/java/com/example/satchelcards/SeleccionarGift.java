@@ -170,6 +170,7 @@ public class SeleccionarGift extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarGift.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("cardType","loyalty");
                 startActivity(intent);
             }
         });

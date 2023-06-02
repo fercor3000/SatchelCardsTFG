@@ -131,12 +131,14 @@
                 android:id="@+id/notes_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/darkBlue"
                 android:text="Notas"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/darkBlue"
                 android:text="Usos recientes"/>
 

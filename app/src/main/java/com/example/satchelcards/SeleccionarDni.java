@@ -175,6 +175,7 @@ public class SeleccionarDni extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarDni.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("cardType","dni");
                 startActivity(intent);
             }
         });

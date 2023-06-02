@@ -47,7 +47,7 @@
         <activity android:name=".BuyPremium" />
         <activity android:name=".AboutUs" />
         <activity
-            android:name=".WriteNfcActivity"
+            android:name=".DetectNfcNoOpenApp"
             android:label="Write NFC"
             android:launchMode="singleTop"
             android:exported="true">

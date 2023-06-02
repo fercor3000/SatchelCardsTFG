@@ -38,6 +38,7 @@ public class CardNotes extends AppCompatActivity {
         btnSaveNotes = findViewById(R.id.btn_save_notes);
 
         String itemId = getIntent().getStringExtra("itemId");
+        String cardType = getIntent().getStringExtra("cardType");
 
         // Cargar nota de la base de datos y rellenar el bloque de notas en el EditText noteBlock
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -45,7 +46,7 @@ public class CardNotes extends AppCompatActivity {
             String email = currentUser.getEmail();
             DocumentReference cardRef = db.collection("user")
                     .document(email)
-                    .collection("loyalty")
+                    .collection(cardType)
                     .document(itemId);
 
             cardRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -68,7 +69,29 @@ public class CardNotes extends AppCompatActivity {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CardNotes.this, SeleccionarGift.class);
+                Intent intent = new Intent();
+                switch(cardType){
+                    case "payment":
+                        intent = new Intent(CardNotes.this, SeleccionarCredit.class);
+                        break;
+                    case "dni":
+                        intent = new Intent(CardNotes.this, SeleccionarDni.class);
+                        break;
+                    case "custom":
+                        intent = new Intent(CardNotes.this, SeleccionarCustom.class);
+                        break;
+                    case "transport":
+                        intent = new Intent(CardNotes.this, SeleccionarTransport.class);
+                        break;
+                    case "access":
+                        //intent = new Intent(CardNotes.this, SeleccionarAccess.class);
+                        break;
+                    case "loyalty":
+                        intent = new Intent(CardNotes.this, SeleccionarGift.class);
+                        break;
+                    default:
+                        intent = new Intent(CardNotes.this, HomeMenu.class);
+                }
                 intent.putExtra("itemId",itemId);
                 startActivity(intent);
             }
@@ -85,7 +108,7 @@ public class CardNotes extends AppCompatActivity {
                     String email = currentUser.getEmail();
                     DocumentReference cardRef = db.collection("user")
                             .document(email)
-                            .collection("loyalty")
+                            .collection(cardType)
                             .document(itemId);
 
                     cardRef.update("notes", note)
@@ -96,14 +119,59 @@ public class CardNotes extends AppCompatActivity {
                                         // Nota Guardada correctamente
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Notas guardadas", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(CardNotes.this, SeleccionarGift.class);
+                                        Intent intent = new Intent();
+                                        switch(cardType){
+                                            case "payment":
+                                                intent = new Intent(CardNotes.this, SeleccionarCredit.class);
+                                                break;
+                                            case "dni":
+                                                intent = new Intent(CardNotes.this, SeleccionarDni.class);
+                                                break;
+                                            case "custom":
+                                                intent = new Intent(CardNotes.this, SeleccionarCustom.class);
+                                                break;
+                                            case "transport":
+                                                intent = new Intent(CardNotes.this, SeleccionarTransport.class);
+                                                break;
+                                            case "access":
+                                                //intent = new Intent(CardNotes.this, SeleccionarAccess.class);
+                                                break;
+                                            case "loyalty":
+                                                intent = new Intent(CardNotes.this, SeleccionarGift.class);
+                                                break;
+                                            default:
+                                                intent = new Intent(CardNotes.this, HomeMenu.class);
+                                        }
+
                                         intent.putExtra("itemId",itemId);
                                         startActivity(intent);
                                     } else {
                                         // Error al guardar nota
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Error al guardar notas", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(CardNotes.this, SeleccionarGift.class);
+                                        Intent intent = new Intent();
+                                        switch(cardType){
+                                            case "payment":
+                                                intent = new Intent(CardNotes.this, SeleccionarCredit.class);
+                                                break;
+                                            case "dni":
+                                                intent = new Intent(CardNotes.this, SeleccionarDni.class);
+                                                break;
+                                            case "custom":
+                                                intent = new Intent(CardNotes.this, SeleccionarCustom.class);
+                                                break;
+                                            case "transport":
+                                                intent = new Intent(CardNotes.this, SeleccionarTransport.class);
+                                                break;
+                                            case "access":
+                                                //intent = new Intent(CardNotes.this, SeleccionarAccess.class);
+                                                break;
+                                            case "loyalty":
+                                                intent = new Intent(CardNotes.this, SeleccionarGift.class);
+                                                break;
+                                            default:
+                                                intent = new Intent(CardNotes.this, HomeMenu.class);
+                                        }
                                         intent.putExtra("itemId",itemId);
                                         startActivity(intent);
                                     }
