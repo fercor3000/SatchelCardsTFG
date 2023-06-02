@@ -319,9 +319,27 @@ public class AddTransport extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Context context = getApplicationContext();
                         Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddTransport.this, SeleccionarTransport.class);
-                        intent.putExtra("itemId",itemId);
-                        startActivity(intent);
+                        if (selectedImageUri != null) {
+                            FirebaseStorage storage = FirebaseStorage.getInstance();
+                            StorageReference storageRef = storage.getReference();
+                            StorageReference imagenRef = storageRef.child("cardImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_custom_" + itemId);
+                            UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
+                            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Context context = getApplicationContext();
+                                    Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            Intent intent = new Intent(AddTransport.this, HomeMenu.class);
+                            intent.putExtra("itemId",itemId);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(AddTransport.this, SeleccionarCustom.class);
+                            intent.putExtra("itemId",itemId);
+                            startActivity(intent);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

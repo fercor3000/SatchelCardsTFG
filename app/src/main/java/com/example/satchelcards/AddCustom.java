@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -48,7 +49,7 @@ public class AddCustom extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
     ImageView imageViewPhoto;
     Uri selectedImageUri;
-    String finalUserCardID, itemId;
+    String itemId, cardNextIdFinal;
 
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +141,7 @@ public class AddCustom extends AppCompatActivity {
                                     //Si los recojo con exito, los utilizo para crear la nueva tarjeta
                                     if (userId != null && cardNextId != null) {
                                         String userCardID = "user" + userId + "card" + cardNextId;
+                                        cardNextIdFinal = userCardID;
                                     //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
                                     insertInDDBB(cardName, cardHolderName,cardNumber, DExpire, userCardID, cardNextId);
                                 } else {
@@ -208,7 +210,7 @@ public class AddCustom extends AppCompatActivity {
                                         if (selectedImageUri != null) {
                                             FirebaseStorage storage = FirebaseStorage.getInstance();
                                             StorageReference storageRef = storage.getReference();
-                                            StorageReference imagenRef = storageRef.child("cardImages/" + currentUser.getUid() + "_custom_" + finalUserCardID);
+                                            StorageReference imagenRef = storageRef.child("cardImages/" + currentUser.getUid() + "_custom_" + cardNextIdFinal);
 
                                             UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
 
@@ -323,9 +325,34 @@ public class AddCustom extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             Context context = getApplicationContext();
                             Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(AddCustom.this, SeleccionarCustom.class);
-                            intent.putExtra("itemId",itemId);
-                            startActivity(intent);
+                            if (selectedImageUri != null) {
+                                FirebaseStorage storage = FirebaseStorage.getInstance();
+                                StorageReference storageRef = storage.getReference();
+
+
+
+
+                                StorageReference imagenRef = storageRef.child("cardImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_custom_" + itemId);
+
+                                UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
+
+                                uploadTask.addOnSuccessListener(taskSnapshot -> {
+
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Context context = getApplicationContext();
+                                        Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                Intent intent = new Intent(AddCustom.this, HomeMenu.class);
+                                intent.putExtra("itemId",itemId);
+                                startActivity(intent);
+                            } else {
+                                Intent intent = new Intent(AddCustom.this, SeleccionarCustom.class);
+                                intent.putExtra("itemId",itemId);
+                                startActivity(intent);
+                            }
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {

@@ -40,7 +40,7 @@ public class SeleccionarCustom extends AppCompatActivity {
     ImageView imagen;
     Button editBtn, deleteBtn, notesBtn;
     Date vFechaExpiracion;
-    String vNombreTarjeta, vNombreTitular, vNumeroTarjeta, formattedExpirationDate;
+    String vNombreTarjeta, vNombreTitular, vNumeroTarjeta, formattedExpirationDate, itemId;
     TextView nombreTarjeta, nombreTitular, numeroTarjeta, fechaExpiracion;
 
     @Override
