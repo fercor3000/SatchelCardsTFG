@@ -1,8 +1,11 @@
 package com.example.satchelcards;
 
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -38,6 +41,9 @@ public class AddDNI extends AppCompatActivity {
     ImageView imageViewPhoto;
     String itemId;
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
+    private NfcAdapter nfcAdapter;
+    private ImageView nfcLogoImageView;
+    private PendingIntent nfcPendingIntent;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,6 +221,14 @@ public class AddDNI extends AppCompatActivity {
             }
             //#endregion
         });
+
+        nfcLogoImageView = findViewById(R.id.nfc_logo);
+
+        nfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        // Crear PendingIntent para la detección de NFC
+        Intent nfcIntent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        nfcPendingIntent = PendingIntent.getActivity(this, 0, nfcIntent, PendingIntent.FLAG_MUTABLE);
     }
 
     //#region IMAGEN ----
@@ -230,5 +244,50 @@ public class AddDNI extends AppCompatActivity {
         }
     }
     //#endregion
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (nfcAdapter != null) {
+            nfcAdapter.enableForegroundDispatch(this, nfcPendingIntent, null, null);
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (nfcAdapter != null) {
+            nfcAdapter.disableForegroundDispatch(this);
+        }
+    }
+
+    String tagIdString = "";
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+
+            byte[] tagId = tag.getId(); // Obtiene el código NFC de la tarjeta como un arreglo de bytes
+
+            //En esta variable esta guardada la cadena del NFC
+            tagIdString = convertBytesToHexString(tagId); // Convierte el arreglo de bytes a una cadena hexadecimal
+
+            // Cambia la imagen a nfc_check.png
+            nfcLogoImageView.setImageResource(R.drawable.nfc_check);
+
+            // Muestra un mensaje de éxito
+            Toast.makeText(this, "NFC detectado correctamente", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String convertBytesToHexString(byte[] bytes) {
+        StringBuilder sb = new StringBuilder();
+        for (byte b : bytes) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
 
 }

@@ -22,6 +22,7 @@ public class HomeMenu extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private TextView menuItem1;
     private TextView menuItem2;
+    private TextView menuItem3;
     private ImageView helpBtn;
     //#endregion
 
@@ -52,8 +53,10 @@ public class HomeMenu extends AppCompatActivity {
         addCardBtn = (ImageButton) findViewById(R.id.addCard);
         displayMenuButton = (ImageView)findViewById(R.id.displayMenu);
         drawerLayout = findViewById(R.id.drawer_layout);
+
         menuItem1 = findViewById(R.id.menu_item1);
         menuItem2 = findViewById(R.id.menu_item2);
+        menuItem3 = findViewById(R.id.menu_item3);
 
         //#region AL PULSAR COMPAR PREMIUM
         menuItem2.setOnClickListener(new View.OnClickListener() {
@@ -180,6 +183,15 @@ public class HomeMenu extends AppCompatActivity {
         });
         //#endregion
 
+        // Configura el botón para abrir el menú lateral
+        displayMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        //#endregion
+
         //#region AL PULSAR EL MENÚ & 1,2
         menuItem1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,15 +212,14 @@ public class HomeMenu extends AppCompatActivity {
             }
         });
 
-
-        // Configura el botón para abrir el menú lateral
-        displayMenuButton.setOnClickListener(new View.OnClickListener() {
+        menuItem3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                Intent intent = new Intent(HomeMenu.this, AboutUs.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
-        //#endregion
     }
 
     @Override

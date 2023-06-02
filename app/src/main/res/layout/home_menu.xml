@@ -304,8 +304,9 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:paddingTop="50dp"
-            android:paddingLeft="16dp"/>
+            android:paddingTop="40dp"
+            android:paddingLeft="16dp"
+            android:paddingBottom="15dp"/>
 
         <TextView
             android:id="@+id/menu_item2"
@@ -315,7 +316,18 @@
             android:textSize="18sp"
             android:textStyle="bold"
             android:text="Comprar Premium"
-            android:padding="16dp" />
+            android:paddingLeft="16dp"
+            android:paddingBottom="15dp"/>
+
+        <TextView
+            android:id="@+id/menu_item3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:text="Acerca de Satchel"
+            android:paddingLeft="16dp" />
 
     </LinearLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

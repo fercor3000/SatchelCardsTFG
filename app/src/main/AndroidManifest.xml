@@ -45,6 +45,7 @@
         <activity android:name=".SeleccionarTransport" />
         <activity android:name=".SeleccionarCustom" />
         <activity android:name=".BuyPremium" />
+        <activity android:name=".AboutUs" />
         <activity
             android:name=".WriteNfcActivity"
             android:label="Write NFC"
