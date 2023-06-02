@@ -191,7 +191,7 @@
                     android:scaleType="fitCenter"
                     android:src="@drawable/piccustomcard" />
 
-                <ImageView
+                <!--<ImageView
                     android:id="@+id/AccessCards"
                     android:layout_width="160dp"
                     android:layout_height="120dp"
@@ -200,7 +200,7 @@
                     android:maxWidth="175dp"
                     android:maxHeight="105dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/picaccesscard" />
+                    android:src="@drawable/picaccesscard" />-->
 
             </LinearLayout>
 
@@ -222,7 +222,7 @@
                     android:background="@drawable/main_menu_image_text"
                     android:textStyle="bold"></TextView>
 
-                <TextView
+                <!--<TextView
                     android:layout_width="160dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
@@ -232,7 +232,7 @@
                     android:textColor="@color/ultraViolet"
                     android:textSize="18dp"
                     android:background="@drawable/main_menu_image_text"
-                    android:textStyle="bold"></TextView>
+                    android:textStyle="bold"/>-->
             </LinearLayout>
 
             <!--<LinearLayout

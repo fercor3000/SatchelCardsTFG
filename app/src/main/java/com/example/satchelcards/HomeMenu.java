@@ -46,7 +46,7 @@ public class HomeMenu extends AppCompatActivity {
         creditsList = (ImageView) findViewById(R.id.CreditCards);
         transportsList = (ImageView) findViewById(R.id.TransportCards);
         giftsList = (ImageView) findViewById(R.id.GiftCards);
-        accessList = (ImageView) findViewById(R.id.AccessCards);
+        //accessList = (ImageView) findViewById(R.id.AccessCards);
         customList = (ImageView) findViewById(R.id.CustomCards);
 
         profileBtn = (ImageView) findViewById(R.id.profile);

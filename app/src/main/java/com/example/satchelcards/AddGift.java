@@ -327,7 +327,7 @@ public class AddGift extends AppCompatActivity {
                         if (selectedImageUri != null) {
                             FirebaseStorage storage = FirebaseStorage.getInstance();
                             StorageReference storageRef = storage.getReference();
-                            StorageReference imagenRef = storageRef.child("cardImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_custom_" + itemId);
+                            StorageReference imagenRef = storageRef.child("cardImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_loyalty_" + itemId);
                             UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
                             uploadTask.addOnSuccessListener(taskSnapshot -> {
                             }).addOnFailureListener(new OnFailureListener() {
