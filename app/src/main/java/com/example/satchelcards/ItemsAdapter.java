@@ -140,8 +140,13 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         break;
                 }
 
-                //intent.putExtra("imageUri", item.getImageViewUri().toString());
                 intent.putExtra("itemId", item.getId());
+
+                if (item.getImageViewUri() != null) {
+                    intent.putExtra("imageUri", item.getImageViewUri().toString());
+                } else {
+                    intent.putExtra("imageUri", "nada");
+                }
 
                 context.startActivity(intent);
             }

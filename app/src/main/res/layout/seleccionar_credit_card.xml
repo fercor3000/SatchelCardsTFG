@@ -40,12 +40,13 @@
             android:layout_marginLeft="12dp">
             <ImageView
                 android:id="@+id/imagen_tarjeta"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:paddingTop="40dp"
-                android:paddingBottom="40dp"
-                android:paddingRight="40dp"
-                android:paddingLeft="40dp"/>
+                android:layout_width="74dp"
+                android:layout_height="74dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
             <TextView
                 android:id="@+id/dueño"

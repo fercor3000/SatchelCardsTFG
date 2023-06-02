@@ -29,7 +29,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-
 public class SeleccionarDni extends AppCompatActivity {
 
     ImageView goBackBtn;
@@ -64,34 +63,19 @@ public class SeleccionarDni extends AppCompatActivity {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
-        //String imageUri = intent.getStringExtra("imageUri");
+        String imageUri = intent.getStringExtra("imageUri");
 
+        if (imageUri.equals("nada")) {
+            imagen.setImageResource(R.drawable.picdnicard);
+        } else {
+            Picasso.get().load(imageUri).into(imagen);
+        }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String email = currentUser.getEmail();
         DocumentReference userRef = db.collection("user").document(email).collection("dni").document(itemId);
-
-        //Picasso.get().load(imageUri).into(imagen);
-        //#region ADD IMAGEN
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        String storagePath = "cardImages/";
-        String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_dni_" + itemId;
-        StorageReference storageRef = storage.getReference().child(rute_storage_photo);
-        //ImageView imageView = findViewById(R.id.profile);
-
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //ADD IMG
-                Picasso.get().load(uri).into(imagen);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {}
-        });
-        //#endregion
 
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

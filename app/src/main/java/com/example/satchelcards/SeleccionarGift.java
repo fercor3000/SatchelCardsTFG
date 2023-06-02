@@ -67,28 +67,13 @@ public class SeleccionarGift extends AppCompatActivity {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
+        String imageUri = intent.getStringExtra("imageUri");
 
-        //#region ADD IMAGEN
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        String storagePath = "cardImages/";
-        String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_loyalty_" + itemId;
-        StorageReference storageRef = storage.getReference().child(rute_storage_photo);
-
-
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //ADD IMG
-                Picasso.get().load(uri).into(imagen);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                imagen.setImageResource(R.drawable.picgiftcard);
-                Log.e("SeleccionarGift", "Error al cargar imagen", e);
-            }
-        });
-        //#endregion
+        if (imageUri.equals("nada")) {
+            imagen.setImageResource(R.drawable.picgiftcard);
+        } else {
+            Picasso.get().load(imageUri).into(imagen);
+        }
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();

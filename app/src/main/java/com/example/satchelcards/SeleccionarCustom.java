@@ -65,25 +65,13 @@ public class SeleccionarCustom extends AppCompatActivity {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
+        String imageUri = intent.getStringExtra("imageUri");
 
-        //#region ADD IMAGEN
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        String storagePath = "cardImages/";
-        String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_custom_" + itemId;
-        StorageReference storageRef = storage.getReference().child(rute_storage_photo);
-
-
-        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                //ADD IMG
-                Picasso.get().load(uri).into(imagen);
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {}
-        });
-        //#endregion
+        if (imageUri.equals("nada")) {
+            imagen.setImageResource(R.drawable.piccustomcard);
+        } else {
+            Picasso.get().load(imageUri).into(imagen);
+        }
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
