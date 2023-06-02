@@ -151,7 +151,7 @@ public class SeleccionarDni extends AppCompatActivity {
             }
         });
 
-        editBtn = findViewById(R.id.edit_button);
+        /*editBtn = findViewById(R.id.edit_button);
 
         editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,7 +166,7 @@ public class SeleccionarDni extends AppCompatActivity {
                 intent.putExtra("operation","edit");
                 startActivity(intent);
             }
-        });
+        });*/
 
         notesBtn = findViewById(R.id.notes_button);
 
