@@ -126,7 +126,7 @@ public class SeleccionarDni extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String email = currentUser.getEmail();
-                DocumentReference cardRef = db.collection("user").document(email).collection("dni").document(itemId);
+                DocumentReference cardRef = db.collection("user").document(email).collection("dni").document(num_dni);
 
                 cardRef.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -174,7 +174,7 @@ public class SeleccionarDni extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarDni.this, CardNotes.class);
-                intent.putExtra("itemId",itemId);
+                intent.putExtra("itemId",num_dni);
                 intent.putExtra("cardType","dni");
                 startActivity(intent);
             }
