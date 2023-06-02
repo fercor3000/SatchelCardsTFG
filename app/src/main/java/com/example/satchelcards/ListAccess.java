@@ -70,13 +70,3 @@ public class ListAccess extends AppCompatActivity {
         recyclerView.setAdapter(itemsAdapter);
     }
 }
-/*
-En este ejemplo, se realiza una consulta a la base de datos de Firebase para obtener los datos de la referencia "items".
-Luego, se utiliza un ValueEventListener para escuchar los cambios en los datos y agregarlos a la lista itemList.
-Una vez que se obtienen todos los datos, se notifica al adaptador (itemsAdapter) que se han realizado cambios en los datos
-mediante notifyDataSetChanged().
-
-Asegúrate de tener correctamente configurada tu base de datos Firebase y que los datos se encuentren en la referencia "items".
-Además, asegúrate de tener la configuración adecuada de Firebase en tu proyecto y de haber agregado las dependencias
-necesarias en el archivo build.gradle de la app.
-*/

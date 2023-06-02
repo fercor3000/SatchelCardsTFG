@@ -43,17 +43,33 @@ public class AddCredit extends AppCompatActivity {
     private NfcAdapter nfcAdapter;
     private ImageView nfcLogoImageView;
     private PendingIntent nfcPendingIntent;
+    String itemId;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_credit_card);
 
+        //Recibimos la operacion que queremos realizar
+        Intent intent = getIntent();
+        String operation = intent.getStringExtra("operation");
+        itemId = intent.getStringExtra("itemId");
+
+        if("edit".equals(operation)){
+            fillInterface();
+        }
+
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddCredit.this, AddCards.class);
-                startActivity(intent);
+                if("edit".equals(operation)){
+                    Intent intent = new Intent(AddCredit.this, SeleccionarCredit.class);
+                    intent.putExtra("itemId",itemId);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(AddCredit.this, AddCards.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -100,15 +116,19 @@ public class AddCredit extends AppCompatActivity {
                             if (document.exists()) {
                                 //Recogo el userId y el cardNextId del usuario (getLong para numero, getString para cadena)
                                 String userId = String.valueOf(document.getLong("userId"));
-                                String cardNextId = String.valueOf(document.getLong("cardNextId"));
-                                //Si los recojo con exito, los utilizo para crear la nueva tarjeta
-                                if (userId != null && cardNextId != null) {
-                                    String userCardID = "user" + userId + "card" + cardNextId;
-                                    //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
-                                    insertInDDBB(cardName, cardHolderName,cardNumber, CVV, DExpire, userCardID, cardNextId);
+                                if ("edit".equals(operation)) {
+                                    editCard(cardName, cardHolderName, DExpire,cardNumber, CVV);
                                 } else {
-                                    // Handle missing or invalid data
-                                    // Show an error message or take appropriate action
+                                    String cardNextId = String.valueOf(document.getLong("cardNextId"));
+                                    //Si los recojo con exito, los utilizo para crear la nueva tarjeta
+                                    if (userId != null && cardNextId != null) {
+                                        String userCardID = "user" + userId + "card" + cardNextId;
+                                        //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
+                                        insertInDDBB(cardName, cardHolderName, cardNumber, CVV, DExpire, userCardID, cardNextId);
+                                    } else {
+                                        // Handle missing or invalid data
+                                        // Show an error message or take appropriate action
+                                    }
                                 }
                             } else {
                                 // Handle non-existent document
@@ -229,6 +249,75 @@ public class AddCredit extends AppCompatActivity {
         // Crear PendingIntent para la detección de NFC
         Intent nfcIntent = new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         nfcPendingIntent = PendingIntent.getActivity(this, 0, nfcIntent, PendingIntent.FLAG_MUTABLE);
+    }
+
+    private void fillInterface() {
+        // RECOGE LOS DATOS DEL INTENT
+        Intent intent = getIntent();
+        String cardName = intent.getStringExtra("cardName");
+        String cardHolderName = intent.getStringExtra("cardHolderName");
+        String cardNumber = intent.getStringExtra("cardNumber");
+        String cvv = intent.getStringExtra("CVV");
+        Date expirationDate = (Date) intent.getSerializableExtra("expirationDate");
+
+        // RELLENA LA INTERFAZ CON DATOS
+        EditText cardNameEditText = findViewById(R.id.cardName);
+        EditText cardHolderNameEditText = findViewById(R.id.cardHolderName);
+        DatePicker expireDateDatePicker = findViewById(R.id.expirationDate);
+        EditText cardNumberEditText = findViewById(R.id.cardNumber);
+        EditText CVVEditText = findViewById(R.id.CVV);
+
+        cardNameEditText.setText(cardName);
+        cardHolderNameEditText.setText(cardHolderName);
+        cardNumberEditText.setText(cardNumber+"");
+        CVVEditText.setText(cvv+"");
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(expirationDate);
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        expireDateDatePicker.updateDate(year, month, day);
+    }
+
+
+    private void editCard(String cardName, String cardHolderName, Date DExpire, long cardNumber, int cvv) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        String email = currentUser.getEmail();
+
+        // Actualizar la tarjeta con nuevos valores
+        DocumentReference docRef = db.collection("user").document(email).collection("payment").document(itemId);
+
+        Map<String, Object> cardMap = new HashMap<>();
+        cardMap.put("cardName", cardName);
+        cardMap.put("cardHolderName", cardHolderName);
+        cardMap.put("expirationDate", DExpire);
+        cardMap.put("CVV",cvv);
+        cardMap.put("cardNumber",cardNumber);
+
+        docRef.update(cardMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Context context = getApplicationContext();
+                        Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(AddCredit.this, SeleccionarCredit.class);
+                        intent.putExtra("itemId",itemId);
+                        startActivity(intent);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Context context = getApplicationContext();
+                        Toast.makeText(context, "Error al actualizar la tarjeta" + e, Toast.LENGTH_SHORT).show();
+                        Log.e("AddCredit", "Error al actualizar la tarjeta", e);
+                    }
+                });
     }
 
     @Override

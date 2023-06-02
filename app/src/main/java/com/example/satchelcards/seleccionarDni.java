@@ -2,6 +2,7 @@ package com.example.satchelcards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,10 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -22,7 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -45,7 +46,7 @@ public class SeleccionarDni extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.seleccionar_dni);
 
-        imagen = findViewById(R.id.imagen_tarjeta);
+        imagen = (ImageView) findViewById(R.id.imagen_tarjeta);
         nombreDniTarjeta = findViewById(R.id.nombre_dni);
         numeroDniTarjeta = findViewById(R.id.num_dni);
         dniElectronicoTarjeta = findViewById(R.id.dni_elec);
@@ -63,6 +64,7 @@ public class SeleccionarDni extends AppCompatActivity {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
+        //String imageUri = intent.getStringExtra("imageUri");
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -70,6 +72,26 @@ public class SeleccionarDni extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String email = currentUser.getEmail();
         DocumentReference userRef = db.collection("user").document(email).collection("dni").document(itemId);
+
+        //Picasso.get().load(imageUri).into(imagen);
+        //#region ADD IMAGEN
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String storagePath = "cardImages/";
+        String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_dni_" + itemId;
+        StorageReference storageRef = storage.getReference().child(rute_storage_photo);
+        //ImageView imageView = findViewById(R.id.profile);
+
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //ADD IMG
+                Picasso.get().load(uri).into(imagen);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {}
+        });
+        //#endregion
 
         userRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override

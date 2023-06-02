@@ -76,6 +76,27 @@ public class SeleccionarCredit extends AppCompatActivity {
                     if (document.exists()) {
                         nombre_tarjeta = String.valueOf(document.getString("cardName"));
                         numero_tarjeta = String.valueOf(document.get("cardNumber"));
+                        char firstNumberIssuer = numero_tarjeta.charAt(0);
+                        switch (firstNumberIssuer) {
+                            case '2':
+                            case '5':
+                                imagen.setImageResource(R.drawable.mastercard_logo);
+                                break;
+                            case '3':
+                                imagen.setImageResource(R.drawable.amex_logo);
+                                break;
+                            case '4':
+                                imagen.setImageResource(R.drawable.visa_logo);
+                                break;
+                            case '6':
+                                imagen.setImageResource(R.drawable.discover_logo);
+                                break;
+                            case '8':
+                                imagen.setImageResource(R.drawable.unionpay_logo);
+                                break;
+                            default:
+                                imagen.setImageResource(R.drawable.piccreditcard);
+                        }
                         dueño = String.valueOf(document.getString("cardHolderName"));
                         cvv =  String.valueOf(document.get("CVV"));
                         vFechaExpiracion = document.getDate("expirationDate");
@@ -144,10 +165,12 @@ public class SeleccionarCredit extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarCredit.this, AddCredit.class);
-                /*intent.putExtra("cardName", vNombreTarjeta);
-                intent.putExtra("cardHolderName", vHolderTarjeta);*/
+                intent.putExtra("cardName", nombre_tarjeta);
+                intent.putExtra("cardHolderName", dueño);
                 intent.putExtra("expirationDate", vFechaExpiracion);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("cardNumber",numero_tarjeta);
+                intent.putExtra("CVV",cvv);
                 intent.putExtra("operation","edit");
                 startActivity(intent);
             }

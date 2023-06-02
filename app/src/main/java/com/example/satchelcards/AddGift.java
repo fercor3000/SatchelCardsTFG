@@ -128,7 +128,7 @@ public class AddGift extends AppCompatActivity {
                                 //Recogo el userId y el cardNextId del usuario (getLong para numero, getString para cadena)
                                 String userId = String.valueOf(document.getLong("userId"));
                                 if ("edit".equals(operation)) {
-                                    editCard(cardName, cardHolderName, DExpire, userId);
+                                    editCard(cardName, cardHolderName, DExpire);
                                 } else {
                                     String cardNextId = String.valueOf(document.getLong("cardNextId"));
                                     //Si los recojo con exito, los utilizo para crear la nueva tarjeta
@@ -290,7 +290,7 @@ public class AddGift extends AppCompatActivity {
     }
 
 
-    private void editCard(String cardName, String cardHolderName, Date DExpire, String userId) {
+    private void editCard(String cardName, String cardHolderName, Date DExpire) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();

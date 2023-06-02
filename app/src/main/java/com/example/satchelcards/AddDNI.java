@@ -36,6 +36,7 @@ public class AddDNI extends AppCompatActivity {
     Button btnCambiarImg;
     Uri selectedImageUri;
     ImageView imageViewPhoto;
+    String itemId;
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +54,27 @@ public class AddDNI extends AppCompatActivity {
         });
 
 
-        gobackBtn = (ImageView)findViewById(R.id.go_back);
+        //Recibimos la operacion que queremos realizar
+        Intent intent = getIntent();
+        String operation = intent.getStringExtra("operation");
+        itemId = intent.getStringExtra("itemId");
+
+        if("edit".equals(operation)){
+            //fillInterface();
+        }
+
+        gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddDNI.this, AddCards.class);
-                startActivity(intent);
+                if("edit".equals(operation)){
+                    Intent intent = new Intent(AddDNI.this, SeleccionarDni.class);
+                    intent.putExtra("itemId",itemId);
+                    startActivity(intent);
+                }else{
+                    Intent intent = new Intent(AddDNI.this, AddCards.class);
+                    startActivity(intent);
+                }
             }
         });
 

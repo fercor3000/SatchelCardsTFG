@@ -55,6 +55,17 @@ public class HomeMenu extends AppCompatActivity {
         menuItem1 = findViewById(R.id.menu_item1);
         menuItem2 = findViewById(R.id.menu_item2);
 
+        //#region AL PULSAR COMPAR PREMIUM
+        menuItem2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(HomeMenu.this, BuyPremium.class);
+                startActivity(intent);
+                drawerLayout.closeDrawer(GravityCompat.START);
+            }
+        });
+        //#endregion
+
         //#region AL PULSAR LISTA DE DNIS
         dnisList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,15 +180,6 @@ public class HomeMenu extends AppCompatActivity {
         });
         //#endregion
 
-        // Configura el botón para abrir el menú lateral
-        displayMenuButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        //#endregion
-
         //#region AL PULSAR EL MENÚ
         menuItem1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -194,11 +196,20 @@ public class HomeMenu extends AppCompatActivity {
         menuItem2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(HomeMenu.this, BuyPremium.class);
-                startActivity(intent);
-                drawerLayout.closeDrawer(GravityCompat.START);
+                // Acción de eliminar tarjeta
+                //drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+
+
+        // Configura el botón para abrir el menú lateral
+        displayMenuButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+        //#endregion
     }
 
     @Override

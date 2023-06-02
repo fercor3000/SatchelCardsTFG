@@ -71,6 +71,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre de la tarjeta"
+            android:maxLength="25"
             android:padding="16dp"/>
 
         <EditText
@@ -78,6 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Nombre completo del dueño"
+            android:maxLength="30"
             android:padding="16dp"/>
 
         <EditText
@@ -87,7 +89,7 @@
             android:hint="Número identificador de la tarjeta"
             android:inputType="number"
             android:maxLength="16"
-            android:padding="16dp" />
+            android:padding="16dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"

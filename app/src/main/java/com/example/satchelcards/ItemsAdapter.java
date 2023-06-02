@@ -7,10 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,7 +17,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
-
 import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
@@ -91,7 +88,26 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 }
             });
         } else {
-            Picasso.get().load(item.getImageViewUri()).into(holder.imageView);
+            if(item.getImageViewUri() == null){
+                switch(item.getTipo()){
+                    case "loyalty":
+                        holder.imageView.setImageResource(R.drawable.picgiftcard);
+                        break;
+                    case "access":
+                        holder.imageView.setImageResource(R.drawable.picaccesscard);
+                        break;
+                    case "transport":
+                        holder.imageView.setImageResource(R.drawable.pictransportcard);
+                        break;
+                    case "custom":
+                        holder.imageView.setImageResource(R.drawable.piccustomcard);
+                        break;
+                    default:
+                        holder.imageView.setImageResource(R.drawable.picdnicard);
+                }
+            }else {
+                Picasso.get().load(item.getImageViewUri()).into(holder.imageView);
+            }
         }
         holder.nombreTarjeta.setText(item.getTitulo());
 
@@ -124,6 +140,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         break;
                 }
 
+                //intent.putExtra("imageUri", item.getImageViewUri().toString());
                 intent.putExtra("itemId", item.getId());
 
                 context.startActivity(intent);

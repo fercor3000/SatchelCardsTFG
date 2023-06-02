@@ -2,6 +2,7 @@ package com.example.satchelcards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -61,6 +65,25 @@ public class SeleccionarCustom extends AppCompatActivity {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
+
+        //#region ADD IMAGEN
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        String storagePath = "cardImages/";
+        String rute_storage_photo = storagePath + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_custom_" + itemId;
+        StorageReference storageRef = storage.getReference().child(rute_storage_photo);
+
+
+        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                //ADD IMG
+                Picasso.get().load(uri).into(imagen);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {}
+        });
+        //#endregion
 
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -111,7 +134,7 @@ public class SeleccionarCustom extends AppCompatActivity {
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
                 String email = currentUser.getEmail();
-                DocumentReference cardRef = db.collection("user").document(email).collection("transport").document(itemId);
+                DocumentReference cardRef = db.collection("user").document(email).collection("custom").document(itemId);
 
                 cardRef.delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
