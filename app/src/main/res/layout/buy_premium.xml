@@ -78,7 +78,7 @@
                 android:textColor="@color/white"
                 android:textSize="13dp"
                 android:fontFamily="sans-serif-black"
-                android:text="- No aparecerán anuncios en app"/>
+                android:text="- No aparecerán anuncios en la app"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -122,7 +122,7 @@
                     android:id="@+id/buy_premium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="4,99 €"
+                    android:text="1,99 €"
                     android:textColor="@color/darkBlue"
                     android:textStyle="bold"
                     android:textFontWeight="@integer/material_motion_duration_long_1"

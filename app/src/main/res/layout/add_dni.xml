@@ -52,14 +52,15 @@
             android:layout_gravity="left"
             android:src="@drawable/baseline_credit_card_off_24"/>
 
+        <!-- EditText para el nombre -->
         <Button
             android:id="@+id/dni_btn_add_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:backgroundTint="@color/darkBlue"
             android:text="Seleccionar imagen" />
 
-        <!-- EditText para el nombre -->
         <EditText
             android:id="@+id/dni_nombre"
             android:layout_width="match_parent"

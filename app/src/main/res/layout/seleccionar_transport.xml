@@ -162,8 +162,8 @@
                 android:paddingBottom="40dp"
                 android:paddingRight="60dp"
                 android:paddingLeft="60dp"
-                android:backgroundTint="@color/darkBlue"
-                />
+                android:textColor="@color/white"
+                android:backgroundTint="@color/darkBlue" />
 
         </LinearLayout>
 
@@ -193,6 +193,7 @@
                 android:paddingBottom="40dp"
                 android:paddingRight="60dp"
                 android:paddingLeft="60dp"
+                android:textColor="@color/white"
                 android:backgroundTint="@color/darkBlue" />
 
         </LinearLayout>
