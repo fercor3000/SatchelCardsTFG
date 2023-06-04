@@ -44,13 +44,19 @@ public class AddAccess extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_access);
+        boolean comesFromList = getIntent().getBooleanExtra("lista",false);
 
         gobackBtn = (ImageView) findViewById(R.id.go_back);
         gobackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AddAccess.this, AddCards.class);
-                startActivity(intent);
+                if(comesFromList){
+                    Intent intent = new Intent(AddAccess.this, ListAccess.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(AddAccess.this, AddCards.class);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -148,7 +154,12 @@ public class AddAccess extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddAccess.this, HomeMenu.class);
+                                        Intent intent;
+                                        if (comesFromList) {
+                                            intent = new Intent(AddAccess.this, ListAccess.class);
+                                        }else{
+                                            intent = new Intent(AddAccess.this, HomeMenu.class);
+                                        }
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

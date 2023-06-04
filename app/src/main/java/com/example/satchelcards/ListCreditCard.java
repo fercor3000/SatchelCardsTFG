@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -27,9 +28,9 @@ import java.util.List;
 public class ListCreditCard extends AppCompatActivity {
 
     ImageView gobackBtn;
+    Button addCardBtn;
     private RecyclerView recyclerView;
     private ItemsAdapter itemsAdapter;
-    Boolean noFoto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,15 @@ public class ListCreditCard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListCreditCard.this, HomeMenu.class);
+                startActivity(intent);
+            }
+        });
+        addCardBtn = (Button) findViewById(R.id.addCardBtn);
+        addCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListCreditCard.this, AddCredit.class);
+                intent.putExtra("lista",true);
                 startActivity(intent);
             }
         });

@@ -48,6 +48,7 @@ public class AddCredit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_credit_card);
+        boolean comesFromList = getIntent().getBooleanExtra("lista",false);
 
         //Recibimos la operacion que queremos realizar
         Intent intent = getIntent();
@@ -66,7 +67,10 @@ public class AddCredit extends AppCompatActivity {
                     Intent intent = new Intent(AddCredit.this, SeleccionarCredit.class);
                     intent.putExtra("itemId",itemId);
                     startActivity(intent);
-                }else{
+                } else if(comesFromList){
+                    Intent intent = new Intent(AddCredit.this, ListCreditCard.class);
+                    startActivity(intent);
+                } else {
                     Intent intent = new Intent(AddCredit.this, AddCards.class);
                     startActivity(intent);
                 }
@@ -213,7 +217,12 @@ public class AddCredit extends AppCompatActivity {
                                         // Transaction success
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddCredit.this, HomeMenu.class);
+                                        Intent intent;
+                                        if (comesFromList) {
+                                            intent = new Intent(AddCredit.this, ListCreditCard.class);
+                                        } else {
+                                            intent = new Intent(AddCredit.this, HomeMenu.class);
+                                        }
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

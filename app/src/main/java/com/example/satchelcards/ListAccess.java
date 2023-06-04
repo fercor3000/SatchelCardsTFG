@@ -3,6 +3,7 @@ package com.example.satchelcards;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -22,8 +23,10 @@ import java.util.List;
 public class ListAccess extends AppCompatActivity {
 
     ImageView gobackBtn;
+    Button addCardBtn;
     private RecyclerView recyclerView;
     private ItemsAdapter itemsAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,15 @@ public class ListAccess extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ListAccess.this, HomeMenu.class);
+                startActivity(intent);
+            }
+        });
+        addCardBtn = (Button) findViewById(R.id.addCardBtn);
+        addCardBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ListAccess.this, AddAccess.class);
+                intent.putExtra("lista",true);
                 startActivity(intent);
             }
         });

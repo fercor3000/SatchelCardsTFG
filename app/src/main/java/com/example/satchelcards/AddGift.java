@@ -58,6 +58,7 @@ public class AddGift extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_gift);
+        boolean comesFromList = getIntent().getBooleanExtra("lista",false);
 
         imageViewPhoto = findViewById(R.id.imageViewPhoto);
         btnCambiarImg = (Button) findViewById(R.id.gift_btn_add_image);
@@ -86,6 +87,9 @@ public class AddGift extends AppCompatActivity {
                 if("edit".equals(operation)){
                     Intent intent = new Intent(AddGift.this, SeleccionarGift.class);
                     intent.putExtra("itemId",itemId);
+                    startActivity(intent);
+                }else if(comesFromList){
+                    Intent intent = new Intent(AddGift.this, ListGift.class);
                     startActivity(intent);
                 }else{
                     Intent intent = new Intent(AddGift.this, AddCards.class);
@@ -226,7 +230,12 @@ public class AddGift extends AppCompatActivity {
 
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
-                                        Intent intent = new Intent(AddGift.this, HomeMenu.class);
+                                        Intent intent;
+                                        if (comesFromList) {
+                                            intent = new Intent(AddGift.this, ListGift.class);
+                                        } else {
+                                            intent = new Intent(AddGift.this, HomeMenu.class);
+                                        }
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
@@ -324,27 +333,9 @@ public class AddGift extends AppCompatActivity {
                     public void onSuccess(Void aVoid) {
                         Context context = getApplicationContext();
                         Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
-                        if (selectedImageUri != null) {
-                            FirebaseStorage storage = FirebaseStorage.getInstance();
-                            StorageReference storageRef = storage.getReference();
-                            StorageReference imagenRef = storageRef.child("cardImages/" + FirebaseAuth.getInstance().getCurrentUser().getUid() + "_loyalty_" + itemId);
-                            UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
-                            uploadTask.addOnSuccessListener(taskSnapshot -> {
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Context context = getApplicationContext();
-                                    Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                            Intent intent = new Intent(AddGift.this, HomeMenu.class);
-                            intent.putExtra("itemId",itemId);
-                            startActivity(intent);
-                        } else {
-                            Intent intent = new Intent(AddGift.this, SeleccionarCustom.class);
-                            intent.putExtra("itemId",itemId);
-                            startActivity(intent);
-                        }
+                        Intent intent = new Intent(AddGift.this, SeleccionarGift.class);
+                        intent.putExtra("itemId",itemId);
+                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
