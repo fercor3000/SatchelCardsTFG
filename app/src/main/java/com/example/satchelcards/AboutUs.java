@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AboutUs extends AppCompatActivity {
+public class AboutUs extends ClassBlockOrientation {
 
     ImageView goBackBtn;
 

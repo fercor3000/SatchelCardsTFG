@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class BuyPremium extends AppCompatActivity {
+public class BuyPremium extends ClassBlockOrientation {
 
     ImageView goBackBtn;
 

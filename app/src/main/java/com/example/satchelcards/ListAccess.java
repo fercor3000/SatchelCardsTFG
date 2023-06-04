@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAccess extends AppCompatActivity {
+public class ListAccess extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     Button addCardBtn;

@@ -23,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Login extends AppCompatActivity {
+public class Login extends ClassBlockOrientation {
 
     //#region VARIABLES
     Button btnLogIn, btnRegister;

@@ -26,7 +26,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-public class Profile extends AppCompatActivity {
+public class Profile extends ClassBlockOrientation {
 
     //#region VARIABLES
     ImageView gobackBtn;

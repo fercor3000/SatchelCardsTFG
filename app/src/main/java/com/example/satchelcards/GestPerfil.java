@@ -29,7 +29,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GestPerfil extends AppCompatActivity {
+public class GestPerfil extends ClassBlockOrientation {
 
     ImageView gobackBtn, profileImg;
     Button editImage, btn_save;
@@ -107,15 +107,20 @@ public class GestPerfil extends AppCompatActivity {
                 DocumentReference userDocumentRef = userCollectionRef.document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                 Map<String, Object> updates = new HashMap<>();
                 Boolean modificar = true;
-                if (!new_name.getText().toString().equals("")) {
+                String nuevoNombre = new_name.getText().toString();
+                if (!nuevoNombre.equals("")) {
                     updates.put("name", new_name.getText().toString());
                 }
-                if (!new_telephone.getText().toString().equals("")) {
-                    updates.put("phoneNumber", new_telephone.getText().toString());
-                } else if (new_telephone.getText().toString().length() != 9) {
-                    Toast.makeText(GestPerfil.this, "Numero de teléfono inválido", Toast.LENGTH_SHORT).show();
-                    modificar = false;
+                String nuevoTelefono = new_telephone.getText().toString();
+                if (!nuevoTelefono.equals("")) {
+                    if (new_telephone.getText().toString().length() != 9) {
+                        Toast.makeText(GestPerfil.this, "Numero de teléfono inválido", Toast.LENGTH_SHORT).show();
+                        modificar = false;
+                    } else {
+                        updates.put("phoneNumber", new_telephone.getText().toString());
+                    }
                 }
+
                 if (modificar) {
                     updates.put("tDataModification", new Date());
                     userDocumentRef.update(updates)

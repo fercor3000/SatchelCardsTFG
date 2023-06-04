@@ -20,7 +20,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.charset.Charset;
 import java.util.Locale;
 
-public class DetectNfcNoOpenApp extends AppCompatActivity {
+public class DetectNfcNoOpenApp extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     private NfcAdapter nfcAdapter;

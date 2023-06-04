@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class AddCards extends AppCompatActivity {
+public class AddCards extends ClassBlockOrientation {
 
     //#region VARIABLES
     ImageView gobackBtn;
@@ -43,7 +43,7 @@ public class AddCards extends AppCompatActivity {
         addCreditBtn = (LinearLayout) findViewById(R.id.creditCard);
         addTransportBtn = (LinearLayout) findViewById(R.id.transportCard);
         addGiftBtn = (LinearLayout) findViewById(R.id.loyaltyCard);
-        addAccessBtn = (LinearLayout) findViewById(R.id.accessCard);
+        //addAccessBtn = (LinearLayout) findViewById(R.id.accessCard);
         //#endregion
 
         //#region AL PULSAR VOLVER...
@@ -93,7 +93,7 @@ public class AddCards extends AppCompatActivity {
         });
         //#endregion
 
-        //#region AL PULSAR ADDACCESS
+        /*//#region AL PULSAR ADDACCESS
         addAccessBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +101,6 @@ public class AddCards extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        //#endregion
+        //#endregion*/
     }
 }

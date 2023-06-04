@@ -30,7 +30,7 @@ import com.google.firebase.storage.StorageReference;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListDNI extends AppCompatActivity {
+public class ListDNI extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     Button addCardBtn;

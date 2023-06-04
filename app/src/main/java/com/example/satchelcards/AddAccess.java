@@ -32,7 +32,7 @@ import com.google.firebase.firestore.Transaction;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddAccess extends AppCompatActivity {
+public class AddAccess extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     Button btn_guardar;

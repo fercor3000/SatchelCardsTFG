@@ -32,7 +32,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class SeleccionarCustom extends AppCompatActivity {
+public class SeleccionarCustom extends ClassBlockOrientation {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();

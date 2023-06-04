@@ -87,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Sexo (M/H)"
+                android:maxLength="1"
                 android:padding="16dp" />
 
             <!-- EditText para la nacionalidad -->
@@ -109,6 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="Num Soport"
+                android:maxLength="9"
                 android:padding="16dp" />
 
             <!-- EditText para la CAN -->
@@ -116,7 +118,9 @@
                 android:id="@+id/dni_can"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="CAN              "
+                android:hint="CAN"
+                android:minWidth="129dp"
+                android:maxLength="6"
                 android:padding="16dp" />
         </LinearLayout>
 
@@ -125,12 +129,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="DNI"
+            android:maxLength="9"
             android:padding="16dp" />
 
         <EditText
             android:id="@+id/dni_equipo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="9"
             android:hint="Equipo"
             android:padding="16dp" />
 

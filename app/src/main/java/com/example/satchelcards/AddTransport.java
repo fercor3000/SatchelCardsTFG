@@ -40,7 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddTransport extends AppCompatActivity {
+public class AddTransport extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     Button btn_guardar;
@@ -142,6 +142,7 @@ public class AddTransport extends AppCompatActivity {
                                     //Si los recojo con exito, los utilizo para crear la nueva tarjeta
                                     if (userId != null && cardNextId != null) {
                                         String userCardID = "user" + userId + "card" + cardNextId;
+                                        cardNextIdFinal = userCardID;
                                     //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
                                     insertInDDBB(cardName, cardHolderName, DExpire, userCardID, cardNextId);
                                 } else {

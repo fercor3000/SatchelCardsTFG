@@ -21,7 +21,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class CardNotes extends AppCompatActivity {
+public class CardNotes extends ClassBlockOrientation {
 
     EditText noteBlock;
     Button btnSaveNotes;

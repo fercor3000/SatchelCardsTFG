@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-public class HomeMenu extends AppCompatActivity {
+public class HomeMenu extends ClassBlockOrientation {
 
     //#region VARIABLES
     ImageView profileBtn, addCardBtn, dnisList, creditsList, transportsList, giftsList, accessList, customList;

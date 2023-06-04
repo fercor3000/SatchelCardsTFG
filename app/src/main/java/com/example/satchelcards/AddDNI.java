@@ -33,7 +33,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddDNI extends AppCompatActivity {
+public class AddDNI extends ClassBlockOrientation {
     ImageView gobackBtn;
     Button btn_guardar;
     Button btnCambiarImg;

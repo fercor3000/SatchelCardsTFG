@@ -40,7 +40,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddGift extends AppCompatActivity {
+public class AddGift extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     Button btn_guardar;

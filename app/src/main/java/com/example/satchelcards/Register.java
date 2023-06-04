@@ -43,7 +43,7 @@ import java.util.regex.Pattern;
 
 
 
-public class Register extends AppCompatActivity {
+public class Register extends ClassBlockOrientation {
 
     //#region VARIABLES
     Button btnCancel, btnRegister, btnCambiarImg;

@@ -34,7 +34,7 @@ import java.util.Locale;
 
 
 
-public class SeleccionarGift extends AppCompatActivity {
+public class SeleccionarGift extends ClassBlockOrientation {
 
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();

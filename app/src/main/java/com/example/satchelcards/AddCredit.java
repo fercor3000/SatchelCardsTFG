@@ -35,7 +35,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AddCredit extends AppCompatActivity {
+public class AddCredit extends ClassBlockOrientation {
 
     ImageView gobackBtn;
     Button btn_guardar;
