@@ -132,7 +132,7 @@ public class SeleccionarGift extends ClassBlockOrientation {
                                 // Tarjeta borrada con exito
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "Tarjeta eliminada", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SeleccionarGift.this, ListGift.class);
+                                Intent intent = new Intent(SeleccionarGift.this, HomeMenu.class);
                                 startActivity(intent);
                             }
                         })

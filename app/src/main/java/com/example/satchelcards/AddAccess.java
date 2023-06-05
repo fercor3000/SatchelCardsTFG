@@ -155,11 +155,7 @@ public class AddAccess extends ClassBlockOrientation {
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
                                         Intent intent;
-                                        if (comesFromList) {
-                                            intent = new Intent(AddAccess.this, ListAccess.class);
-                                        }else{
-                                            intent = new Intent(AddAccess.this, HomeMenu.class);
-                                        }
+                                        intent = new Intent(AddAccess.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

@@ -208,11 +208,7 @@ public class AddDNI extends ClassBlockOrientation {
                                     }
 
                                     Intent intent;
-                                    if (comesFromList) {
-                                        intent = new Intent(AddDNI.this, ListDNI.class);
-                                    } else {
-                                        intent = new Intent(AddDNI.this, HomeMenu.class);
-                                    }
+                                    intent = new Intent(AddDNI.this, HomeMenu.class);
                                     startActivity(intent);
                                     Context context = getApplicationContext();
                                     Toast.makeText(context, "DNI insertado !", Toast.LENGTH_SHORT).show();

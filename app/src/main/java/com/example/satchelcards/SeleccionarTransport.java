@@ -129,7 +129,7 @@ public class SeleccionarTransport extends ClassBlockOrientation {
                                 // Tarjeta borrada con exito
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "Tarjeta eliminada", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SeleccionarTransport.this, ListTransport.class);
+                                Intent intent = new Intent(SeleccionarTransport.this, HomeMenu.class);
                                 startActivity(intent);
                             }
                         })

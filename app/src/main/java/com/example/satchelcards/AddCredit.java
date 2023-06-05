@@ -218,11 +218,7 @@ public class AddCredit extends ClassBlockOrientation {
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
                                         Intent intent;
-                                        if (comesFromList) {
-                                            intent = new Intent(AddCredit.this, ListCreditCard.class);
-                                        } else {
-                                            intent = new Intent(AddCredit.this, HomeMenu.class);
-                                        }
+                                        intent = new Intent(AddCredit.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

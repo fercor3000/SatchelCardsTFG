@@ -135,7 +135,7 @@ public class SeleccionarDni extends ClassBlockOrientation {
                                 // Tarjeta borrada con exito
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "Tarjeta eliminada", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SeleccionarDni.this, ListGift.class);
+                                Intent intent = new Intent(SeleccionarDni.this, HomeMenu.class);
                                 startActivity(intent);
                             }
                         })

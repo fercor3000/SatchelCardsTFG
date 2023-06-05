@@ -231,11 +231,7 @@ public class AddGift extends ClassBlockOrientation {
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
                                         Intent intent;
-                                        if (comesFromList) {
-                                            intent = new Intent(AddGift.this, ListGift.class);
-                                        } else {
-                                            intent = new Intent(AddGift.this, HomeMenu.class);
-                                        }
+                                        intent = new Intent(AddGift.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

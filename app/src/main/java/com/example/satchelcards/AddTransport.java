@@ -227,11 +227,7 @@ public class AddTransport extends ClassBlockOrientation {
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
                                         Intent intent;
-                                        if (comesFromList) {
-                                            intent = new Intent(AddTransport.this, ListTransport.class);
-                                        } else {
-                                            intent = new Intent(AddTransport.this, HomeMenu.class);
-                                        }
+                                        intent = new Intent(AddTransport.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

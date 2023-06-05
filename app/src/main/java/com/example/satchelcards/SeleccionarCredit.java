@@ -143,7 +143,7 @@ public class SeleccionarCredit extends ClassBlockOrientation {
                                 // Tarjeta borrada con exito
                                 Context context = getApplicationContext();
                                 Toast.makeText(context, "Tarjeta eliminada", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(SeleccionarCredit.this, ListCreditCard.class);
+                                Intent intent = new Intent(SeleccionarCredit.this, HomeMenu.class);
                                 startActivity(intent);
                             }
                         })

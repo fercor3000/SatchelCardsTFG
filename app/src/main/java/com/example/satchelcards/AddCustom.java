@@ -144,6 +144,7 @@ public class AddCustom extends ClassBlockOrientation {
                                     //Si los recojo con exito, los utilizo para crear la nueva tarjeta
                                     if (userId != null && cardNextId != null) {
                                         String userCardID = "user" + userId + "card" + cardNextId;
+                                        finalUserCardID = userCardID;
                                     //llamo al método de insertar en la base de datos enviandole los datos que quiero insertar
                                     insertInDDBB(cardName, cardHolderName,cardNumber, DExpire, userCardID, cardNextId);
                                 } else {
@@ -231,11 +232,7 @@ public class AddCustom extends ClassBlockOrientation {
                                         Context context = getApplicationContext();
                                         Toast.makeText(context, "Tarjeta insertada!", Toast.LENGTH_SHORT).show();
                                         Intent intent;
-                                        if (comesFromList) {
-                                            intent = new Intent(AddCustom.this, ListCustom.class);
-                                        } else {
-                                            intent = new Intent(AddCustom.this, HomeMenu.class);
-                                        }
+                                        intent = new Intent(AddCustom.this, HomeMenu.class);
                                         startActivity(intent);
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
