@@ -113,10 +113,6 @@ public class SeleccionarDni extends ClassBlockOrientation {
             }
         });
 
-
-
-        //METODOS RAUL ========================================================================================
-
         deleteBtn = (Button) findViewById(R.id.delete_button);
 
         deleteBtn.setOnClickListener(new View.OnClickListener() {

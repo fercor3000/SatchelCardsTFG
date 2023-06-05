@@ -40,7 +40,7 @@ public class SeleccionarTransport extends ClassBlockOrientation {
     ImageView imagen;
     Button editBtn, deleteBtn, notesBtn;
     Date vFechaExpiracion;
-    String vNombreTarjeta, vNombreTitular, formattedExpirationDate;
+    String vNombreTarjeta, vNombreTitular, formattedExpirationDate, imageUri;
     TextView nombreTarjeta, nombreTitular, fechaExpiracion;
 
     @Override
@@ -64,7 +64,7 @@ public class SeleccionarTransport extends ClassBlockOrientation {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
-        String imageUri = intent.getStringExtra("imageUri");
+        imageUri = intent.getStringExtra("imageUri");
 
         if (imageUri.equals("nada")) {
             imagen.setImageResource(R.drawable.pictransportcard);
@@ -106,10 +106,6 @@ public class SeleccionarTransport extends ClassBlockOrientation {
                 }
             }
         });
-
-
-
-        //METODOS RAUL ========================================================================================
 
         deleteBtn = (Button) findViewById(R.id.delete_button);
 
@@ -155,6 +151,7 @@ public class SeleccionarTransport extends ClassBlockOrientation {
                 intent.putExtra("cardHolderName", vNombreTitular);
                 intent.putExtra("expirationDate", vFechaExpiracion);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("imageUri",imageUri);
                 intent.putExtra("operation","edit");
                 startActivity(intent);
             }

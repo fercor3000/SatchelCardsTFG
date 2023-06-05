@@ -35,12 +35,10 @@ import java.util.Locale;
 public class SeleccionarCustom extends ClassBlockOrientation {
 
     ImageView goBackBtn;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseAuth auth = FirebaseAuth.getInstance();
     ImageView imagen;
     Button editBtn, deleteBtn, notesBtn;
     Date vFechaExpiracion;
-    String vNombreTarjeta, vNombreTitular, vNumeroTarjeta, formattedExpirationDate, itemId;
+    String vNombreTarjeta, vNombreTitular, vNumeroTarjeta, formattedExpirationDate, itemId, imageUri;
     TextView nombreTarjeta, nombreTitular, numeroTarjeta, fechaExpiracion;
 
     @Override
@@ -65,7 +63,7 @@ public class SeleccionarCustom extends ClassBlockOrientation {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
-        String imageUri = intent.getStringExtra("imageUri");
+        imageUri = intent.getStringExtra("imageUri");
 
         if (imageUri.equals("nada")) {
             imagen.setImageResource(R.drawable.piccustomcard);
@@ -108,10 +106,6 @@ public class SeleccionarCustom extends ClassBlockOrientation {
                 }
             }
         });
-
-
-
-        //METODOS RAUL ========================================================================================
 
         deleteBtn = (Button) findViewById(R.id.delete_button);
 
@@ -158,6 +152,7 @@ public class SeleccionarCustom extends ClassBlockOrientation {
                 intent.putExtra("expirationDate", vFechaExpiracion);
                 intent.putExtra("cardNumber", vNumeroTarjeta);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("imageUri",imageUri);
                 intent.putExtra("operation","edit");
                 startActivity(intent);
             }

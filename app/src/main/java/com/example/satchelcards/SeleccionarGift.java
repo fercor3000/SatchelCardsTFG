@@ -43,7 +43,7 @@ public class SeleccionarGift extends ClassBlockOrientation {
     Button editBtn, deleteBtn, notesBtn;
     Date vFechaExpiracion;
 
-    String formattedExpirationDate, vNombreTarjeta, vHolderTarjeta;
+    String formattedExpirationDate, vNombreTarjeta, vHolderTarjeta, imageUri;
     TextView nombreTarjeta, holderTarjeta, fechaExpiracion;
 
     @Override
@@ -67,7 +67,7 @@ public class SeleccionarGift extends ClassBlockOrientation {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
-        String imageUri = intent.getStringExtra("imageUri");
+        imageUri = intent.getStringExtra("imageUri");
 
         if (imageUri.equals("nada")) {
             imagen.setImageResource(R.drawable.picgiftcard);
@@ -109,10 +109,6 @@ public class SeleccionarGift extends ClassBlockOrientation {
                 }
             }
         });
-
-
-
-        //METODOS RAUL ========================================================================================
 
         deleteBtn = (Button) findViewById(R.id.delete_button);
 
@@ -158,6 +154,7 @@ public class SeleccionarGift extends ClassBlockOrientation {
                 intent.putExtra("cardHolderName", vHolderTarjeta);
                 intent.putExtra("expirationDate", vFechaExpiracion);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("imageUri",imageUri);
                 intent.putExtra("operation","edit");
                 startActivity(intent);
             }

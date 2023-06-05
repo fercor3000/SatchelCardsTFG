@@ -34,6 +34,7 @@ import com.google.firebase.firestore.Transaction;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -77,6 +78,13 @@ public class AddGift extends ClassBlockOrientation {
         itemId = intent.getStringExtra("itemId");
 
         if("edit".equals(operation)){
+            String imageUri = intent.getStringExtra("imageUri");
+
+            if (imageUri.equals("nada")) {
+                imageViewPhoto.setImageResource(R.drawable.picgiftcard);
+            } else {
+                Picasso.get().load(imageUri).into(imageViewPhoto);
+            }
             fillInterface();
         }
 
