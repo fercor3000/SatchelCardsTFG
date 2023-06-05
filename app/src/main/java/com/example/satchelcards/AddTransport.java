@@ -325,7 +325,7 @@ public class AddTransport extends ClassBlockOrientation {
                     public void onSuccess(Void aVoid) {
                         Context context = getApplicationContext();
                         Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddTransport.this, SeleccionarTransport.class);
+                        Intent intent = new Intent(AddTransport.this, HomeMenu.class);
                         intent.putExtra("itemId",itemId);
                         startActivity(intent);
                     }

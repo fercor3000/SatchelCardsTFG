@@ -329,7 +329,7 @@ public class AddGift extends ClassBlockOrientation {
                     public void onSuccess(Void aVoid) {
                         Context context = getApplicationContext();
                         Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddGift.this, SeleccionarGift.class);
+                        Intent intent = new Intent(AddGift.this, HomeMenu.class);
                         intent.putExtra("itemId",itemId);
                         startActivity(intent);
                     }
