@@ -138,6 +138,8 @@ public class Register extends ClassBlockOrientation {
                                     List<String> signInMethods = result.getSignInMethods();
 
                                     if (signInMethods == null || signInMethods.isEmpty()) {
+                                        Intent intent = new Intent(Register.this, LoadingData.class);
+                                        startActivity(intent);
                                         mAuth.createUserWithEmailAndPassword(emailSTR.toLowerCase(), passwordSTR).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                             @Override
                                             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -150,6 +152,8 @@ public class Register extends ClassBlockOrientation {
                                                             @Override
                                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                                                                 //Toast.makeText(Register.this, "Imagen guardada con éxito", Toast.LENGTH_SHORT).show();
+                                                                Intent intent = new Intent(Register.this, LoadingData.class);
+                                                                startActivity(intent);
                                                                 meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
                                                             }
                                                         }).addOnFailureListener(new OnFailureListener() {
@@ -157,17 +161,15 @@ public class Register extends ClassBlockOrientation {
                                                             public void onFailure(@NonNull Exception e) {
                                                                 Toast.makeText(Register.this, "Error al guardar imagen", Toast.LENGTH_SHORT).show();
                                                                 meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
-                                                                Intent intent = new Intent(Register.this, HomeMenu.class);
-                                                                startActivity(intent);
                                                             }
                                                         });
                                                     } else {
                                                         meterdatosenBBDD(usernameSTR, emailSTR, passwordSTR, telephoneSTR);
-                                                        Intent intent = new Intent(Register.this, HomeMenu.class);
-                                                        startActivity(intent);
                                                     }
                                                 } else {
                                                     Toast.makeText(Register.this, "Registro fallido", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(Register.this, Register.class);
+                                                    startActivity(intent);
                                                 }
                                             }
                                         });
@@ -291,9 +293,9 @@ public class Register extends ClassBlockOrientation {
                         });
                     }
 
-                    //Intent intent = new Intent(Register.this, HomeMenu.class);
                     Toast.makeText(context, "Registro completado!", Toast.LENGTH_SHORT).show();
-                    //startActivity(intent);
+                    Intent intent = new Intent(Register.this, HomeMenu.class);
+                    startActivity(intent);
                 } else {
                     Toast.makeText(context, "Error!! Email o contraseña inválidos!", Toast.LENGTH_SHORT).show();
                 }

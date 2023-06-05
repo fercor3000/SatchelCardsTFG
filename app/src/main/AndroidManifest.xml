@@ -47,6 +47,7 @@
         <activity android:name=".SeleccionarCustom" />
         <activity android:name=".BuyPremium" />
         <activity android:name=".AboutUs" />
+        <activity android:name=".LoadingData" />
         <activity
             android:name=".DetectNfcNoOpenApp"
             android:label="Write NFC"
