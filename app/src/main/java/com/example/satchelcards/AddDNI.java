@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.HalfFloat;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -184,6 +185,9 @@ public class AddDNI extends ClassBlockOrientation {
                     userMap.put("DNacimiento", DNacimiento);
                     userMap.put("DValidez", DValidez);
 
+                    Intent intent = new Intent(AddDNI.this, LoadingData.class);
+                    startActivity(intent);
+
                     //AÑADE EL DOCUMENTO A LA COLECCIÓN
                     docRef.set(userMap)
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -202,6 +206,8 @@ public class AddDNI extends ClassBlockOrientation {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
                                                 Context context = getApplicationContext();
+                                                Intent intent = new Intent(AddDNI.this, HalfFloat.class);
+                                                startActivity(intent);
                                                 Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
@@ -218,6 +224,8 @@ public class AddDNI extends ClassBlockOrientation {
                                 @Override
                                 public void onFailure(@NonNull Exception e) { //SI HAY ALGÚN ERROR
                                     Context context = getApplicationContext();
+                                    Intent intent = new Intent(AddDNI.this, HomeMenu.class);
+                                    startActivity(intent);
                                     Toast.makeText(context, "Error al registrar los datos del usuario!" + e, Toast.LENGTH_SHORT).show();
                                 }
                             });

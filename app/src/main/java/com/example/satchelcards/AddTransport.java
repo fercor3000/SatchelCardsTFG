@@ -188,6 +188,9 @@ public class AddTransport extends ClassBlockOrientation {
                 userMap.put("cardId", cardNextId);
                 userMap.put("cardType","transport");
 
+                Intent intent = new Intent(AddTransport.this, LoadingData.class);
+                startActivity(intent);
+
                 docRef.set(userMap)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -226,6 +229,8 @@ public class AddTransport extends ClassBlockOrientation {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
                                                     Context context = getApplicationContext();
+                                                    Intent intent = new Intent(AddTransport.this, HomeMenu.class);
+                                                    startActivity(intent);
                                                     Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
@@ -243,6 +248,8 @@ public class AddTransport extends ClassBlockOrientation {
                                     public void onFailure(@NonNull Exception e) {
                                         // Transaction failure
                                         Context context = getApplicationContext();
+                                        Intent intent = new Intent(AddTransport.this, HomeMenu.class);
+                                        startActivity(intent);
                                         Toast.makeText(context, "Error al registrar los datos de la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                                         Log.e("AddGift", "Error updating cardNextId in Firestore", e);
                                     }
@@ -254,6 +261,8 @@ public class AddTransport extends ClassBlockOrientation {
                             public void onFailure(@NonNull Exception e) {
                                 // Firestore set operation failure
                                 Context context = getApplicationContext();
+                                Intent intent = new Intent(AddTransport.this, HomeMenu.class);
+                                startActivity(intent);
                                 Toast.makeText(context, "Error al registrar los datos de la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                                 Log.e("AddGift", "Error inserting card data to Firestore", e);
                             }
@@ -327,6 +336,9 @@ public class AddTransport extends ClassBlockOrientation {
         cardMap.put("cardHolderName", cardHolderName);
         cardMap.put("expirationDate", DExpire);
 
+        Intent intent = new Intent(AddTransport.this, LoadingData.class);
+        startActivity(intent);
+
         docRef.update(cardMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -342,6 +354,8 @@ public class AddTransport extends ClassBlockOrientation {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Context context = getApplicationContext();
+                        Intent intent = new Intent(AddTransport.this, HomeMenu.class);
+                        startActivity(intent);
                         Toast.makeText(context, "Error al actualizar la tarjeta" + e, Toast.LENGTH_SHORT).show();
                         Log.e("AddTransport", "Error al actualizar la tarjeta", e);
                     }

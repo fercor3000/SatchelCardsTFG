@@ -149,6 +149,8 @@ public class AddCredit extends ClassBlockOrientation {
 
             //Método para insertar datos en la base de datos según los parámetros recibidos
             private void insertInDDBB(String cardName, String cardHolderName,long cardNumber, int CVV, Date DExpire, String userCardID, String cardNextId) {
+                Intent intent = new Intent(AddCredit.this, LoadingData.class);
+                startActivity(intent);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -226,6 +228,8 @@ public class AddCredit extends ClassBlockOrientation {
                                     public void onFailure(@NonNull Exception e) {
                                         // Transaction failure
                                         Context context = getApplicationContext();
+                                        Intent intent = new Intent(AddCredit.this, HomeMenu.class);
+                                        startActivity(intent);
                                         Toast.makeText(context, "Error al registrar los datos de la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                                         Log.e("AddGift", "Error updating cardNextId in Firestore", e);
                                     }
@@ -237,6 +241,8 @@ public class AddCredit extends ClassBlockOrientation {
                             public void onFailure(@NonNull Exception e) {
                                 // Firestore set operation failure
                                 Context context = getApplicationContext();
+                                Intent intent = new Intent(AddCredit.this, HomeMenu.class);
+                                startActivity(intent);
                                 Toast.makeText(context, "Error al registrar los datos de la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                                 Log.e("AddGift", "Error inserting card data to Firestore", e);
                             }
@@ -304,6 +310,8 @@ public class AddCredit extends ClassBlockOrientation {
         cardMap.put("CVV",cvv);
         cardMap.put("cardNumber",cardNumber);
 
+        Intent intent = new Intent(AddCredit.this, LoadingData.class);
+        startActivity(intent);
         docRef.update(cardMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -319,6 +327,8 @@ public class AddCredit extends ClassBlockOrientation {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Context context = getApplicationContext();
+                        Intent intent = new Intent(AddCredit.this, HomeMenu.class);
+                        startActivity(intent);
                         Toast.makeText(context, "Error al actualizar la tarjeta" + e, Toast.LENGTH_SHORT).show();
                         Log.e("AddCredit", "Error al actualizar la tarjeta", e);
                     }

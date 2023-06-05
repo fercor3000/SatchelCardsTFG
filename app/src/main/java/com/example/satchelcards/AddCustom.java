@@ -176,6 +176,8 @@ public class AddCustom extends ClassBlockOrientation {
 
             //Método para insertar datos en la base de datos según los parámetros recibidos
             private void insertInDDBB(String cardName, String cardHolderName,long cardNumber, Date DExpire, String userCardID, String cardNextId) {
+                Intent intent = new Intent(AddCustom.this, LoadingData.class);
+                startActivity(intent);
                 FirebaseFirestore db = FirebaseFirestore.getInstance();
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -231,6 +233,8 @@ public class AddCustom extends ClassBlockOrientation {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
                                                     Context context = getApplicationContext();
+                                                    Intent intent = new Intent(AddCustom.this, HomeMenu.class);
+                                                    startActivity(intent);
                                                     Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
@@ -248,6 +252,8 @@ public class AddCustom extends ClassBlockOrientation {
                                     public void onFailure(@NonNull Exception e) {
                                         // Transaction failure
                                         Context context = getApplicationContext();
+                                        Intent intent = new Intent(AddCustom.this, HomeMenu.class);
+                                        startActivity(intent);
                                         Toast.makeText(context, "Error al registrar los datos de la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                                         Log.e("AddGift", "Error updating cardNextId in Firestore", e);
                                     }
@@ -259,6 +265,8 @@ public class AddCustom extends ClassBlockOrientation {
                             public void onFailure(@NonNull Exception e) {
                                 // Firestore set operation failure
                                 Context context = getApplicationContext();
+                                Intent intent = new Intent(AddCustom.this, HomeMenu.class);
+                                startActivity(intent);
                                 Toast.makeText(context, "Error al registrar los datos de la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                                 Log.e("AddGift", "Error inserting card data to Firestore", e);
                             }
@@ -331,6 +339,9 @@ public class AddCustom extends ClassBlockOrientation {
             cardMap.put("expirationDate", DExpire);
             cardMap.put("cardNumber",cardNumber);
 
+            Intent intent = new Intent(AddCustom.this, LoadingData.class);
+            startActivity(intent);
+
             docRef.update(cardMap)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -346,6 +357,8 @@ public class AddCustom extends ClassBlockOrientation {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             Context context = getApplicationContext();
+                            Intent intent = new Intent(AddCustom.this, HomeMenu.class);
+                            startActivity(intent);
                             Toast.makeText(context, "Error al actualizar la tarjeta!" + e, Toast.LENGTH_SHORT).show();
                             Log.e("AddGift", "Error updating card data in Firestore", e);
                         }
