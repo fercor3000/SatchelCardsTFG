@@ -235,7 +235,7 @@ public class AddCustom extends ClassBlockOrientation {
                                                     Context context = getApplicationContext();
                                                     Intent intent = new Intent(AddCustom.this, HomeMenu.class);
                                                     startActivity(intent);
-                                                    Toast.makeText(context, "Error al cargar la imagen de perfil!", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, "Error al cargar la imagen!", Toast.LENGTH_SHORT).show();
                                                 }
                                             });
                                         }
@@ -346,6 +346,25 @@ public class AddCustom extends ClassBlockOrientation {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
+                            if (selectedImageUri != null) {
+                                FirebaseStorage storage = FirebaseStorage.getInstance();
+                                StorageReference storageRef = storage.getReference();
+                                StorageReference imagenRef = storageRef.child("cardImages/" + currentUser.getUid() + "_custom_" + itemId);
+
+                                UploadTask uploadTask = imagenRef.putFile(selectedImageUri);
+
+                                uploadTask.addOnSuccessListener(taskSnapshot -> {
+
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Context context = getApplicationContext();
+                                        Intent intent = new Intent(AddCustom.this, HomeMenu.class);
+                                        startActivity(intent);
+                                        Toast.makeText(context, "Error al cargar la imagen!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
                             Context context = getApplicationContext();
                             Toast.makeText(context, "Tarjeta actualizada!", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(AddCustom.this, HomeMenu.class);
