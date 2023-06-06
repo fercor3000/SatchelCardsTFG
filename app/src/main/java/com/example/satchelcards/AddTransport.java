@@ -126,7 +126,7 @@ public class AddTransport extends ClassBlockOrientation {
                 int expireDay = expireDateDatePicker.getDayOfMonth();
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, expireYear);
-                calendar.set(Calendar.MONTH, expireMonth - 1); //
+                calendar.set(Calendar.MONTH, expireMonth); //
                 calendar.set(Calendar.DAY_OF_MONTH, expireDay);
                 Date DExpire = calendar.getTime();
 

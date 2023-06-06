@@ -131,7 +131,7 @@ public class AddDNI extends ClassBlockOrientation {
                 int dayNacimiento = fechaNacimientoDatePicker.getDayOfMonth();
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, yearNacimiento);
-                calendar.set(Calendar.MONTH, monthNacimiento - 1); //
+                calendar.set(Calendar.MONTH, monthNacimiento); //
                 calendar.set(Calendar.DAY_OF_MONTH, dayNacimiento);
                 Date DNacimiento = calendar.getTime();
 
@@ -141,7 +141,7 @@ public class AddDNI extends ClassBlockOrientation {
                 int dayValidez = fechaValidezDatePicker.getDayOfMonth();
                 Calendar calendar2 = Calendar.getInstance();
                 calendar2.set(Calendar.YEAR, yearValidez);
-                calendar2.set(Calendar.MONTH, monthValidez - 1);
+                calendar2.set(Calendar.MONTH, monthValidez);
                 calendar2.set(Calendar.DAY_OF_MONTH, dayValidez);
                 Date DValidez = calendar2.getTime();
 
