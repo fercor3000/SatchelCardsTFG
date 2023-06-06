@@ -50,9 +50,10 @@
 
             <TextView
                 android:id="@+id/dueño"
-                android:layout_width="match_parent"
+                android:layout_width="143dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="5dp"
                 android:text="DUEÑO TARJETA" />
 
         </LinearLayout>
@@ -67,12 +68,16 @@
             <TextView
                 android:id="@+id/nombre_tarjeta"
                 android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content"
                 android:text="NOMBRE TARJETA"/>
 
             <TextView
                 android:id="@+id/numero_tarjeta"
                 android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_marginRight="10dp"
                 android:layout_height="wrap_content"
                 android:text="NUMERO TARJETA"/>
 
@@ -81,6 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
                 android:text="CVV"/>
 
@@ -89,6 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="10dp"
                 android:text="Fecha Expiracion"/>
 
