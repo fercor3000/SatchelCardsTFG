@@ -1,11 +1,7 @@
 package com.example.satchelcards;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import androidx.biometric.BiometricManager;
-import android.hardware.biometrics.BiometricPrompt;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -25,8 +21,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.SignInMethodQueryResult;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -53,7 +47,6 @@ public class Register extends ClassBlockOrientation {
     StorageReference storageReference;
     private static final int REQUEST_CODE_SELECT_IMAGE = 100;
     Uri selectedImageUri;
-    boolean guardarHuella;
     //#endregion
 
     @Override
@@ -113,7 +106,8 @@ public class Register extends ClassBlockOrientation {
             }
         });
         //#endregion
-        //#startregion REGISTRAR
+
+        //#region REGISTRAR
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -188,8 +182,8 @@ public class Register extends ClassBlockOrientation {
                 }
             }
         });
+        //#endregion
     }
-
 
     //#region FUNCIÓN PARA METER DATOS EN LA BBDD
     private void meterdatosenBBDD(String username, String email, String password, String phoneNumber) {
@@ -295,8 +289,8 @@ public class Register extends ClassBlockOrientation {
                     }
 
                     Toast.makeText(context, "Registro completado!", Toast.LENGTH_SHORT).show();
-                    meterHuella();
                     Intent intent = new Intent(Register.this, HomeMenu.class);
+                    intent.putExtra("registro", true);
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "Error!! Email o contraseña inválidos!", Toast.LENGTH_SHORT).show();
@@ -305,85 +299,6 @@ public class Register extends ClassBlockOrientation {
         });
     }
 
-    //#endregion
-
-    //#region HUELLA DACTILAR
-    public void meterHuella() { //FirebaseAuth.getInstance().getCurrentUser().getUid()
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = mDatabase.getReference("user");
-        Context context = getApplicationContext();
-        BiometricManager biometricManager = BiometricManager.from(context);
-        switch (biometricManager.canAuthenticate()) {
-            case BiometricManager.BIOMETRIC_SUCCESS:
-                Toast.makeText(context, "Dispositivo habilitado para utilizar datos biométricos.", Toast.LENGTH_SHORT).show();
-                break;
-
-            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
-                Toast.makeText(context, "Este dispositivo no contiene lector de datos biométricos.", Toast.LENGTH_SHORT).show();
-                break;
-
-            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
-                Toast.makeText(context, "El lector de datos biométricos no se encuentra disponible.", Toast.LENGTH_SHORT).show();
-                break;
-
-            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                Toast.makeText(context, "El dispositivo no cuenta con datos biométricos cargados, por favor corrobore sus opciones de seguridad.", Toast.LENGTH_SHORT).show();
-                break;
-        }
-
-        /*if (biometricManager.canAuthenticate() == BiometricManager.BIOMETRIC_SUCCESS) {
-            // Si el dispositivo es compatible con la autenticación biométrica
-
-            // Crear un registro para el nuevo usuario
-            User newUser = new User(email, password); // Suponiendo que ya tienes los datos del usuario
-
-            // Registrar la huella dactilar del usuario
-            BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
-                    .setTitle("Registrar huella dactilar")
-                    .setSubtitle("Toque el sensor de huella para registrarla")
-                    .setNegativeButtonText("Cancelar")
-                    .build();
-
-            BiometricPrompt.AuthenticationCallback authenticationCallback = new BiometricPrompt.AuthenticationCallback() {
-                @Override
-                public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
-                    super.onAuthenticationSucceeded(result);
-
-                    // Guardar la huella dactilar en Firebase
-                    usersRef.child(newUser.getUserId()).child("huellaDactilar").setValue(true);
-                }
-            };
-
-            BiometricPrompt biometricPrompt = new BiometricPrompt(context, executor, authenticationCallback);
-            biometricPrompt.authenticate(promptInfo);
-        } else {
-            // El dispositivo no es compatible con la autenticación biométrica
-            // Mostrar un mensaje de error o usar otra forma de autenticación
-        }*/
-
-    }
-
-    private boolean showConfirmationFingerPrintDialog() {
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Confirmación");
-        builder.setMessage("¿Quieres iniciar sesión con tu huella dactilar?");
-        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                guardarHuella = true;
-            }
-        });
-        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                guardarHuella = false;
-            }
-        });
-        builder.show();
-        return guardarHuella;
-    }
     //#endregion
 
     //#region FUNCION PARA VALIDAR FORMATO DEL EMAIL

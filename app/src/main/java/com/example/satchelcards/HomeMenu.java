@@ -1,18 +1,37 @@
 package com.example.satchelcards;
 
+import android.content.Context;
 import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeMenu extends ClassBlockOrientation {
 
@@ -24,12 +43,84 @@ public class HomeMenu extends ClassBlockOrientation {
     private TextView menuItem2;
     private TextView menuItem3;
     private ImageView helpBtn;
+    boolean guardarHuella;
     //#endregion
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_menu);
+
+        try {
+            boolean comesFromRegister = getIntent().getBooleanExtra("registro", false);
+            if (comesFromRegister) {
+                //#region HUELLA DACTILAR
+                FirebaseAuth mAuth = FirebaseAuth.getInstance();
+                FirebaseDatabase mDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference usersRef = mDatabase.getReference("user");
+                Context context = getApplicationContext();
+                BiometricManager biometricManager = BiometricManager.from(context);
+                switch (biometricManager.canAuthenticate()) {
+                    case BiometricManager.BIOMETRIC_SUCCESS:
+                        //Toast.makeText(context, "Dispositivo habilitado para utilizar datos biométricos.", Toast.LENGTH_SHORT).show();
+                        BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                                .setTitle("Registrar inicio de sesión biometrico")
+                                .setSubtitle("Ponga su huella o cara para activar el inicio de sesión biometrico")
+                                .setNegativeButtonText("Cancelar")
+                                .build();
+
+                        BiometricPrompt.AuthenticationCallback authenticationCallback = new BiometricPrompt.AuthenticationCallback() {
+                            @Override
+                            public void onAuthenticationSucceeded(BiometricPrompt.AuthenticationResult result) {
+                                super.onAuthenticationSucceeded(result);
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                DocumentReference docRef = db.collection("user").document(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                Map<String, Object> userMap = new HashMap<>();
+                                userMap.put("biometricAuth", true);
+                                docRef.update(userMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                Toast.makeText(context, "Registrado inicio de sesión biometrico!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) { //SI HAY ALGÚN ERROR
+                                                Context context = getApplicationContext();
+                                                Toast.makeText(context, "Error al registrar datos de huella dactilar!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
+                            @Override
+                            public void onAuthenticationFailed() {
+                                super.onAuthenticationFailed();
+                                Toast.makeText(context, "ERROR! No se ha podido autentificar con biometría.", Toast.LENGTH_SHORT).show();
+                            }
+                        };
+
+                        Executor executor = Executors.newSingleThreadExecutor();
+                        BiometricPrompt biometricPrompt = new BiometricPrompt(this, executor, authenticationCallback);
+                        biometricPrompt.authenticate(promptInfo);
+                        break;
+
+                    case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+                        Toast.makeText(context, "Este dispositivo no contiene lector de datos biométricos.", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+                        Toast.makeText(context, "El lector de datos biométricos no se encuentra disponible.", Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                        Toast.makeText(context, "El dispositivo no cuenta con datos biométricos cargados, por favor corrobore sus opciones de seguridad.", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                //#endregion
+            }
+        } catch (Exception ex) {
+
+        }
 
         helpBtn = (ImageView) findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(new View.OnClickListener() {
@@ -220,6 +311,27 @@ public class HomeMenu extends ClassBlockOrientation {
                 drawerLayout.closeDrawer(GravityCompat.START);
             }
         });
+    }
+
+    private boolean showConfirmationFingerPrintDialog() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirmación");
+        builder.setMessage("¿Quieres iniciar sesión con tu huella dactilar?");
+        builder.setPositiveButton("Sí", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                guardarHuella = true;
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                guardarHuella = false;
+            }
+        });
+        builder.show();
+        return guardarHuella;
     }
 
     @Override

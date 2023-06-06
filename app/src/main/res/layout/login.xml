@@ -18,9 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="35dp"
-            android:text="Satchel"
-            android:textSize="34sp"
-            android:textColor="@color/black"/>
+            android:text="SATCHEL"
+            android:textStyle="bold"
+            android:textColor="@color/darkBlue"
+            android:textSize="34sp"/>
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="196dp"
@@ -94,7 +95,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
             android:backgroundTint="@color/darkBlue"
-            android:text="Iniciar sesion"
+            android:text="INICIAR SESIÓN"
+            android:minWidth="160dp"
+            android:minHeight="50dp"
             android:textColor="@color/white" />
         <Button
             android:id="@+id/register"
@@ -103,7 +106,9 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="25dp"
             android:backgroundTint="@color/darkBlue"
-            android:text="Registrarse"
+            android:text="REGISTRARSE"
+            android:minWidth="160dp"
+            android:minHeight="50dp"
             android:textColor="@color/white" />
     </LinearLayout>
 </LinearLayout>

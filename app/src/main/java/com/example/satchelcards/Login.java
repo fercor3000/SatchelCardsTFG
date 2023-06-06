@@ -19,6 +19,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,18 +39,46 @@ public class Login extends ClassBlockOrientation {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
 
-        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            Log.i("Auth", "Estoy autentificado");
-            Log.i("Auth", FirebaseAuth.getInstance().getCurrentUser().getEmail());
-        } else {
-            Log.i("Auth", "No estoy autentificado");
-        }
-
         //#region OBTENER ELEMENTOS
         btnRegister = (Button)findViewById(R.id.register);
         btnLogIn = (Button)findViewById(R.id.login);
         email = (EditText)findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        //#endregion
+
+        //#region BIOMETRÍA
+        boolean loginWithEmailAndPassword = getIntent().getBooleanExtra("loginWithEmailAndPassword", false);
+
+        if (!loginWithEmailAndPassword) { //SI EL USUARIO NO VIENE DE PULSAR LOGIN CON EMAIL Y CONTRASEÑA
+            //SI USER TIENE BIOMETRIA TRUE
+            String emailAuth;
+            try {
+                emailAuth = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            } catch (Exception ex) {
+                emailAuth = null;
+            }
+            if (emailAuth != null) {
+                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                CollectionReference usersRef = db.collection("user");
+                usersRef.document(emailAuth).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+                                try {
+                                    Boolean biometricAuth = document.getBoolean("biometricAuth");
+                                    if (biometricAuth != null && biometricAuth) {
+                                        Intent intent = new Intent(Login.this, LoginBiometric.class);
+                                        startActivity(intent);
+                                    }
+                                } catch (Exception ex) {}
+                            }
+                        }
+                    }
+                });
+            }
+        }
         //#endregion
 
         //#region MOSTRAR CONTRASEÑA
