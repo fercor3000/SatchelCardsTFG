@@ -73,12 +73,12 @@ public class AddGift extends ClassBlockOrientation {
 
 
         //Recibimos la operacion que queremos realizar
-        Intent intent = getIntent();
-        String operation = intent.getStringExtra("operation");
-        itemId = intent.getStringExtra("itemId");
+        Intent intentOne = getIntent();
+        String operation = intentOne.getStringExtra("operation");
+        itemId = intentOne.getStringExtra("itemId");
 
         if("edit".equals(operation)){
-            String imageUri = intent.getStringExtra("imageUri");
+            String imageUri = intentOne.getStringExtra("imageUri");
 
             if (imageUri.equals("nada")) {
                 imageViewPhoto.setImageResource(R.drawable.picgiftcard);
@@ -95,6 +95,8 @@ public class AddGift extends ClassBlockOrientation {
                 if("edit".equals(operation)){
                     Intent intent = new Intent(AddGift.this, SeleccionarGift.class);
                     intent.putExtra("itemId",itemId);
+                    String imageUri = intentOne.getStringExtra("imageUri");
+                    intent.putExtra("imageUri",imageUri);
                     startActivity(intent);
                 }else if(comesFromList){
                     Intent intent = new Intent(AddGift.this, ListGift.class);
