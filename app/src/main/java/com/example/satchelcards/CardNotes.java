@@ -149,6 +149,7 @@ public class CardNotes extends ClassBlockOrientation {
                                         }
 
                                         intent.putExtra("itemId",itemId);
+                                        intent.putExtra("imageUri",imageUri);
                                         startActivity(intent);
                                     } else {
                                         // Error al guardar nota
@@ -178,6 +179,7 @@ public class CardNotes extends ClassBlockOrientation {
                                                 intent = new Intent(CardNotes.this, HomeMenu.class);
                                         }
                                         intent.putExtra("itemId",itemId);
+                                        intent.putExtra("imageUri",imageUri);
                                         startActivity(intent);
                                     }
                                 }

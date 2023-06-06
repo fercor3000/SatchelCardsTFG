@@ -64,7 +64,6 @@ public class SeleccionarDni extends ClassBlockOrientation {
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
         imageUri = intent.getStringExtra("imageUri");
-
         if (imageUri.equals("nada")) {
             imagen.setImageResource(R.drawable.picdnicard);
         } else {
