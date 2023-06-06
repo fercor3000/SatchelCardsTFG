@@ -290,6 +290,7 @@ public class Register extends ClassBlockOrientation {
 
                     Toast.makeText(context, "Registro completado!", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(Register.this, HomeMenu.class);
+                    mAuth.getCurrentUser().sendEmailVerification();
                     intent.putExtra("registro", true);
                     startActivity(intent);
                 } else {
