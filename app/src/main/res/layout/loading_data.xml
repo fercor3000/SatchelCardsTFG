@@ -12,6 +12,7 @@
         android:layout_marginTop="110dp"
         android:textAlignment="center"
         android:text="CARGANDO..."
+        android:textStyle="bold"
         android:textSize="40dp"
         android:textColor="@color/darkBlue"
         app:layout_constraintEnd_toEndOf="parent"

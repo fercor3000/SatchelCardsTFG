@@ -28,6 +28,7 @@ import java.util.concurrent.Executors;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,6 +51,13 @@ public class HomeMenu extends ClassBlockOrientation {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_menu);
+
+        FirebaseAuth mAuthVerify = FirebaseAuth.getInstance();
+        FirebaseUser currentUserVerify = mAuthVerify.getCurrentUser();
+        if (currentUserVerify != null && !currentUserVerify.isEmailVerified()) {
+            Intent intent = new Intent(HomeMenu.this, WaitingToVerifyEmail.class);
+            startActivity(intent);
+        }
 
         try {
             boolean comesFromRegister = getIntent().getBooleanExtra("registro", false);

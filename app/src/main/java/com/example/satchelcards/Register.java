@@ -289,9 +289,9 @@ public class Register extends ClassBlockOrientation {
                     }
 
                     Toast.makeText(context, "Registro completado!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(Register.this, HomeMenu.class);
+                    Intent intent = new Intent(Register.this, WaitingToVerifyEmail.class);
                     mAuth.getCurrentUser().sendEmailVerification();
-                    intent.putExtra("registro", true);
+                    //intent.putExtra("registro", true);
                     startActivity(intent);
                 } else {
                     Toast.makeText(context, "Error!! Email o contraseña inválidos!", Toast.LENGTH_SHORT).show();
