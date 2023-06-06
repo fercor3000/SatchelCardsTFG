@@ -13,8 +13,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
@@ -153,6 +155,30 @@ public class Profile extends ClassBlockOrientation {
             Toast.makeText(context, "Error!! Usuario no logueado!!", Toast.LENGTH_SHORT).show();
             atras(1);
         }
+
+        //#region RESTABLECER CONTRASEÑA
+        Button resetButton = findViewById(R.id.restablecerContraseña);
+        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String email = firebaseAuth.getCurrentUser().getEmail();
+                Context context = getApplicationContext();
+                firebaseAuth.sendPasswordResetEmail(email)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(context, "Se ha enviado un correo electrónico para restablecer la contraseña", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(context, "No se pudo enviar el correo electrónico de restablecimiento de contraseña", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+
+            }
+        });
+        //#endregion
     }
 
     //#region FUNCIÓN PARA REDIRECCIONAR

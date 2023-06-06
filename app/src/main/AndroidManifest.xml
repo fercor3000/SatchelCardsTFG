@@ -52,6 +52,7 @@
         <activity android:name=".Construction" />
         <activity android:name=".LoginBiometric" />
         <activity android:name=".WaitingToVerifyEmail" />
+        <activity android:name=".RestorePassword" />
         <activity
             android:name=".DetectNfcNoOpenApp"
             android:label="Write NFC"

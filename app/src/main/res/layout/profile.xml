@@ -93,6 +93,17 @@
                     android:backgroundTint="@color/white" />
 
                 <Button
+                    android:id="@+id/restablecerContraseña"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="Restablecer contraseña"
+                    android:textColor="@color/darkBlue"
+                    android:textStyle="bold"
+                    android:textFontWeight="@integer/material_motion_duration_long_1"
+                    android:backgroundTint="@color/white" />
+
+                <Button
                     android:id="@+id/btnCerrarSesion"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

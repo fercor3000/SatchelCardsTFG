@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
 public class Login extends ClassBlockOrientation {
 
     //#region VARIABLES
-    Button btnLogIn, btnRegister;
+    Button btnLogIn, btnRegister, btnHeOlvidadoMiContraseña;
     EditText email, password;
     private FirebaseAuth mAuth;
     //#endregion
@@ -44,6 +44,7 @@ public class Login extends ClassBlockOrientation {
         btnLogIn = (Button)findViewById(R.id.login);
         email = (EditText)findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
+        btnHeOlvidadoMiContraseña = findViewById(R.id.heOlvidadoMiContraseña);
         //#endregion
 
         //#region BIOMETRÍA
@@ -96,6 +97,16 @@ public class Login extends ClassBlockOrientation {
                     passwordEditText.setSelection(passwordEditText.getText().length());
                 }
                 return false;
+            }
+        });
+        //#endregion
+
+        //#region AL PULSAR HE OLVIDADO MI CONTRASEÑA
+        btnHeOlvidadoMiContraseña.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, RestorePassword.class);
+                startActivity(intent);
             }
         });
         //#endregion

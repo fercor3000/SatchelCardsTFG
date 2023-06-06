@@ -55,6 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
+            android:textColor="@color/white"
             android:text="Añadir una nueva tarjeta"
             android:layout_gravity="center"
             android:backgroundTint="@color/darkBlue"
