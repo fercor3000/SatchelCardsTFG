@@ -40,10 +40,10 @@ public class BuyPremium extends ClassBlockOrientation {
 
         buyPremium = findViewById(R.id.buy_premium);
 
-        goBackBtn.setOnClickListener(new View.OnClickListener() {
+        buyPremium.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuyPremium.this, HomeMenu.class);
+                Intent intent = new Intent(BuyPremium.this, Construction.class);
                 startActivity(intent);
             }
         });
