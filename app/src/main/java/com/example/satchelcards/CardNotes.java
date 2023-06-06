@@ -25,6 +25,7 @@ public class CardNotes extends ClassBlockOrientation {
 
     EditText noteBlock;
     Button btnSaveNotes;
+    String imageUri;
     ImageView goBackBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -38,6 +39,9 @@ public class CardNotes extends ClassBlockOrientation {
         btnSaveNotes = findViewById(R.id.btn_save_notes);
 
         String itemId = getIntent().getStringExtra("itemId");
+        try {
+            imageUri = getIntent().getStringExtra("imageUri");
+        } catch (Exception e) {}
         String cardType = getIntent().getStringExtra("cardType");
 
         // Cargar nota de la base de datos y rellenar el bloque de notas en el EditText noteBlock
@@ -93,6 +97,7 @@ public class CardNotes extends ClassBlockOrientation {
                         intent = new Intent(CardNotes.this, HomeMenu.class);
                 }
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("imageUri",imageUri);
                 startActivity(intent);
             }
         });

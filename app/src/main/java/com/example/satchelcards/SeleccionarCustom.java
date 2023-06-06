@@ -165,6 +165,7 @@ public class SeleccionarCustom extends ClassBlockOrientation {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarCustom.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("imageUri",imageUri);
                 intent.putExtra("cardType","custom");
                 startActivity(intent);
             }

@@ -37,7 +37,7 @@ public class SeleccionarDni extends ClassBlockOrientation {
     ImageView imagen;
     Button editBtn, deleteBtn, notesBtn;
     Date vFechaExpiracion;
-    String nombre_dni, num_dni, dni_elec, sexo, fecha_expiracionFormatted;
+    String nombre_dni, num_dni, dni_elec, sexo, fecha_expiracionFormatted, imageUri;
     TextView nombreDniTarjeta, numeroDniTarjeta, dniElectronicoTarjeta, sexoTarjeta, fechaExpiracionTarjeta;
 
     @Override
@@ -63,7 +63,7 @@ public class SeleccionarDni extends ClassBlockOrientation {
 
         Intent intent = getIntent();
         String itemId = intent.getStringExtra("itemId");
-        String imageUri = intent.getStringExtra("imageUri");
+        imageUri = intent.getStringExtra("imageUri");
 
         if (imageUri.equals("nada")) {
             imagen.setImageResource(R.drawable.picdnicard);
@@ -171,6 +171,7 @@ public class SeleccionarDni extends ClassBlockOrientation {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarDni.this, CardNotes.class);
                 intent.putExtra("itemId",num_dni);
+                intent.putExtra("imageUri",imageUri);
                 intent.putExtra("cardType","dni");
                 startActivity(intent);
             }

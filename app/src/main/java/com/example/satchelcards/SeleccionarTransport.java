@@ -164,6 +164,7 @@ public class SeleccionarTransport extends ClassBlockOrientation {
             public void onClick(View v) {
                 Intent intent = new Intent(SeleccionarTransport.this, CardNotes.class);
                 intent.putExtra("itemId",itemId);
+                intent.putExtra("imageUri",imageUri);
                 intent.putExtra("cardType","transport");
                 startActivity(intent);
             }
