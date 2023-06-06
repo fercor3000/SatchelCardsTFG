@@ -4,19 +4,15 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class BuyPremium extends ClassBlockOrientation {
+public class Construction extends ClassBlockOrientation {
 
     ImageView goBackBtn, helpBtn;
-    Button buyPremium;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.buy_premium);
+        setContentView(R.layout.construction);
 
         helpBtn = (ImageView) findViewById(R.id.helpBtn);
         helpBtn.setOnClickListener(new View.OnClickListener() {
@@ -33,17 +29,7 @@ public class BuyPremium extends ClassBlockOrientation {
         goBackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BuyPremium.this, HomeMenu.class);
-                startActivity(intent);
-            }
-        });
-
-        buyPremium = findViewById(R.id.buy_premium);
-
-        goBackBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(BuyPremium.this, HomeMenu.class);
+                Intent intent = new Intent(Construction.this, HomeMenu.class);
                 startActivity(intent);
             }
         });
