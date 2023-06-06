@@ -99,6 +99,11 @@ public class LoginBiometric extends ClassBlockOrientation {
                 BiometricPrompt biometricPrompt = new BiometricPrompt(this, executor, authenticationCallback);
                 biometricPrompt.authenticate(promptInfo);
                 break;
+            default:
+                Intent intent = new Intent(LoginBiometric.this, Login.class);
+                intent.putExtra("loginWithEmailAndPassword", true);
+                startActivity(intent);
+                break;
         }
     }
     //#endregion
