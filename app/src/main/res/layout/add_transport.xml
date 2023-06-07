@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:layout_weight="1"
-            android:text="Acerque su tarjeta de crédito"
+            android:text="Acerque su tarjeta de transporte"
             android:textColor="#232e63"
             android:textSize="20sp"
             android:textStyle="bold"
